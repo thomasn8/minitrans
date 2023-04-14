@@ -1,0 +1,22 @@
+
+version: '3.8'
+
+services:
+
+  nginx:
+    restart: "on-failure"
+    ports:
+      - "8080:80"
+
+  front:
+    restart: "on-failure"
+    environment:
+      BUILD_TYPE: "Production" 
+
+  back:
+    restart: "on-failure"
+    environment:
+      BUILD_TYPE: "Production" 
+
+  postgres:
+    restart: "on-failure"
