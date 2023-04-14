@@ -14,25 +14,22 @@ fi
 
 
 # # nest new rest-api --directory ./ -p yarn --strict
-
 # yarn add json-server
 # json-server ./api/db.json --host 0.0.0.0
 
 # Download node_modules
 yarn install
 
+# Use tsc: compile ts to js
 yarn build 
-# yarn typeorm migration:run
 
 
 
 if [ "$BUILD_TYPE" = "Production" ]; 
 then 
-    # For start in prod
-    yarn start
+	# For start in prod
+	yarn start
 
 else 
-    yarn start:dev 
+	yarn start:dev 
 fi
-
-
