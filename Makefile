@@ -44,7 +44,7 @@ logsnginx:
 flogsfront:
 			${DOCKER} logs -f front
 flogsvue:
-			${DOCKER} logs -f vue
+			${DOCKER} logs -f front-vue
 flogsapi:
 			${DOCKER} logs -f back
 flogsnginx:

@@ -8,7 +8,7 @@ services:
   front:
     build: ./_build/front
     restart: "no"
-    stdin_open:  true
+    stdin_open: true
     tty: true
     ports:
       - "3000:3000"
@@ -19,8 +19,9 @@ services:
   front-vue:
     build: ./_build/front-vue
     restart: "no"
-    stdin_open:  true
+    stdin_open: true
     tty: true
+    ports:
       - "3001:3001"
     networks:
       - netpong

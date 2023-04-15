@@ -18,5 +18,3 @@ then
 else
     yarn start
 fi
-
-
