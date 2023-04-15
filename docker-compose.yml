@@ -17,6 +17,8 @@ services:
 
   front:
     build: ./_build/front
+    volumes:
+      - ./front:/app
     networks:
       - netpong
     working_dir: /app
@@ -27,10 +29,9 @@ services:
     #   - postgres
     volumes:
       - ./api:/app
-      - ./_datas:/app-datas
     networks:
       - netpong
-    environment:
+    # environment:
       # DATABASE_USER: ${DB_USERNAME}
       # DATABASE_PASSWORD: ${DB_PASSWORD}
       # DATABASE_DB: ${DB_DB}

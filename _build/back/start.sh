@@ -14,14 +14,14 @@ fi
 
 
 # # nest new rest-api --directory ./ -p yarn --strict
-# yarn add json-server
-# json-server ./api/db.json --host 0.0.0.0
+# # yarn add json-server
+# # json-server ./api/db.json --host 0.0.0.0
 
 # Download node_modules
-yarn install
+# yarn install
 
 # Use tsc: compile ts to js
-yarn build 
+yarn build
 
 
 

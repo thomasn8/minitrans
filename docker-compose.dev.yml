@@ -20,13 +20,11 @@ services:
     restart: "no"
     stdin_open:  true # docker run -i
     tty: true        # docker run -t
-
-    # ports:
-    #   - "4000:4000"
+    ports:
+      - "4000:4000"
 
   # postgres:
   #   restart: "no"
-
     #ports:
     #  - "5432:5432"
 
@@ -36,11 +34,8 @@ services:
   #   # image: mcaubrey/adminer
   #   depends_on:
   #     - postgres
-
   #   restart: "no"
-
   #   ports:
   #     - "8081:8080"
-
   #   networks:
   #     - netpong
