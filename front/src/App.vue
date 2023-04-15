@@ -115,7 +115,7 @@ const emitTyping = () => {
 								<span v-if="userTyping !== name && userTyping === user.name" class="typing"></span>
 								<span v-else-if="userTyping === user.name" class="me-typing"></span>
 							</template>
-							<span v-if="user.name === name" class="user me">{{ user.name }} [me]</span>
+							<span v-if="user.name === name" class="user me">{{ user.name }} (me)</span>
 							<span v-else class="user else">{{ user.name }}</span>
 							<span class="lister">•</span>
 						</div>
@@ -129,7 +129,7 @@ const emitTyping = () => {
 					<div class="messages scrollbar">
 						<div v-for="message in messages.slice().reverse()" class="message">
 							<div v-if="message.name === name" class="name me"><span>{{ message.text }}</span></div>
-							<div v-else class="name else"><span class="else-name">[{{ message.name }}]: </span><span>{{ message.text }}</span></div>
+							<div v-else class="name else"><span class="else-name">{{ message.name }}: </span><span>{{ message.text }}</span></div>
 						</div>
 					</div>
 				</div>
