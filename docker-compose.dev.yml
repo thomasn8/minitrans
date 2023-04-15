@@ -8,10 +8,20 @@ services:
   front:
     build: ./_build/front
     restart: "no"
-    stdin_open:  true # docker run -i
-    tty: true        # docker run -t
+    stdin_open:  true
+    tty: true
     ports:
       - "3000:3000"
+    networks:
+      - netpong
+    working_dir: /app
+
+  front-vue:
+    build: ./_build/front-vue
+    restart: "no"
+    stdin_open:  true
+    tty: true
+      - "3001:3001"
     networks:
       - netpong
     working_dir: /app

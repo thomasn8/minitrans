@@ -34,6 +34,8 @@ flogs:
 
 logsfront:
 			${DOCKER} logs front
+logsvue:
+			${DOCKER} logs front-vue
 logsapi:
 			${DOCKER} logs back
 logsnginx:
@@ -41,6 +43,8 @@ logsnginx:
 
 flogsfront:
 			${DOCKER} logs -f front
+flogsvue:
+			${DOCKER} logs -f vue
 flogsapi:
 			${DOCKER} logs -f back
 flogsnginx:
@@ -56,6 +60,8 @@ renginx:
 
 run:
 			${DOCKER} exec front sh
+runvue:
+			${DOCKER} exec font=vue sh
 runapi:
 			${DOCKER} exec back sh
 runnginx:

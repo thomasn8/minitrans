@@ -10,6 +10,10 @@ services:
     environment:
       BUILD_TYPE: "Setup" 
 
+  front-vue:
+    environment:
+      BUILD_TYPE: "Setup" 
+
   back:
     environment:
       BUILD_TYPE: "Setup" 

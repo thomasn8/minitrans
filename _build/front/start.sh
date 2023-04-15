@@ -1,24 +1,22 @@
 apk add vim
 
-# # Create application
-if [ ! -e package.json ]; 
-then 
-	yarn create vite ./ --template vue
-	yarn add socket.io-client
+# Create application
+if [ "$BUILD_TYPE" = "Setup" ];
+then
+    yarn add react-router-dom
+    # yarn add axios
 fi
 
-# Download node_modules
-yarn install
+if [ "$BUILD_TYPE" = "Production" ];
+then
+    # For start in prod
+    yarn global add serve
 
+    yarn build
+    serve -s build
 
-if [ "$BUILD_TYPE" = "Production" ]; 
-then 
-	# For start in prod
-	yarn global add serve
-
-	yarn build
-	serve -s build 
-
-else 
-    yarn dev
+else
+    yarn start
 fi
+
+
