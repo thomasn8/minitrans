@@ -12,21 +12,8 @@ const joined = ref(false);
 const name = ref('');
 const usersTyping = ref([]);
 
-/*  SOCKET methods
-
-	emit:
-	emit(event, bodyarguments, optional_callback)
-	suite a une interaction avec la page html,
-	mon socket emit un message au server (requete GET POST selon bodyarguments)
-	fonction callback appelée que si l'event coté server retourne une valeur
-	
-	on:
-	on(event, optional_callback)
-	suite a un event emit par le server
-	mon socket recoit un message du server suite
-*/
-
 // onBeforeMount: call right before the component DOM is actually rendered and mounted
+// equivalent to React.useEffect
 onBeforeMount(() => {
 	socket.emit('findAllUsers', {}, (response) => {
 		users.value = response;
@@ -64,7 +51,6 @@ onBeforeMount(() => {
 
 const join = () => {
 	if (name.value.length > 0) {
-		// fonction callback de emit appelée que si l'event coté server retourne une valeur
 		socket.emit('join', { name: name.value }, () => {
 			joined.value = true;
 		})
@@ -115,7 +101,7 @@ const emitTyping = () => {
 								<span v-if="userTyping !== name && userTyping === user.name" class="typing"></span>
 								<span v-else-if="userTyping === user.name" class="me-typing"></span>
 							</template>
-							<span v-if="user.name === name" class="user me">{{ user.name }} [me]</span>
+							<span v-if="user.name === name" class="user me">{{ user.name }} (me)</span>
 							<span v-else class="user else">{{ user.name }}</span>
 							<span class="lister">•</span>
 						</div>
@@ -129,7 +115,7 @@ const emitTyping = () => {
 					<div class="messages scrollbar">
 						<div v-for="message in messages.slice().reverse()" class="message">
 							<div v-if="message.name === name" class="name me"><span>{{ message.text }}</span></div>
-							<div v-else class="name else"><span class="else-name">[{{ message.name }}]: </span><span>{{ message.text }}</span></div>
+							<div v-else class="name else"><span class="else-name">{{ message.name }}: </span><span>{{ message.text }}</span></div>
 						</div>
 					</div>
 				</div>
