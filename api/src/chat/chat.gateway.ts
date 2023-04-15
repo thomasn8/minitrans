@@ -12,7 +12,6 @@ import { MessageDto } from './dto/message.dto';
 import { UserDto } from './dto/user.dto';
 import { Server, Socket } from 'socket.io';
 
-// @WebSocketGateway({ path: '/socket-chat/', cors: { origin: '*' } })
 @WebSocketGateway( {cors: { origin: '*' }} ) // a voir pour autoriser une liste de CORS directement via Nginx
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   
