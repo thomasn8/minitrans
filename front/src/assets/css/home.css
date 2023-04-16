@@ -1,6 +1,54 @@
-.home {
+#home {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	align-items: center;
 	height: 100%;
+}
+
+.applis {
+	display: flex;
+	flex-wrap: wrap;
+	width: 400px;
+}
+
+.applis-center {
+	justify-content: center;
+}
+
+.applis-left {
+	justify-content: left;
+}
+
+.appli {
+	height: 100px;
+	width: 100px;
+	margin: 10px 0;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+	color: var(--main-color08);
+}
+
+.appli:hover {
+	color: var(--main-color1);
+}
+
+.appli-img {
+	background-color: var(--main-color03);
+	height: 60px;
+	width: 60px;
+}
+
+.appli-name {
+	width: auto;
+	font-size: 16px;
+}
+
+@media (max-width: 419px) {
+	.applis {
+		width: 300px;
+	}
 }

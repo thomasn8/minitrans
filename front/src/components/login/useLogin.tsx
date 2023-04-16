@@ -8,7 +8,7 @@ function useLogin(): LoginDto | undefined {
 	const [token, setToken] = React.useState(localStorage.getItem("token") || "");
 	const [user, setUser] = React.useState<UserDto | undefined>();
 
-	function get_headers(): any {
+	function getHeaders(): any {
     return {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -19,7 +19,7 @@ function useLogin(): LoginDto | undefined {
   function getUserData(): void {
     if (token && token.length != 0) {
       axios
-        .get("/api/me", get_headers())
+        .get("/api/me", getHeaders())
         .then((res) => {
           if (res.status === 200) {
             setUser(res.data as UserDto);
@@ -42,7 +42,7 @@ function useLogin(): LoginDto | undefined {
     token,
     setToken,
     user,
-    get_headers,
+    getHeaders,
     getUserData,
   };
 }

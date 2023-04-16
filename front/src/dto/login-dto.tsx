@@ -6,6 +6,6 @@ export interface LoginDto {
 
   user: UserDto | undefined;
 
-  get_headers: Function;
+  getHeaders: Function;
   getUserData: Function;
 }

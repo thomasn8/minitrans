@@ -7,18 +7,18 @@ form * {
 	margin: 8px 0;
 }
 
-.login {
+input {
+	max-width: 300px;
+}
+button {
+	max-width: 100px;
+}
+
+#login {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	height: 100%;
-}
-
-.login input {
-	max-width: 300px;
-}
-.login button {
-	max-width: 100px;
 }
 
 .login-adds {
@@ -33,11 +33,6 @@ form * {
 	margin: 0;
 }
 .login-adds a:hover {
-	color: var(--main-color08);
-}
-
-.title {
-	text-align: center;
 	color: var(--main-color08);
 }
 

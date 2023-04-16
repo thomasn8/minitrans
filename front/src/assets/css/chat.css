@@ -1,3 +1,10 @@
+#chat {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 100%;
+}
+
 .scrollbar {
 	scrollbar-color: var(--main-color04) var(--window-color);
 	scrollbar-width: thin;
@@ -91,7 +98,7 @@
 	border: solid 1px var(--main-color015);
 }
 
-.title {
+.title-chat {
 	background-color: var(--main-color015);
 	height: 36px;
 	text-align: left;

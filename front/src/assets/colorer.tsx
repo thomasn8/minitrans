@@ -1,4 +1,4 @@
-function Colorer(login: string | undefined): string {
+function colorer(login: string | undefined): string {
 	//
 	if (login === undefined) {
 		return "bg-cyan-500 dark:bg-gray-700";
@@ -24,4 +24,4 @@ function Colorer(login: string | undefined): string {
 	}
 }
 
-export default Colorer;
+export default colorer;

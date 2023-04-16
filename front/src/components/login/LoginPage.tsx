@@ -1,8 +1,18 @@
 import React, { SyntheticEvent } from "react";
+import { Link } from "react-router-dom";
+import { useHomeRedirect } from "./useRedirect";
+import { LoginDto } from "../../dto/login-dto";
 
 import '../../assets/css/login.css'
 
-function LoginPage() {
+interface LoginPageProps {
+	user: LoginDto | undefined;
+}
+
+function LoginPage({user}: LoginPageProps) {
+
+	useHomeRedirect(user);
+
 	const [signin, setSignin] = React.useState(false);
 	function handleClickSignin() {
 		setSignin(!signin);
@@ -21,10 +31,10 @@ function LoginPage() {
 	}
 
 	return (
-			<div className="login">
+			<div id="login">
 				{signin === false &&
-				(<>
-				<p className="title">Login</p>
+				<>
+				<h1 className="title">Login</h1>
 				<form onSubmit={handleSubmitLogin}>
 					<input
 						type="email"
@@ -38,15 +48,16 @@ function LoginPage() {
 					<div className="login-adds">
 						<a onClick={handleClickSignin}>Signin</a>
 						<span>/</span>
-						<a>Forgotten password</a>
+						<Link to="/recover_password">Forgotten password</Link>
 					</div>
 					<button type="submit">Enter</button>
 				</form>
-				</>)
+				</>
 
 				||
-				(<>
-				<p className="title">Signin</p>
+
+				<>
+				<h1 className="title">Signin</h1>
 				<form onSubmit={handleSubmitSignin}>
 					<input
 						type="email"
@@ -66,7 +77,7 @@ function LoginPage() {
 					</div>
 					<button type="submit">Enter</button>
 				</form>
-				</>)}
+				</>}
 
 				<p className="error-message">{errorMessage}error</p>
 			</div>
