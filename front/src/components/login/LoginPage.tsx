@@ -48,7 +48,7 @@ function LoginPage({user}: LoginPageProps) {
 					<div className="nav">
 						<a onClick={handleClickSignin}>Signin</a>
 						<span>/</span>
-						<Link to="/recover_password">Forgotten password</Link>
+						<Link to="/recover">Forgotten password</Link>
 					</div>
 					<button type="submit">Enter</button>
 				</form>
