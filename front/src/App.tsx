@@ -28,7 +28,8 @@ function App() {
 
           {/* <Route path="/" element={<HomePage />} /> */}
 
-          {user === undefined && (
+          {/* {user === undefined && ( */}
+          {user !== undefined && (
             <>
               <Route path="/" element={<LoginPage />} />
             </>
@@ -37,7 +38,7 @@ function App() {
           ||
 
           <>
-            <Route path="/apps" element={<HomePage user={user} />} />
+            <Route path="/" element={<HomePage user={user} />} />
             {/* <Route path="/chat" element={<ChatPage user={user} />} /> */}
           </>}
 
