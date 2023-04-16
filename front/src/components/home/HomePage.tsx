@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useLoginRedirect } from "../login/useRedirect";
 import { LoginDto } from "../../dto/login-dto";
-
+import Nav from "../nav/Nav";
 import '../../assets/css/home.css'
 
 interface HomePageProps {
@@ -25,7 +25,9 @@ function HomePage({user}: HomePageProps) {
 		<div id="home">
 			{user && 
 			<>
-			<h1 className="title">Applications</h1>
+			<h1 className="title">Home</h1>
+			<Nav page={'home'}/>
+			
 			<div className={`applis ${alignment}`}>
 
 				<Link to="/chat" className="appli">

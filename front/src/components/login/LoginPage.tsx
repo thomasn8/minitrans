@@ -45,7 +45,7 @@ function LoginPage({user}: LoginPageProps) {
 						type="password"
 						placeholder="Password"
 					/>
-					<div className="login-adds">
+					<div className="nav">
 						<a onClick={handleClickSignin}>Signin</a>
 						<span>/</span>
 						<Link to="/recover_password">Forgotten password</Link>
@@ -72,7 +72,7 @@ function LoginPage({user}: LoginPageProps) {
 						type="password"
 						placeholder="Repeat password"
 					/>
-					<div className="login-adds">
+					<div className="nav">
 						<a onClick={handleClickSignin}>Login</a>
 					</div>
 					<button type="submit">Enter</button>

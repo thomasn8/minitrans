@@ -21,21 +21,6 @@ button {
 	height: 100%;
 }
 
-.login-adds {
-	display: flex;
-	justify-content: center;
-	font-size: 0.75em;
-}
-
-.login-adds a, .login-adds span {
-	color: var(--main-color05);
-	padding: 0 5px;
-	margin: 0;
-}
-.login-adds a:hover {
-	color: var(--main-color08);
-}
-
 .error-message {
 	text-align: center;
 	height: 0;
