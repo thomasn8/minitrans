@@ -1,5 +1,11 @@
+import { UserDto } from "./user-dto";
+
 export interface LoginDto {
-	id: number;
-	email: string;
-	pseudo: string;
+  token: string;
+  setToken: Function;
+
+  user: UserDto | undefined;
+
+  get_headers: Function;
+  getUserData: Function;
 }

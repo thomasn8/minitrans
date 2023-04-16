@@ -2,10 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Colorer from './assets/Colorer'
-import './App.css';
+import './assets/css/main.css'
 
 import { LoginDto } from './dto/login-dto';
-import login from './components/login/login';
+import useLogin from './components/login/useLogin';
 
 import LoginPage from './components/login/LoginPage'; 
 import HomePage from './components/home/HomePage';
@@ -18,11 +18,12 @@ declare global {
 function App() {
   // globalThis.colorTheme = Colorer();
 
-  const user: LoginDto | undefined = login();
+  // const user: LoginDto | undefined = useLogin();
+  const user = undefined;
 
   return (
     <Router>
-      <div className="">
+      <div className="app">
         <Routes>
 
           {/* <Route path="/" element={<HomePage />} /> */}
@@ -37,7 +38,7 @@ function App() {
 
           <>
             <Route path="/apps" element={<HomePage user={user} />} />
-            <Route path="/chat" element={<ChatPage user={user} />} />
+            {/* <Route path="/chat" element={<ChatPage user={user} />} /> */}
           </>}
 
         </Routes>
