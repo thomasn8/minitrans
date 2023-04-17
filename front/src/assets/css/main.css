@@ -141,6 +141,12 @@ a {
 	margin-bottom: 20px;
 }
 
+.error-message {
+	text-align: center;
+	height: 0;
+	font-size: 0.85em!important;
+}
+
 /* @media only screen and (max-width: 600px) { */
 @media (max-width: 600px) {
 	#root {

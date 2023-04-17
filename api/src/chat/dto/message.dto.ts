@@ -1,4 +1,4 @@
 export class MessageDto {
-	name: string | undefined;
+	pseudo: string | undefined;
 	text: string;
 }

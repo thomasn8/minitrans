@@ -44,7 +44,7 @@ function App() {
           <Route path="/login"    element={<LoginPage   user={user} />} />
           <Route path="/logout"   element={<LogoutPage  user={user} />} />
           <Route path="/recover"  element={<Recover     user={user} />} />
-          <Route path="/chat"     element={<ChatPage    user={user} />} />
+          <Route path="/chat"     element={<ChatPage    loggedUser={user} />} />
           <Route path="/game"     element={<GamePage    user={user} />} />
         </Routes>
       </div>

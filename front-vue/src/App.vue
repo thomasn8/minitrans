@@ -95,6 +95,7 @@ const emitTyping = () => {
 			<div class="users-container">
 				<div class="count">{{ usersCount }}</div>
 				<div class="users-wrapper scrollbar">
+					
 					<div class="users" v-for="user in users">
 						<div :socketId="user.id" class="user-wrapper">							
 							<template v-for="userTyping in usersTyping">
@@ -106,6 +107,7 @@ const emitTyping = () => {
 							<span class="lister">•</span>
 						</div>
 					</div>
+					
 				</div>
 			</div>
 

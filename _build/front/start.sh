@@ -4,7 +4,8 @@ apk add vim
 if [ "$BUILD_TYPE" = "Setup" ];
 then
     yarn add react-router-dom
-    # yarn add axios
+    yarn add axios
+    yarn add socket.io-client
 fi
 
 if [ "$BUILD_TYPE" = "Production" ];
