@@ -17,6 +17,7 @@
 	--main-color04:rgba(var(--main-color), 0.4);
 	--main-color03:rgba(var(--main-color), 0.3);
 	--main-color015:rgba(var(--main-color), 0.15);
+	--main-color010:rgba(var(--main-color), 0.10);
 }
 
 *, *::before, *::after {
@@ -24,7 +25,8 @@
   margin: 0;
   position: relative;
   font-weight: normal;
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+	/* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; */
+	font-family: Consolas, Monolisa, Cascadia Code, monospace;
 }
 
 body {
@@ -88,14 +90,19 @@ button {
 	padding: 5px;
 }
 
-input:hover, input:active, input:focus {
+input:hover, input:active{
 	background-color: var(--main-color04);
 	transition: .15s;
 }
 
-button:hover, button:active, button:focus {
+button:hover, button:focus {
 	transition: .15s;
 	background: var(--main-color1);
+}
+
+button:active {
+	transition: .15s;
+	background: var(--main-color08);
 }
 
 input:focus, button:focus {
@@ -104,26 +111,26 @@ input:focus, button:focus {
 
 a {
 	text-decoration: none;
+	cursor: default;
 }
 
 .title {
 	text-align: center;
 	color: var(--main-color08);
-	font-size: 1.5rem;
+	font-size: 2.5rem;
 	margin: 10px 0;
 }
 
 .nav {
 	display: flex;
 	justify-content: center;
-	font-size: 0.75em;
+	font-size: 0.85em;
 }
 
 .nav a, .nav span {
 	color: var(--main-color05);
 	padding: 0 5px;
 	margin: 0;
-	cursor: default;
 }
 
 .nav a:hover {

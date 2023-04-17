@@ -13,7 +13,7 @@ function GamePage({user}: GamePageProps) {
 	useLoginRedirect(user);
 
 	return (
-		<div id="Game">
+		<div id="game">
 			<h1  className="title">Game</h1>
 			<Nav />
 

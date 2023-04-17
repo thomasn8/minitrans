@@ -34,17 +34,23 @@
 
 .appli:hover {
 	color: var(--main-color1);
+	background-color: var(--main-color015);
+	transition: .1s;
+}
+
+.appli:active {
+	background-color: var(--main-color010);
+	transition: .1s;
 }
 
 .appli-img {
-	background-color: var(--main-color03);
 	height: 60px;
 	width: 60px;
 }
 
 .appli-name {
 	width: auto;
-	font-size: 16px;
+	font-size: 18px;
 }
 
 @media (max-width: 419px) {

@@ -16,6 +16,7 @@ function ChatPage({user}: ChatPageProps) {
 	const [pseudo, setPseudo] = React.useState('');
 	function handleSubmitPseudo(event: SyntheticEvent) {
 		event.preventDefault()
+		// ...
 	}
 
 	return (
@@ -33,11 +34,6 @@ function ChatPage({user}: ChatPageProps) {
 					onChange={(event) => setPseudoInput(event.target.value)}
 					autoFocus
 				/>
-				{/* <div className="login-adds">
-					<a onClick={handleClickSignin}>Signin</a>
-					<span>/</span>
-					<a>Forgotten password</a>
-				</div> */}
 				<button type="submit">Enter</button>
 			</form>
 			</>

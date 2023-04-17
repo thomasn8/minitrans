@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useLoginRedirect } from "../login/useRedirect";
 import { LoginDto } from "../../dto/login-dto";
 import Nav from "../nav/Nav";
+
+import { ChatSvg, GameSvg } from "../../assets/svg/home-icones";
 import '../../assets/css/home.css'
 
 interface HomePageProps {
@@ -31,12 +33,16 @@ function HomePage({user}: HomePageProps) {
 			<div className={`applis ${alignment}`}>
 
 				<Link to="/chat" className="appli">
-					<div className="appli-img"></div>
+					<div className="appli-img">
+						<ChatSvg />
+					</div>
 					<div className="appli-name">Chat</div>
 				</Link>
 
 				<Link to="/game" className="appli">
-					<div className="appli-img"></div>
+					<div className="appli-img">
+						<GameSvg />
+					</div>
 					<div className="appli-name">Game</div>
 				</Link>
 
