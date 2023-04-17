@@ -2,13 +2,13 @@ import React, { SyntheticEvent } from "react";
 import { useLoginRedirect } from "../login/useRedirect";
 import { LoginDto } from "../../dto/login-dto";
 
-import '../../assets/css/model.css';
+import '../../assets/css/page.css';
 
-interface ModelPageProps {
+interface PageProps {
 	user: LoginDto | undefined;
 }
 
-function ModelPage({user}: ModelPageProps) {
+function Page({user}: PageProps) {
 
 	useLoginRedirect(user);
 	
@@ -17,4 +17,4 @@ function ModelPage({user}: ModelPageProps) {
 	);
 }
 
-export default ModelPage;
+export default Page;
