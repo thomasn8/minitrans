@@ -8,20 +8,22 @@ export class ChatService {
 
   // REINITIALISER CES DATAS CHAQUE JOUR A 00:00
   users = new Map<string, ChatUserDto>();
+  usersTyping = new Set<string>();
   messages: ChatMessageDto[] = [];
-  usersTyping: string[] = []; 
+  // usersTyping: string[] = []; 
 
 
   // return an iterator based on users keys begining
-  async identify(user: ChatUserDto): Promise< IterableIterator<string> > {
+  identify(user: ChatUserDto): IterableIterator<string> {
     this.users.set(user.socket.id, user);
     return this.users.keys();
   }
 
-  async quitChat(socketId: string): Promise<number> {
+  quitChat(socketId: string): number {
     const user: ChatUserDto | undefined = this.users.get(socketId);
-    if (user === undefined)
+    if (user === undefined) {
       throw new NotFoundException('User not found');
+    }
     const userId: number = user.id;
     this.users.delete(socketId);
     return userId;
@@ -39,7 +41,7 @@ export class ChatService {
     return this.messages;
   }
   
-  async getMessage(socketId: string, message: ChatMessageDto): Promise<ChatMessageDto | null> {
+  getMessage(socketId: string, message: ChatMessageDto):ChatMessageDto | null {
     const user: ChatUserDto | undefined = this.users.get(socketId);
     if (user && user.pseudo === message.pseudo) {
       this.messages.push(message);
@@ -48,16 +50,15 @@ export class ChatService {
     return null;
   }
 
-  // A FINIR
-  async isTyping(pseudo: string, isTyping: boolean): Promise<void> {
+  isTyping(pseudo: string, isTyping: boolean): void {
     if (isTyping === true)
-      this.usersTyping.push(pseudo);
+      this.usersTyping.add(pseudo);
     else
-      this.usersTyping = this.usersTyping.filter(user => user !== pseudo);
+      this.usersTyping.delete(pseudo);
   }
 
   findAllUsersTyping(): string[] {
-	  return this.usersTyping;
+    return Array.from(this.usersTyping);
   }
 
 }

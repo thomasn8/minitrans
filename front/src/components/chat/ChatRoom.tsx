@@ -38,7 +38,7 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
       });
 
 			socketRef.current.on("connect", () => {
-        console.log("connected!");
+        console.log("connection to chat: success");
 			})
 
 			socketRef.current && socketRef.current.emit('findAllUsers', {}, (res: ChatUserDto[]) => {
@@ -80,7 +80,7 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 		event.preventDefault()
 
 		// validation
-		let message: ChatMessageDto = {pseudo: pseudo, text: messageInput};
+		let message: ChatMessageDto = { pseudo: pseudo, text: messageInput };
 		if (messageInput !== '') {
 			socketRef.current && socketRef.current.emit('message', message, () => {
 				setMessageInput('');
@@ -95,7 +95,7 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 			// typing = true;
 			socketRef.current && socketRef.current.emit('isTyping', { pseudo: pseudo, isTyping: true } );
 			
-			let timeout = setTimeout (() => {
+			setTimeout (() => {
 				socketRef.current && socketRef.current.emit('isTyping', { pseudo: pseudo, isTyping: false } );
 				setTyping(false);
 				// typing = false;

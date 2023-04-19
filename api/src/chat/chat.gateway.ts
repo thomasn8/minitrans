@@ -16,7 +16,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 	usersCount: number = 0;
 
 
-	async handleConnection(@ConnectedSocket() client: Socket): Promise<void> {
+	handleConnection(@ConnectedSocket() client: Socket): void {
 		console.log('handleConnection', client.id, client.handshake.headers.pseudo);
 		this.usersCount++;
 		this.server.emit('countUsers', this.usersCount);
@@ -31,19 +31,22 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 			user.id = id;
 			user.pseudo = pseudo;
 
-			await this.chatService.identify(user);
+			this.chatService.identify(user);
 			this.server.emit('newClient', {id, pseudo});
 		}
 	}
 
-	async handleDisconnect(@ConnectedSocket() client: Socket): Promise<void> {
+	handleDisconnect(@ConnectedSocket() client: Socket): void {
 		console.log('handleDisconnect');
-		const userId: number = await this.chatService.quitChat(client.id).catch((err) => {
-			throw new NotFoundException(err);
-		})
-		this.usersCount--;
-		this.server.emit('countUsers', this.usersCount);
-		this.server.emit('disconect', userId);
+		try {
+			const userId: number = this.chatService.quitChat(client.id);
+			this.usersCount--;
+			this.server.emit('countUsers', this.usersCount);
+			this.server.emit('disconect', userId);
+		} catch (err) {
+			console.log('User not found');
+			// throw new NotFoundException(err);
+		}
 	}
 
 
@@ -61,8 +64,8 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
 
 	@SubscribeMessage('message')
-	async getMessage(@ConnectedSocket() client: Socket, @MessageBody() message: ChatMessageDto): Promise<void> {
-		const newMessage: ChatMessageDto | null = await this.chatService.getMessage(client.id, message);
+	getMessage(@ConnectedSocket() client: Socket, @MessageBody() message: ChatMessageDto): void {
+		const newMessage: ChatMessageDto | null = this.chatService.getMessage(client.id, message);
 		if (newMessage !== null) {
 			this.server.emit('broadcastMessage', newMessage);
 		}
@@ -71,9 +74,9 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
 	// A FINIR
 	@SubscribeMessage('isTyping')
-	async isTyping(@MessageBody('pseudo') userTyping: string, @MessageBody('isTyping') isTyping: boolean): Promise<void>
+	isTyping(@MessageBody('pseudo') pseudo: string, @MessageBody('isTyping') isTyping: boolean): void
 	{
-		await this.chatService.isTyping(userTyping, isTyping);
+		this.chatService.isTyping(pseudo, isTyping);
 		// (a voir si on veut pas renvoyer juste le user qui commence/arrete a ecrire et laisser le client gerer le tableau)
 		this.server.emit('isTyping', this.chatService.findAllUsersTyping());
 	}
