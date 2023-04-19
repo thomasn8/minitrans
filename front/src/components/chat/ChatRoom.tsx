@@ -88,17 +88,14 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 		}
 	};
 
-	// let typing = false;
 	function emitTyping() {
 		if (typing === false) {
 			setTyping(true);
-			// typing = true;
 			socketRef.current && socketRef.current.emit('isTyping', { pseudo: pseudo, isTyping: true } );
 			
 			setTimeout (() => {
 				socketRef.current && socketRef.current.emit('isTyping', { pseudo: pseudo, isTyping: false } );
 				setTyping(false);
-				// typing = false;
 			}, 5000);
 		}
 	}
