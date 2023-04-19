@@ -7,7 +7,7 @@
 
 	/* main, don't modify */
 	--window-color:rgb(15, 15, 15);
-	--input-text-color:rgb(255, 255, 255);
+	/* --input-text-color:rgb(255, 255, 255); */
 	--button-text-color:rgb(15, 15, 15);
 
 	/* based on main color, don't modify */
@@ -102,6 +102,11 @@ button {
 input:hover, input:active{
 	background-color: var(--main-color03);
 	transition: .15s;
+}
+
+input::selection, input::-moz-selection {
+	background-color: var(--main-color05);
+	color: var(--main-color1);
 }
 
 button:hover, button:focus {
