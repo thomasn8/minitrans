@@ -72,13 +72,16 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 	}
 
 
-	// A FINIR
 	@SubscribeMessage('isTyping')
-	isTyping(@MessageBody('pseudo') pseudo: string, @MessageBody('isTyping') isTyping: boolean): void
+	isTyping(@MessageBody('pseudo') pseudo: string): void
 	{
-		this.chatService.isTyping(pseudo, isTyping);
-		// (a voir si on veut pas renvoyer juste le user qui commence/arrete a ecrire et laisser le client gerer le tableau)
-		this.server.emit('isTyping', this.chatService.findAllUsersTyping());
+		this.server.emit('isTyping', pseudo);
+	}
+
+	@SubscribeMessage('stopTyping')
+	stopTyping(@MessageBody('pseudo') pseudo: string): void
+	{
+		this.server.emit('stopTyping', pseudo);
 	}
 
 

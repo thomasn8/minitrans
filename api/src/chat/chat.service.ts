@@ -8,9 +8,7 @@ export class ChatService {
 
   // REINITIALISER CES DATAS CHAQUE JOUR A 00:00
   users = new Map<string, ChatUserDto>();
-  usersTyping = new Set<string>();
   messages: ChatMessageDto[] = [];
-  // usersTyping: string[] = []; 
 
 
   // return an iterator based on users keys begining
@@ -48,17 +46,6 @@ export class ChatService {
       return message;
     }
     return null;
-  }
-
-  isTyping(pseudo: string, isTyping: boolean): void {
-    if (isTyping === true)
-      this.usersTyping.add(pseudo);
-    else
-      this.usersTyping.delete(pseudo);
-  }
-
-  findAllUsersTyping(): string[] {
-    return Array.from(this.usersTyping);
   }
 
 }
