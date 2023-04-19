@@ -37,8 +37,6 @@ body {
 	cursor: default;
 	min-height: 100vh;
   text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 	line-height: 1.6;
 
 	/* copied from index.css: */
@@ -47,7 +45,7 @@ body {
 	'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
 	sans-serif;
 	-webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* -moz-osx-font-smoothing: grayscale; */
 }
 
 #root {

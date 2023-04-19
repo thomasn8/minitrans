@@ -1,33 +1,55 @@
+import { NotFoundException } from '@nestjs/common';
 import { WebSocketGateway, SubscribeMessage, MessageBody, WebSocketServer, ConnectedSocket, OnGatewayConnection, OnGatewayDisconnect, } from '@nestjs/websockets';
-import { ChatService } from './chat.service';
-import { ChatMessageDto } from './dto/chat-message.dto';
-import { ChatUserDto } from './dto/chat-user.dto';
 import { Server, Socket } from 'socket.io';
 
-@WebSocketGateway( {cors: { origin: '*' }} ) // a voir pour autoriser une liste de CORS directement via Nginx
-// @WebSocketGateway({ path: '/socket-chat/', cors: { origin: '*' } })
+import { ChatService } from './chat.service';
+
+import { ChatUserDto, ChatUserResponseDto } from './dto/chat-user.dto';
+import { ChatMessageDto } from './dto/chat-message.dto';
+
+// @WebSocketGateway( {cors: { origin: '*' }} )
+@WebSocketGateway({ path: '/socket-chat/', cors: { origin: '*' } })
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   
 	@WebSocketServer() server: Server;
 	constructor(private readonly chatService: ChatService) {}
 	usersCount: number = 0;
 
-	handleConnection(): void {
-		console.log('handleConnection');
+
+	async handleConnection(@ConnectedSocket() client: Socket): Promise<void> {
+		console.log('handleConnection', client.id, client.handshake.headers.pseudo);
 		this.usersCount++;
-		this.server.emit('countUser', this.usersCount);
+		this.server.emit('countUsers', this.usersCount);
+
+		// provisory (later will use token login infos)
+		if (client.handshake.headers.pseudo) {
+			const user: ChatUserDto = new ChatUserDto();
+			const pseudo: string = (client.handshake.headers.pseudo).toString();		// CHEAT (provisory)
+			const id = this.usersCount;																							// CHEAT (provisory)
+
+			user.socket = client;
+			user.id = id;
+			user.pseudo = pseudo;
+
+			await this.chatService.identify(user);
+			this.server.emit('newClient', {id, pseudo});
+		}
 	}
 
-	handleDisconnect(@ConnectedSocket() client: Socket): void {
+	async handleDisconnect(@ConnectedSocket() client: Socket): Promise<void> {
 		console.log('handleDisconnect');
+		const userId: number = await this.chatService.quitChat(client.id).catch((err) => {
+			throw new NotFoundException(err);
+		})
 		this.usersCount--;
-		this.server.emit('countUser', this.usersCount);
-		this.chatService.quitChat(client.id);
-		this.server.emit('disconect', client.id);
+		this.server.emit('countUsers', this.usersCount);
+		this.server.emit('disconect', userId);
 	}
+
+
 
 	@SubscribeMessage('findAllUsers')
-	findAllUsers(): ChatUserDto[] {
+	findAllUsers(): ChatUserResponseDto[] {
 		return this.chatService.findAllUsers();
 	}
 
@@ -35,29 +57,26 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 	findAllMessages(): ChatMessageDto[] {
 		return this.chatService.findAllMessages();
 	}
-  
-	@SubscribeMessage('join')
-	async joinRoom(@MessageBody('pseudo') pseudo: string, @ConnectedSocket() client: Socket): Promise<boolean> {
-		console.log('join');
-		await this.chatService.identify(pseudo, client.id);
-		// console.log(client);
-		const id: string = client.id;
-		this.server.emit('join', {id, pseudo});
-		return true;
+
+
+
+	@SubscribeMessage('message')
+	async getMessage(@ConnectedSocket() client: Socket, @MessageBody() message: ChatMessageDto): Promise<void> {
+		const newMessage: ChatMessageDto | null = await this.chatService.getMessage(client.id, message);
+		if (newMessage !== null) {
+			this.server.emit('broadcastMessage', newMessage);
+		}
 	}
 
-	@SubscribeMessage('typing')
-	async typing(@MessageBody('pseudo') userTyping: string, @MessageBody('isTyping') isTyping: boolean): Promise<void>
+
+	// A FINIR
+	@SubscribeMessage('isTyping')
+	async isTyping(@MessageBody('pseudo') userTyping: string, @MessageBody('isTyping') isTyping: boolean): Promise<void>
 	{
-		await this.chatService.userIsTyping(userTyping, isTyping);
+		await this.chatService.isTyping(userTyping, isTyping);
 		// (a voir si on veut pas renvoyer juste le user qui commence/arrete a ecrire et laisser le client gerer le tableau)
-		this.server.emit('typing', this.chatService.findAllUsersTyping());
+		this.server.emit('isTyping', this.chatService.findAllUsersTyping());
 	}
 
-	@SubscribeMessage('createMessage')
-	async create(@MessageBody() input: ChatMessageDto, @ConnectedSocket() client: Socket): Promise<ChatMessageDto> {
-		const newMessage: ChatMessageDto = await this.chatService.create(input, client.id);
-		this.server.emit('message', newMessage);
-		return newMessage;
-	}
+
 }

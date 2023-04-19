@@ -28,10 +28,17 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 		
 		if (socketRef.current === undefined) {
 
-			socketRef.current = io('http://localhost:4000');
+			socketRef.current = io("", {
+        path: "/socket-chat/",
+        timeout: 10000,
+        extraHeaders: {
+          // Authorization: `Bearer ${token}`,
+					Pseudo: pseudo,
+        },
+      });
 
-			socketRef.current && socketRef.current.emit('join', { pseudo: pseudo }, () => {
-				// console.log(pseudo + ' try to join chat');
+			socketRef.current.on("connect", () => {
+        console.log("connected!");
 			})
 
 			socketRef.current && socketRef.current.emit('findAllUsers', {}, (res: ChatUserDto[]) => {
@@ -42,7 +49,7 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 				setMessages(res);
 			})
 
-			socketRef.current && socketRef.current.on('countUser', (res: number) => {
+			socketRef.current && socketRef.current.on('countUsers', (res: number) => {
 				let wordUser: string;
 				res > 1 ? wordUser = 'users' : wordUser = 'user'
 				setUsersCount(res + ' ' + wordUser);
@@ -52,30 +59,33 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 
 	}, [user, pseudo]);
 
-	socketRef.current && socketRef.current.on('join', (res: ChatUserDto) => {
-		console.log(res.id, 'joined chat');
+	socketRef.current && socketRef.current.on('newClient', (res: ChatUserDto) => {
 		setUsers([...users, res]);
 	})
 
-	socketRef.current && socketRef.current.on('disconect', (res: string) => {
+	socketRef.current && socketRef.current.on('disconect', (res: number) => {
 		setUsers(users.filter(user => user.id !== res));
 	})
 
-	socketRef.current && socketRef.current.on('message', (res: ChatMessageDto) => {
+	socketRef.current && socketRef.current.on('broadcastMessage', (res: ChatMessageDto) => {
 		setMessages([...messages, res]);
 	})
 	
-	socketRef.current && socketRef.current.on('typing', (res: string[]) => {
-		console.log('someone is typing');
+	socketRef.current && socketRef.current.on('isTyping', (res: string[]) => {
+		// console.log('someone is typing');
 		setUsersTyping(res);
 	})
 
 	function sendMessage(event: SyntheticEvent) {
 		event.preventDefault()
+
 		// validation
-		socketRef.current && socketRef.current.emit('createMessage', { text: messageInput }, () => {
-			setMessageInput('');
-		})
+		let message: ChatMessageDto = {pseudo: pseudo, text: messageInput};
+		if (messageInput !== '') {
+			socketRef.current && socketRef.current.emit('message', message, () => {
+				setMessageInput('');
+			})
+		}
 	};
 
 	// let typing = false;
@@ -83,10 +93,10 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 		if (typing === false) {
 			setTyping(true);
 			// typing = true;
-			socketRef.current && socketRef.current.emit('typing', { name: pseudo, isTyping: true } );
+			socketRef.current && socketRef.current.emit('isTyping', { pseudo: pseudo, isTyping: true } );
 			
 			let timeout = setTimeout (() => {
-				socketRef.current && socketRef.current.emit('typing', { name: pseudo, isTyping: false } );
+				socketRef.current && socketRef.current.emit('isTyping', { pseudo: pseudo, isTyping: false } );
 				setTyping(false);
 				// typing = false;
 			}, 5000);

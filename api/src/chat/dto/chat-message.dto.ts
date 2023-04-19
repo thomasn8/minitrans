@@ -1,4 +1,4 @@
 export class ChatMessageDto {
-	pseudo: string | undefined;
+	pseudo: string;
 	text: string;
 }
