@@ -16,13 +16,17 @@ import ChatPage from './components/chat/ChatPage';
 import GamePage from './components/game/GamePage';
 import ColorTheme from './assets/ColorTheme';
 
+declare global {
+  var colorTheme: string;
+}
+
 function App() {
   
   let colorer = new ColorTheme(document);
 
   React.useLayoutEffect(() => {
     const begin: Date = new Date('4/13/2023');
-    colorer.setColorThemeByDay(begin);
+    globalThis.colorTheme = colorer.setColorThemeByDay(begin);
   }, [])
 
   // const user: LoginDto | undefined = useLogin();

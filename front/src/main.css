@@ -87,8 +87,9 @@ input, button {
 }
 
 input {
-	background-color: var(--main-color03);
-	color: var(--input-text-color);
+	background-color: var(--main-color015);
+	/* color: var(--input-text-color); */
+	color: var(--main-color1);
 	padding: 5px 15px;
 }
 
@@ -99,7 +100,7 @@ button {
 }
 
 input:hover, input:active{
-	background-color: var(--main-color04);
+	background-color: var(--main-color03);
 	transition: .15s;
 }
 

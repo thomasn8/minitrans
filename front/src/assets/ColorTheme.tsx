@@ -8,10 +8,16 @@ class ColorTheme {
 
 	cssVar: string = '--main-color';
 
-	blue: string = '100, 148, 237';			// blue theme		[0]
-	orange: string = '239, 126, 33';		// orange theme	[1]
-	green: string = '93, 213, 18';			// green theme	[2]
-	purple: string = '163, 76, 255';		// purple theme	[3]
+	blue: string = '100, 148, 237';			// [0]
+	orange: string = '239, 126, 33';		// [1]
+	green: string = '93, 213, 18';			// [2]
+	purple: string = '163, 76, 255';		// [3]
+	
+	blueHex: string = '#6494ed'
+	orangeHex: string = '#ef7e21'
+	greenHex: string = '#5dd512'
+	purpleHex: string = '#a34cff'
+
 
 	colorTab: string[] = [this.blue, this.orange, this.green, this.purple];
 
@@ -27,7 +33,7 @@ class ColorTheme {
 		this.document.documentElement.style.setProperty('--main-color', this.colorTab[i]);
 	}
 
-	setColorThemeByDay(begin: Date): void {
+	setColorThemeByDay(begin: Date): string {
 		let now: Date = new Date();
 		const _MS_PER_DAY = 1000 * 60 * 60 * 24;
 		const utc1 = Date.UTC(begin.getFullYear(), begin.getMonth(), begin.getDate());
@@ -35,6 +41,22 @@ class ColorTheme {
 		const diff = Math.floor((utc2 - utc1) / _MS_PER_DAY);
 		const index = (diff % 4);
 		this.setColorThemeByIndex(index);
+
+		switch (this.colorTab[index]) {
+			case this.blue:
+				return this.blueHex;
+				break;
+			case this.orange:
+				return this.orangeHex; 
+				break;
+			case this.green:
+				return this.greenHex;
+				break;
+			case this.purple:
+				return this.purpleHex; 
+				break;
+		}
+		return this.blueHex;
 	}
 
 }
