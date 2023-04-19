@@ -5,13 +5,14 @@ import { LoginDto } from "../../_dto/login-dto";
 import Nav from "../nav/Nav";
 
 import styles from './css/Home.module.css'
-import { ChatSvg, GameSvg } from "../../assets/svg/home-icones";
+import { ChatSvg, GameSvg } from "./svg/home-icones";
 
 interface HomePageProps {
 	user: LoginDto | undefined;
+	color: string;
 }
 
-function HomePage({user}: HomePageProps) {
+function HomePage({user, color}: HomePageProps) {
 
 	useLoginRedirect(user);
 
@@ -34,14 +35,14 @@ function HomePage({user}: HomePageProps) {
 
 				<Link to="/chat" className={styles.appli}>
 					<div className={styles.appli_img}>
-						<ChatSvg />
+						<ChatSvg color={color}/>
 					</div>
 					<div className={styles.appli_name}>Chat</div>
 				</Link>
 
 				<Link to="/game" className={styles.appli}>
 					<div className={styles.appli_img}>
-						<GameSvg />
+						<GameSvg color={color} />
 					</div>
 					<div className={styles.appli_name}>Game</div>
 				</Link>

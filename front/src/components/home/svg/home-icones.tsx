@@ -3,24 +3,27 @@
 // green		rgb(93, 213, 18)		#5DD512
 // purple	rgb(163, 76, 255)		#A34CFF
 
+interface SvgProps {
+	color: string;
+}
 
-function ChatSvg() {
+function ChatSvg({color}: SvgProps) {
 	return (
-		<svg viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" fill={globalThis.colorTheme} stroke={globalThis.colorTheme}>
+		<svg viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" fill={color} stroke={color}>
 			<g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
 			<g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
 			<g id="SVGRepo_iconCarrier">
 				<g id="icomoon-ignore"></g> 
-				<path d="M21.331 10.669v-7.997h-18.659v14.394h7.997v7.997h11.063l4.265 4.264h0.665v-4.264h2.666v-14.394h-7.997zM3.738 16v-12.262h16.527v6.931h-9.596v5.331h-6.931zM28.262 23.997h-2.666v3.422l-3.423-3.422h-10.439v-12.262h16.527v12.262z" fill={globalThis.colorTheme}> 
+				<path d="M21.331 10.669v-7.997h-18.659v14.394h7.997v7.997h11.063l4.265 4.264h0.665v-4.264h2.666v-14.394h-7.997zM3.738 16v-12.262h16.527v6.931h-9.596v5.331h-6.931zM28.262 23.997h-2.666v3.422l-3.423-3.422h-10.439v-12.262h16.527v12.262z" fill={color}> 
 				</path> 
 			</g>
 		</svg>
 	)
 }
 
-function GameSvg() {
+function GameSvg({color}: SvgProps) {
 	return (
-		<svg fill={globalThis.colorTheme} viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+		<svg fill={color} viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
 			<g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
 			<g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
 			<g id="SVGRepo_iconCarrier"> 

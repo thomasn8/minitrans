@@ -1,13 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import mainColor from './assets/ColorTheme'
-import './main.css'
-
-import { LoginDto } from './_dto/login-dto';
-import { UserDto } from './_dto/user-dto';
-import useLogin from './components/login/useLogin';
-
 import HomePage from './components/home/HomePage';
 import LoginPage from './components/login/LoginPage'; 
 import LogoutPage from './components/login/LogoutPage';
@@ -16,17 +9,21 @@ import ChatPage from './components/chat/ChatPage';
 import GamePage from './components/game/GamePage';
 import ColorTheme from './assets/ColorTheme';
 
-declare global {
-  var colorTheme: string;
-}
+import { LoginDto } from './_dto/login-dto';
+import { UserDto } from './_dto/user-dto';
+
+import mainColor from './assets/ColorTheme'
+import './main.css'
 
 function App() {
   
   let colorer = new ColorTheme(document);
+  let [color, setColor] = React.useState('');
 
   React.useLayoutEffect(() => {
-    const begin: Date = new Date('4/13/2023');
-    globalThis.colorTheme = colorer.setColorThemeByDay(begin);
+    let begin: Date = new Date('4/13/2023');
+    let colorTheme = colorer.setColorThemeByDay(begin);
+    setColor(colorTheme);
   }, [])
 
   // const user: LoginDto | undefined = useLogin();
@@ -44,7 +41,7 @@ function App() {
     <Router>
       <div className="app">
         <Routes>
-          <Route path="/"         element={<HomePage    user={user} />} />
+          <Route path="/"         element={<HomePage    user={user} color={color} />} />
           <Route path="/login"    element={<LoginPage   user={user} />} />
           <Route path="/logout"   element={<LogoutPage  user={user} />} />
           <Route path="/recover"  element={<Recover     user={user} />} />

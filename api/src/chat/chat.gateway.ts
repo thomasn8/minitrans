@@ -38,6 +38,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   
 	@SubscribeMessage('join')
 	async joinRoom(@MessageBody('pseudo') pseudo: string, @ConnectedSocket() client: Socket): Promise<boolean> {
+		console.log('join');
 		await this.chatService.identify(pseudo, client.id);
 		// console.log(client);
 		const id: string = client.id;

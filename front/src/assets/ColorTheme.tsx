@@ -3,7 +3,7 @@ class ColorTheme {
 	constructor(document: Document) {
 		this.document = document;
 	}
-
+ 
 	document: Document;
 
 	cssVar: string = '--main-color';
