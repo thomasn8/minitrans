@@ -25,8 +25,11 @@
   margin: 0;
   position: relative;
   font-weight: normal;
-	/* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; */
-	/* font-family: Consolas, Monolisa, Cascadia Code, monospace; */
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
 body {
@@ -35,6 +38,15 @@ body {
 	min-height: 100vh;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+	line-height: 1.6;
+
+	/* copied from index.css: */
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+	'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+	sans-serif;
+	-webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
@@ -59,7 +71,6 @@ body {
 
 form {
 	display: flex;
-	justify-content: center;
 }
 
 label {
@@ -73,20 +84,17 @@ input, button {
 	border-radius: 5px;
 	font-size: 20px;
 	cursor: default;
-	margin: 0 5px;
 }
 
 input {
 	background-color: var(--main-color03);
 	color: var(--input-text-color);
-	width: calc(75% - 20px);
 	padding: 5px 15px;
 }
 
 button {
 	background: var(--main-color08);
 	color: var(--button-text-color);
-	width: 25%;
 	padding: 5px;
 }
 
@@ -137,14 +145,23 @@ a {
 	color: var(--main-color08);
 }
 
-.nav-top {
+.nav_top {
+	margin-top: -15px;
 	margin-bottom: 20px;
 }
 
-.error-message {
+.error_message {
 	text-align: center;
 	height: 0;
 	font-size: 0.85em!important;
+}
+
+.justify_center {
+	justify-content: center;
+}
+
+.justify_left {
+	justify-content: left;
 }
 
 /* @media only screen and (max-width: 600px) { */

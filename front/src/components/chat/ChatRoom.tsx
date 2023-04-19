@@ -6,7 +6,7 @@ import { io, Socket } from 'socket.io-client';
 import { ChatUserDto } from "./dto/chat-user.dto";
 import { ChatMessageDto } from "./dto/chat-message.dto";
 
-import '../../assets/css/chat.css';
+import styles from './css/ChatRoom.module.css'
 
 interface ChatRoomProps {
 	user: LoginDto | undefined;
@@ -95,26 +95,26 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 
 
 	return (
-		<div className="chat-container">		
+		<div className={styles.chat_container}>		
 
-			<div className="users-container">
-				<div className="count">
+			<div className={styles.users_container}>
+				<div className={styles.count}>
 					{usersCount}
 				</div>
-				<div className="users-wrapper scrollbar">
-					<div className="users">
+				<div className={`${styles.users_wrapper} ${styles.scrollbar}`}>
+					<div className={styles.users}>
 						{users.map((user) => {
 							return (
-								<div className="user-wrapper">
+								<div className={styles.user_wrapper}>
 									{usersTyping.find(userTyping => {
-										(userTyping === user.pseudo && userTyping !== pseudo && <span className="typing"></span>) ||
-										(userTyping === user.pseudo && userTyping === pseudo && <span className="me-typing"></span>) 
+										(userTyping === user.pseudo && userTyping !== pseudo && <span className={styles.typing}></span>) ||
+										(userTyping === user.pseudo && userTyping === pseudo && <span className={styles.me_typing}></span>) 
 									})}
 
 									{user.pseudo === pseudo &&
-									<span className="user me">{user.pseudo} (me)</span> ||
-									<span className="user else">{user.pseudo}</span>}
-									<span className="lister">•</span>
+									<span className={`${styles.user} ${styles.me}`}>{user.pseudo} (me)</span> ||
+									<span className={`${styles.user} ${styles.else}`}>{user.pseudo}</span>}
+									<span className={styles.lister}>•</span>
 								</div>
 							);
 						})}
@@ -122,26 +122,27 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 				</div>
 			</div>
 
-			<div className="messages-container">
-				<div className="title-chat">
+			<div className={styles.messages_container}>
+				<div className={styles.title_chat}>
 					Chat
 				</div>
-				<div className="messages-wrapper">
-					<div className="messages scrollbar">
+				<div className={styles.messages_wrapper}>
+					<div className={`${styles.messages} ${styles.scrollbar}`}>
 						{messages.slice().reverse().map((message) => {
 							return (
-								<div className="message">
+								<div className={styles.message}>
 									{message.pseudo === pseudo && 
-									<div className="name me"><span>{message.text}</span></div> ||
-									<div className="name else"><span className="else-name">{message.pseudo}: </span><span>{message.text}</span></div>}
+									<div className={styles.me}><span>{message.text}</span></div> ||
+									<div className={styles.else}><span className={styles.pseudo}>{message.pseudo}: </span><span>{message.text}</span></div>}
 								</div>
 							);
 						})}
 					</div>
 				</div>
-				<div className="write">
+				<div className={styles.write}>
 					<form onSubmit={sendMessage}>
 						<input
+							className={styles.chat}
 							type="text"
 							placeholder="Message..."
 							value={messageInput}
@@ -151,7 +152,7 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 							}}
 							autoFocus
 						/>
-						<button type="submit">Send</button>
+						<button className={styles.chat} type="submit">Send</button>
 					</form>
 				</div>
 			</div>

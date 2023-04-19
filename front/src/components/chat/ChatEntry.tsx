@@ -2,7 +2,7 @@ import React, { SyntheticEvent } from "react";
 import Nav from "../nav/Nav";
 import { LoginDto } from "../../dto/login-dto";
 
-import '../../assets/css/chat.css';
+import styles from './css/ChatEntry.module.css'
 
 interface ChatEntryProps {
 	user: LoginDto | undefined;
@@ -26,17 +26,18 @@ function ChatEntry({user, setPseudo}: ChatEntryProps) {
 			<>
 			<h1 className="title">Chat</h1>
 			<Nav />
-			<form onSubmit={handleSubmitPseudo}>
+			<form className={styles.chat} onSubmit={handleSubmitPseudo}>
 				<input
+					className={styles.chat}
 					type="text"
 					placeholder="Pseudo"
 					value={pseudoInput}
 					onChange={(event) => setPseudoInput(event.target.value)}
 					autoFocus
 				/>
-				<button type="submit">Enter</button>
+				<button className={styles.chat} type="submit">Enter</button>
 			</form>
-			<p className="error-message">{errorMessage}error</p>
+			<p className={`error_message ${styles.chat}`}>{errorMessage}error</p>
 			</>
 	);
 

@@ -6,7 +6,7 @@ interface NavProps {
 
 function Nav({page}: NavProps) {
 	return (
-			<div className="nav nav-top">
+			<div className="nav nav_top">
 				{page !== 'home' &&
 				<>
 					<Link to="/">Home</Link>

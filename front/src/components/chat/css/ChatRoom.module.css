@@ -1,8 +1,24 @@
-#chat {
+/* form {
 	display: flex;
-	flex-direction: column;
 	justify-content: center;
-	height: 100%;
+} */
+
+/* form {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+} */
+
+input.chat {
+	width: calc(75% - 20px);
+	padding: 5px 15px;
+	margin: 0 5px;
+}
+
+button.chat {
+	width: 25%;
+	margin: 0 5px;
 }
 
 .scrollbar {
@@ -12,7 +28,7 @@
 	overflow: auto;
 }
 
-.chat-container {
+.chat_container {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -20,7 +36,7 @@
 	height: 100%;
 }
 
-.users-container {
+.users_container {
 	display: flex;
 	flex-direction: column;
 	justify-content: start;
@@ -31,7 +47,7 @@
 	border-right: 0;
 }
 
-.users-wrapper {
+.users_wrapper {
 	padding: 5px 10px 0 10px;
 	height: calc(100% - 36px);
 }
@@ -44,7 +60,7 @@
 	hyphens: auto;
 }
 
-.user-wrapper {
+.user_wrapper {
 	display: flex;
 	justify-content: start;
 }
@@ -77,7 +93,7 @@
 	text-align: left;
 }
 
-.typing + span, .me-typing + span {
+.typing + span, .me_typing + span {
 	color: var(--main-color1)!important;
 }
 .typing + span:after{
@@ -85,11 +101,11 @@
 	font-style: italic;
 	content: ' is typing ...';
 }
-.typing + span, .me-typing + span, .typing + span:after {
+.typing + span, .me_typing + span, .typing + span:after {
 	transition: .25s;
 }
 
-.messages-container {
+.messages_container {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -98,14 +114,14 @@
 	border: solid 1px var(--main-color015);
 }
 
-.title-chat {
+.title_chat {
 	background-color: var(--main-color015);
 	height: 36px;
 	text-align: left;
 	padding-left: 10px;
 }
 
-.messages-wrapper {
+.messages_wrapper {
 	height: calc(100% - 98px);
 	padding: 5px 0 0 10px;
 }
@@ -127,7 +143,7 @@
 .message .else {
 	padding-right: 25%;
 }
-.message .else-name {
+.message .pseudo {
 	opacity: 0.5;
 }
 

@@ -1,4 +1,4 @@
-#home {
+.home_wrapper {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -10,14 +10,6 @@
 	display: flex;
 	flex-wrap: wrap;
 	width: 400px;
-}
-
-.applis-center {
-	justify-content: center;
-}
-
-.applis-left {
-	justify-content: left;
 }
 
 .appli {
@@ -43,12 +35,12 @@
 	transition: .1s;
 }
 
-.appli-img {
+.appli_img {
 	height: 60px;
 	width: 60px;
 }
 
-.appli-name {
+.appli_name {
 	width: auto;
 	font-size: 18px;
 }

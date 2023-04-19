@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import mainColor from './assets/ColorTheme'
-import './assets/css/main.css'
+import './main.css'
 
 import { LoginDto } from './dto/login-dto';
 import { UserDto } from './dto/user-dto';

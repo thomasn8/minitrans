@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useHomeRedirect } from "./useRedirect";
 import { LoginDto } from "../../dto/login-dto";
 
-import '../../assets/css/login.css'
+import styles from './css/Login.module.css'
 
 interface LoginPageProps {
 	user: LoginDto | undefined;
@@ -31,55 +31,60 @@ function LoginPage({user}: LoginPageProps) {
 	}
 
 	return (
-			<div id="login">
+			<div id="login" className={styles.login_wrapper}>
 				{signin === false &&
 				<>
-				<h1 className="title">Login</h1>
-				<form onSubmit={handleSubmitLogin}>
+				<h1 className={`title ${styles.login}`}>Login</h1>
+				<form onSubmit={handleSubmitLogin} className={styles.login}>
 					<input
+						className={styles.login}
 						type="email"
 						placeholder="Email"
 						autoFocus
 					/>
 					<input
+						className={styles.login}
 						type="password"
 						placeholder="Password"
 					/>
-					<div className="nav">
+					<div className={`nav ${styles.login}`}>
 						<a onClick={handleClickSignin}>Signin</a>
 						<span>/</span>
 						<Link to="/recover">Forgotten password</Link>
 					</div>
-					<button type="submit">Enter</button>
+					<button className={styles.login} type="submit">Enter</button>
 				</form>
 				</>
 
 				||
 
 				<>
-				<h1 className="title">Signin</h1>
+				<h1 className={`title ${styles.login}`}>Signin</h1>
 				<form onSubmit={handleSubmitSignin}>
 					<input
+						className={styles.login}
 						type="email"
 						placeholder="Email"
 						autoFocus
 					/>
 					<input
+						className={styles.login}
 						type="password"
 						placeholder="Password"
 					/>
 					<input
+						className={styles.login}
 						type="password"
 						placeholder="Repeat password"
 					/>
-					<div className="nav">
+					<div className={`nav ${styles.login}`}>
 						<a onClick={handleClickSignin}>Login</a>
 					</div>
-					<button type="submit">Enter</button>
+					<button className={styles.login} type="submit">Enter</button>
 				</form>
 				</>}
 
-				<p className="error-message">{errorMessage}error</p>
+				<p className={`error_message ${styles.login}`}>{errorMessage}error</p>
 			</div>
 	);
 }
