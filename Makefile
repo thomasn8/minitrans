@@ -52,6 +52,8 @@ flogsnginx:
 
 refront:
 			${DOCKER} restart front
+refront-vue:
+			${DOCKER} restart front-vue
 reapi:
 			${DOCKER} restart back
 renginx:

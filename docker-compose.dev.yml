@@ -16,16 +16,16 @@ services:
       - netpong
     working_dir: /app
 
-  # front-vue:
-  #   build: ./_build/front-vue
-  #   restart: "no"
-  #   stdin_open: true
-  #   tty: true
-  #   ports:
-  #     - "3001:3001"
-  #   networks:
-  #     - netpong
-  #   working_dir: /app
+  front-vue:
+    build: ./_build/front-vue
+    restart: "no"
+    stdin_open: true
+    tty: true
+    ports:
+      - "3001:3001"
+    networks:
+      - netpong
+    working_dir: /app
 
   back:
     restart: "no"

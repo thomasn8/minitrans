@@ -23,13 +23,13 @@ services:
       - netpong
     working_dir: /app
 
-  # front-vue:
-  #   build: ./_build/front-vue
-  #   volumes:
-  #     - ./front-vue:/app
-  #   networks:
-  #     - netpong
-  #   working_dir: /app
+  front-vue:
+    build: ./_build/front-vue
+    volumes:
+      - ./front-vue:/app
+    networks:
+      - netpong
+    working_dir: /app
 
   back:
     build: ./_build/back

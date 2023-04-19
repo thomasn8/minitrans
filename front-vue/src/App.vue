@@ -9,7 +9,7 @@ const users = ref([]);
 const messages = ref([]);
 const messageText = ref('');
 const joined = ref(false);
-const name = ref('');
+const pseudo = ref('');
 const usersTyping = ref([]);
 
 // onBeforeMount: call right before the component DOM is actually rendered and mounted
@@ -23,7 +23,7 @@ onBeforeMount(() => {
 		messages.value = response;
 	})
 
-	socket.on('users', (count) => {
+	socket.on('countUser', (count) => {
 		if (count > 1) {
 			usersCount.value = `${count} users`;
 		}
@@ -32,8 +32,9 @@ onBeforeMount(() => {
 		}
 	})
 
-	socket.on('join', ( {id, name} ) => {
-		users.value.push({id, name});
+	socket.on('join', ( {id, pseudo} ) => {
+		console.log({id, pseudo});
+		users.value.push({id, pseudo});
 	})
 
 	socket.on('disconect', (id) => {
@@ -50,8 +51,8 @@ onBeforeMount(() => {
 });
 
 const join = () => {
-	if (name.value.length > 0) {
-		socket.emit('join', { name: name.value }, () => {
+	if (pseudo.value.length > 0) {
+		socket.emit('join', { pseudo: pseudo.value }, () => {
 			joined.value = true;
 		})
 	}
@@ -65,13 +66,13 @@ const sendMessage = () => {
 
 let typing = false;
 const emitTyping = () => {
-	const val = name.value;
+	const val = pseudo.value;
 	if (typing === false) {
 		typing = true;
-		socket.emit('typing', { name: val, isTyping: true } );
+		socket.emit('typing', { pseudo: val, isTyping: true } );
 		
 		let timeout = setTimeout (() => {
-			socket.emit('typing', { name: val, isTyping: false } );
+			socket.emit('typing', { pseudo: val, isTyping: false } );
 			typing = false;
 		}, 5000);
 	}
@@ -84,7 +85,7 @@ const emitTyping = () => {
 		<!-- MODULE D'IDENTIFICATION -->
 		<div class="join" v-if="!joined">
 			<form @submit.prevent="join">
-				<input v-model="name" autofocus placeholder="Pseudo" />
+				<input v-model="pseudo" autofocus placeholder="Pseudo" />
 				<button type="submit">Enter</button>
 			</form>
 		</div>
@@ -99,11 +100,11 @@ const emitTyping = () => {
 					<div class="users" v-for="user in users">
 						<div :socketId="user.id" class="user-wrapper">							
 							<template v-for="userTyping in usersTyping">
-								<span v-if="userTyping !== name && userTyping === user.name" class="typing"></span>
-								<span v-else-if="userTyping === user.name" class="me-typing"></span>
+								<span v-if="userTyping !== pseudo && userTyping === user.pseudo" class="typing"></span>
+								<span v-else-if="userTyping === user.pseudo" class="me-typing"></span>
 							</template>
-							<span v-if="user.name === name" class="user me">{{ user.name }} (me)</span>
-							<span v-else class="user else">{{ user.name }}</span>
+							<span v-if="user.pseudo === pseudo" class="user me">{{ user.pseudo }} (me)</span>
+							<span v-else class="user else">{{ user.pseudo }}</span>
 							<span class="lister">•</span>
 						</div>
 					</div>
@@ -116,8 +117,8 @@ const emitTyping = () => {
 				<div class="messages-wrapper">
 					<div class="messages scrollbar">
 						<div v-for="message in messages.slice().reverse()" class="message">
-							<div v-if="message.name === name" class="name me"><span>{{ message.text }}</span></div>
-							<div v-else class="name else"><span class="else-name">{{ message.name }}: </span><span>{{ message.text }}</span></div>
+							<div v-if="message.pseudo === pseudo" class="name me"><span>{{ message.text }}</span></div>
+							<div v-else class="name else"><span class="else-name">{{ message.pseudo }}: </span><span>{{ message.text }}</span></div>
 						</div>
 					</div>
 				</div>
