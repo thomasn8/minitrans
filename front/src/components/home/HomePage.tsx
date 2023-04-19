@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useLoginRedirect } from "../login/useRedirect";
-import { LoginDto } from "../../dto/login-dto";
+import { LoginDto } from "../../_dto/login-dto";
 import Nav from "../nav/Nav";
 
 import styles from './css/Home.module.css'

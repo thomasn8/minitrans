@@ -1,6 +1,6 @@
 import React from "react";
 import { useLoginRedirect } from "../login/useRedirect";
-import { LoginDto } from "../../dto/login-dto";
+import { LoginDto } from "../../_dto/login-dto";
 import ChatEntry from "./ChatEntry";
 import ChatRoom from "./ChatRoom";
 

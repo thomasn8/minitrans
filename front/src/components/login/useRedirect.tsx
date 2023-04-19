@@ -1,5 +1,5 @@
 import React from "react";
-import { LoginDto } from "../../dto/login-dto";
+import { LoginDto } from "../../_dto/login-dto";
 import { useNavigate } from "react-router-dom";
 
 function useLoginRedirect(user: LoginDto | undefined): void {

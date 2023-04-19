@@ -1,5 +1,5 @@
 import React, { SyntheticEvent } from "react";
-import { LoginDto } from "../../dto/login-dto";
+import { LoginDto } from "../../_dto/login-dto";
 
 // import '../../assets/css/logout.css';
 

@@ -1,6 +1,6 @@
 import React, { SyntheticEvent } from "react";
 import Nav from "../nav/Nav";
-import { LoginDto } from "../../dto/login-dto";
+import { LoginDto } from "../../_dto/login-dto";
 
 import styles from './css/ChatEntry.module.css'
 

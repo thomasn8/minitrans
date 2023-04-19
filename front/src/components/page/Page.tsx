@@ -1,6 +1,6 @@
 import React, { SyntheticEvent } from "react";
 import { useLoginRedirect } from "../login/useRedirect";
-import { LoginDto } from "../../dto/login-dto";
+import { LoginDto } from "../../_dto/login-dto";
 
 import '../../assets/css/page.css';
 

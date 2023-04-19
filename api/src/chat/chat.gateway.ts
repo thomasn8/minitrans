@@ -1,7 +1,7 @@
 import { WebSocketGateway, SubscribeMessage, MessageBody, WebSocketServer, ConnectedSocket, OnGatewayConnection, OnGatewayDisconnect, } from '@nestjs/websockets';
 import { ChatService } from './chat.service';
-import { MessageDto } from './dto/message.dto';
-import { UserDto } from './dto/user.dto';
+import { ChatMessageDto } from './dto/chat-message.dto';
+import { ChatUserDto } from './dto/chat-user.dto';
 import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway( {cors: { origin: '*' }} ) // a voir pour autoriser une liste de CORS directement via Nginx
@@ -27,12 +27,12 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 	}
 
 	@SubscribeMessage('findAllUsers')
-	findAllUsers(): UserDto[] {
+	findAllUsers(): ChatUserDto[] {
 		return this.chatService.findAllUsers();
 	}
 
 	@SubscribeMessage('findAllMessages')
-	findAllMessages(): MessageDto[] {
+	findAllMessages(): ChatMessageDto[] {
 		return this.chatService.findAllMessages();
 	}
   
@@ -54,8 +54,8 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 	}
 
 	@SubscribeMessage('createMessage')
-	async create(@MessageBody() input: MessageDto, @ConnectedSocket() client: Socket): Promise<MessageDto> {
-		const newMessage: MessageDto = await this.chatService.create(input, client.id);
+	async create(@MessageBody() input: ChatMessageDto, @ConnectedSocket() client: Socket): Promise<ChatMessageDto> {
+		const newMessage: ChatMessageDto = await this.chatService.create(input, client.id);
 		this.server.emit('message', newMessage);
 		return newMessage;
 	}

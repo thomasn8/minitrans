@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import mainColor from './assets/ColorTheme'
 import './main.css'
 
-import { LoginDto } from './dto/login-dto';
-import { UserDto } from './dto/user-dto';
+import { LoginDto } from './_dto/login-dto';
+import { UserDto } from './_dto/user-dto';
 import useLogin from './components/login/useLogin';
 
 import HomePage from './components/home/HomePage';

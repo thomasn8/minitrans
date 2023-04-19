@@ -1,10 +1,10 @@
 import React, { SyntheticEvent } from "react";
-import { LoginDto } from "../../dto/login-dto";
+import { LoginDto } from "../../_dto/login-dto";
 import Nav from "../nav/Nav";
 
 import { io, Socket } from 'socket.io-client';
-import { ChatUserDto } from "./dto/chat-user.dto";
-import { ChatMessageDto } from "./dto/chat-message.dto";
+import { ChatUserDto } from "../../_dto/chat-user.dto";
+import { ChatMessageDto } from "../../_dto/chat-message.dto";
 
 import styles from './css/ChatRoom.module.css'
 

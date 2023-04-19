@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { MessageDto } from './dto/message.dto';
-import { UserDto } from './dto/user.dto';
+import { ChatMessageDto } from './dto/chat-message.dto';
+import { ChatUserDto } from './dto/chat-user.dto';
 
 @Injectable()
 export class ChatService {
-  messages: MessageDto[] = [];
+  messages: ChatMessageDto[] = [];
   clientToUser = new Map<string, string>();
   usersTyping: string[] = [];
   
-  async create(message: MessageDto, clientId: string): Promise<MessageDto> {
-    const newMessage: MessageDto = {
+  async create(message: ChatMessageDto, clientId: string): Promise<ChatMessageDto> {
+    const newMessage: ChatMessageDto = {
       pseudo: this.clientToUser.get(clientId),
       text: message.text
     };
@@ -44,11 +44,11 @@ export class ChatService {
   }
 
   // vuejs doesnt implement Map (nor Set) type so we must return an array of object in our case
-  findAllUsers(): UserDto[] {
+  findAllUsers(): ChatUserDto[] {
     return Array.from(this.clientToUser, ([id, pseudo]) => ({ id, pseudo }));
   }
 
-  findAllMessages(): MessageDto[] {
+  findAllMessages(): ChatMessageDto[] {
     return this.messages;
   }
 

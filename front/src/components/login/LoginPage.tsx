@@ -1,7 +1,7 @@
 import React, { SyntheticEvent } from "react";
 import { Link } from "react-router-dom";
 import { useHomeRedirect } from "./useRedirect";
-import { LoginDto } from "../../dto/login-dto";
+import { LoginDto } from "../../_dto/login-dto";
 
 import styles from './css/Login.module.css'
 

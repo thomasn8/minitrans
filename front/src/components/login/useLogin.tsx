@@ -1,6 +1,6 @@
 import React from "react";
-import { LoginDto } from "../../dto/login-dto";
-import { UserDto } from "../../dto/user-dto";
+import { LoginDto } from "../../_dto/login-dto";
+import { UserDto } from "../../_dto/user-dto";
 import axios from "axios";
 
 function useLogin(): LoginDto | undefined {
