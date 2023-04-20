@@ -39,9 +39,10 @@ export class ChatService {
     return this.messages;
   }
   
-  getMessage(socketId: string, message: ChatMessageDto):ChatMessageDto | null {
+  createMessage(socketId: string, message: ChatMessageDto):ChatMessageDto | null {
     const user: ChatUserDto | undefined = this.users.get(socketId);
     if (user && user.pseudo === message.pseudo) {
+      message.id = this.messages.length + 1;
       this.messages.push(message);
       return message;
     }

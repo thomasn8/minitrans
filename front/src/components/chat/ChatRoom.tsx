@@ -96,7 +96,7 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 			setTimeout (() => {
 				socketRef.current && socketRef.current.emit('stopTyping', {pseudo: pseudo} );
 				setTyping(false);
-			}, 5000);
+			}, 10000);
 		}
 	}
 
@@ -143,7 +143,7 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 					<div className={`${styles.messages} ${styles.scrollbar}`}>
 						{messages.slice().reverse().map((message) => {
 							return (
-								<div className={styles.message}>
+								<div key={message.id} className={styles.message}>
 									{message.pseudo === pseudo && 
 									<div className={styles.me}><span>{message.text}</span></div> ||
 									<div className={styles.else}><span className={styles.pseudo}>{message.pseudo}: </span><span>{message.text}</span></div>}

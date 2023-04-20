@@ -16,6 +16,7 @@
 	--main-color05:rgba(var(--main-color), 0.5);
 	--main-color04:rgba(var(--main-color), 0.4);
 	--main-color03:rgba(var(--main-color), 0.3);
+	--main-color022:rgba(var(--main-color), 0.22);
 	--main-color015:rgba(var(--main-color), 0.15);
 	--main-color010:rgba(var(--main-color), 0.10);
 }
@@ -98,7 +99,7 @@ button {
 }
 
 input:hover, input:active{
-	background-color: var(--main-color03);
+	background-color: var(--main-color022);
 	transition: .15s;
 }
 

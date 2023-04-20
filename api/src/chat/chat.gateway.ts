@@ -17,7 +17,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
 
 	handleConnection(@ConnectedSocket() client: Socket): void {
-		console.log('handleConnection', client.id, client.handshake.headers.pseudo);
+		console.log('Connect:', client.id, 'pseudo:',client.handshake.headers.pseudo);
 		this.usersCount++;
 		this.server.emit('countUsers', this.usersCount);
 
@@ -37,7 +37,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 	}
 
 	handleDisconnect(@ConnectedSocket() client: Socket): void {
-		console.log('handleDisconnect');
+		console.log('Disconnect:', client.id);
 		try {
 			const userId: number = this.chatService.quitChat(client.id);
 			this.usersCount--;
@@ -60,8 +60,8 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 	}
 
 	@SubscribeMessage('message')
-	getMessage(@ConnectedSocket() client: Socket, @MessageBody() message: ChatMessageDto): void {
-		const newMessage: ChatMessageDto | null = this.chatService.getMessage(client.id, message);
+	createMessage(@ConnectedSocket() client: Socket, @MessageBody() message: ChatMessageDto): void {
+		const newMessage: ChatMessageDto | null = this.chatService.createMessage(client.id, message);
 		if (newMessage !== null) {
 			this.server.emit('broadcastMessage', newMessage);
 		}
@@ -70,14 +70,12 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 	@SubscribeMessage('isTyping')
 	isTyping(@MessageBody('pseudo') pseudo: string): void
 	{
-		console.log(pseudo,'is typing');
 		this.server.emit('isTyping', pseudo);
 	}
 
 	@SubscribeMessage('stopTyping')
 	stopTyping(@MessageBody('pseudo') pseudo: string): void
 	{
-		console.log(pseudo,'stops typing');
 		this.server.emit('stopTyping', pseudo);
 	}
 
