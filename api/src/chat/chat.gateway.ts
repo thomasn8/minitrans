@@ -50,7 +50,6 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 	}
 
 
-
 	@SubscribeMessage('findAllUsers')
 	findAllUsers(): ChatUserResponseDto[] {
 		return this.chatService.findAllUsers();
@@ -61,8 +60,6 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 		return this.chatService.findAllMessages();
 	}
 
-
-
 	@SubscribeMessage('message')
 	getMessage(@ConnectedSocket() client: Socket, @MessageBody() message: ChatMessageDto): void {
 		const newMessage: ChatMessageDto | null = this.chatService.getMessage(client.id, message);
@@ -70,7 +67,6 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 			this.server.emit('broadcastMessage', newMessage);
 		}
 	}
-
 
 	@SubscribeMessage('isTyping')
 	isTyping(@MessageBody('pseudo') pseudo: string): void
@@ -83,6 +79,5 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 	{
 		this.server.emit('stopTyping', pseudo);
 	}
-
 
 }

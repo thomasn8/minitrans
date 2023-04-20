@@ -81,16 +81,11 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 
 	function sendMessage(event: SyntheticEvent) {
 		event.preventDefault()
-
-		// validation
-		// ...
-
 		let message: ChatMessageDto = { pseudo: pseudo, text: messageInput };
-		if (messageInput !== '') {
-			socketRef.current && socketRef.current.emit('message', message, () => {
-				setMessageInput('');
-			})
+		if (messageInput !== '' && messageInput.length < 2000) {
+			socketRef.current && socketRef.current.emit('message', message);
 		}
+		setMessageInput('');
 	};
 
 	function emitTyping() {
