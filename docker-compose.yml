@@ -23,41 +23,30 @@ services:
       - netpong
     working_dir: /app
 
-  front-vue:
-    build: ./_build/front-vue
-    volumes:
-      - ./front-vue:/app
-    networks:
-      - netpong
-    working_dir: /app
-
   back:
     build: ./_build/back
-    # depends_on:
-    #   - postgres
+    depends_on:
+      - postgres
     volumes:
       - ./api:/app
     networks:
       - netpong
-    # environment:
-      # DATABASE_USER: ${DB_USERNAME}
-      # DATABASE_PASSWORD: ${DB_PASSWORD}
-      # DATABASE_DB: ${DB_DB}
+    environment:
+      DATABASE_USER: ${DB_USERNAME}
+      DATABASE_PASSWORD: ${DB_PASSWORD}
+      DATABASE_DB: ${DB_DB}
     working_dir: /app
 
-  # postgres:
-  #   image: postgres:14.2
-
-  #   volumes:
-  #     - pong_db:/var/lib/postgresql/data/
-
-  #   networks:
-  #     - netpong
-
-  #   environment:
-  #     POSTGRES_USER: ${DB_USERNAME}
-  #     POSTGRES_PASSWORD: ${DB_PASSWORD}
-  #     POSTGRES_DB: ${DB_DB}
+  postgres:
+    image: postgres:14.2
+    volumes:
+      - pong_db:/var/lib/postgresql/data/
+    networks:
+      - netpong
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DB}
 
 networks:
   netpong:

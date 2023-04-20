@@ -6,11 +6,16 @@ yarn global add @nestjs/cli
 if [ "$BUILD_TYPE" = "Setup" ]; 
 then 
 	yarn install
+	yarn add @nestjs/typeorm typeorm pg
+	yarn add bcrypt @types/bcrypt
+	# yarn add @nestjs/jwt passport-jwt @types/passport-jwt
+	yarn add  @nestjs/schedule @types/cron
 	yarn add @nestjs/websockets @nestjs/platform-socket.io
 fi
 
 # Use tsc: compile ts to js
 yarn build
+# yarn typeorm migration:run
 
 if [ "$BUILD_TYPE" = "Production" ]; 
 then 

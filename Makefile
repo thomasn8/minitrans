@@ -12,26 +12,26 @@ DOCKER		= docker compose ${COMPOSE_DEV} -p ${APP_NAME}
 
 all:		start
 
+
 build:
 			${DOCKER} build
 certs:
 			openssl req -x509 -nodes -days 365 -newkey rsa:2048 -subj '/C=CH/ST=Valais/L=Sierre/O=private/OU=IT/CN=localhost' -keyout _build/nginx/certs/nginx.key -out _build/nginx/certs/nginx.crt
-
 setup:
 			${DOCKER} -f ./docker-compose.setup.yml up --build -d
-
-
 start:
 			${DOCKER} up -d --build
+down:
+			${DOCKER} down
+re:
+			down
+			start
 
-ps:
-			${DOCKER} ps -a
 
 logs:
 			${DOCKER} logs
 flogs:
 			${DOCKER} logs -f
-
 logsfront:
 			${DOCKER} logs front
 logsvue:
@@ -41,6 +41,7 @@ logsapi:
 logsnginx:
 			${DOCKER} logs nginx
 
+
 flogsfront:
 			${DOCKER} logs -f front
 flogsvue:
@@ -49,6 +50,7 @@ flogsapi:
 			${DOCKER} logs -f back
 flogsnginx:
 			${DOCKER} logs -f nginx
+
 
 refront:
 			${DOCKER} restart front
@@ -68,26 +70,26 @@ runapi:
 			${DOCKER} exec back sh
 runnginx:
 			${DOCKER} exec nginx bash
-# runpostg:
-# 			${DOCKER} exec postgres bash
+runpostg:
+			${DOCKER} exec postgres bash
 rundb:
 			${DOCKER} exec postgres psql --host=postgres --dbname=test_db --username=user -W
 
-# migrate-create:
-# 			@echo "Usage: make migrate-create DEST=name";
-# 			@if [ ! -z ${DEST} ]; then\
-# 				${DOCKER} exec back yarn migration:create src/_typeorm/migrations/${DEST} ;\
-# 			fi
-# migrate-gen:
-# 			@echo "Usage: make migrate-gen DEST=name";
-# 			@if [ ! -z ${DEST} ]; then \
-# 				${DOCKER} exec back yarn migration:generate src/_typeorm/migrations/${DEST} ;\
-# 			fi
-# migrate-run:
-# 			${DOCKER} exec back yarn migration:run
-# migrate-revert:
-# 			${DOCKER} exec back yarn migration:revert
 
+migrate-create:
+			@echo "Usage: make migrate-create DEST=name";
+			@if [ ! -z ${DEST} ]; then\
+				${DOCKER} exec back yarn migration:create src/_typeorm/migrations/${DEST} ;\
+			fi
+migrate-gen:
+			@echo "Usage: make migrate-gen DEST=name";
+			@if [ ! -z ${DEST} ]; then \
+				${DOCKER} exec back yarn migration:generate src/_typeorm/migrations/${DEST} ;\
+			fi
+migrate-run:
+			${DOCKER} exec back yarn migration:run
+migrate-revert:
+			${DOCKER} exec back yarn migration:revert
 # package-json yarn commands for migrations
 # "typeorm": "yarn ts-node ./node_modules/typeorm/cli -d ./dist/typeorm/data-source.js",
 # "migration:generate": "yarn build && yarn typeorm migration:generate",
@@ -95,13 +97,4 @@ rundb:
 # "migration:revert": "yarn build && yarn typeorm migration:revert"
 
 
-
-down:
-			${DOCKER} down
-
-clean:		down
-#			${DOCKER} down --volumes
-
-re:			clean build start
-
-.PHONY:		all build start ps logs flogs run api down clean re
+.PHONY:		all build start down logs flogs run re

@@ -16,37 +16,24 @@ services:
       - netpong
     working_dir: /app
 
-  front-vue:
-    build: ./_build/front-vue
+  back:
     restart: "no"
     stdin_open: true
     tty: true
     ports:
-      - "3001:3001"
-    networks:
-      - netpong
-    working_dir: /app
-
-  back:
-    restart: "no"
-    stdin_open:  true # docker run -i
-    tty: true        # docker run -t
-    ports:
       - "4000:4000"
 
-  # postgres:
-  #   restart: "no"
-    #ports:
+  postgres:
+    restart: "no"
+    # ports:
     #  - "5432:5432"
 
-
-  # adminer:
-  #   image: adminer
-  #   # image: mcaubrey/adminer
-  #   depends_on:
-  #     - postgres
-  #   restart: "no"
-  #   ports:
-  #     - "8081:8080"
-  #   networks:
-  #     - netpong
+  adminer:
+    image: adminer
+    depends_on:
+      - postgres
+    restart: "no"
+    ports:
+      - "8081:8080"
+    networks:
+      - netpong
