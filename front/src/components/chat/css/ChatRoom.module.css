@@ -1,14 +1,6 @@
-/* form {
-	display: flex;
-	justify-content: center;
-} */
-
-/* form {
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
-	align-items: center;
-} */
+form.chat {
+	padding: 0 5px;
+}
 
 input.chat {
 	width: calc(75% - 20px);
@@ -117,8 +109,23 @@ button.chat {
 .title_chat {
 	background-color: var(--main-color015);
 	height: 36px;
-	text-align: left;
 	padding-left: 10px;
+	padding-right: 10px;
+	display: flex;
+	justify-content: space-between;
+}
+
+/* .title_chat span.chatnav {
+} */
+
+span.chatlink {
+	color: var(--main-color05);
+	padding: 0 5px;
+	font-size: 0.85em;
+}
+
+span.chatlink:hover {
+	color: var(--main-color1);
 }
 
 .messages_wrapper {

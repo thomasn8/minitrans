@@ -1,8 +1,9 @@
 import React, { SyntheticEvent } from "react";
-import { LoginDto } from "../../_dto/login-dto";
-import Nav from "../nav/Nav";
+import { Link } from "react-router-dom";
 
 import { io, Socket } from 'socket.io-client';
+
+import { LoginDto } from "../../_dto/login-dto";
 import { ChatUserDto } from "../../_dto/chat-user.dto";
 import { ChatMessageDto } from "../../_dto/chat-message.dto";
 
@@ -137,7 +138,12 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 
 			<div className={styles.messages_container}>
 				<div className={styles.title_chat}>
-					Chat
+					<span>Chat</span>
+					<span className={styles.chatnav}>
+						<Link to="/"><span className={styles.chatlink}>Home</span></Link>
+						<span className={styles.chatlink}>/</span>
+						<Link to="/logout"><span className={styles.chatlink}>Logout</span></Link>
+					</span>
 				</div>
 				<div className={styles.messages_wrapper}>
 					<div className={`${styles.messages} ${styles.scrollbar}`}>
@@ -153,7 +159,7 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 					</div>
 				</div>
 				<div className={styles.write}>
-					<form onSubmit={sendMessage}>
+					<form className={styles.chat} onSubmit={sendMessage}>
 						<input
 							className={styles.chat}
 							type="text"
