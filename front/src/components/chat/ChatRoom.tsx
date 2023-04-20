@@ -34,7 +34,7 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
         timeout: 10000,
         extraHeaders: {
           // Authorization: `Bearer ${token}`,
-					Pseudo: pseudo,
+					Pseudo: pseudo,														// CHEAT (provisory until no stable login)
         },
       });
 
@@ -84,7 +84,7 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 		event.preventDefault()
 		let message: ChatMessageDto = { pseudo: pseudo, text: messageInput };
 		if (messageInput !== '' && messageInput.length < 2000) {
-			socketRef.current && socketRef.current.emit('message', message);
+			socketRef.current && socketRef.current.emit('createMessage', message);
 		}
 		setMessageInput('');
 	};

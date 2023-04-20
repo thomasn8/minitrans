@@ -59,7 +59,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 		return this.chatService.findAllMessages();
 	}
 
-	@SubscribeMessage('message')
+	@SubscribeMessage('createMessage')
 	createMessage(@ConnectedSocket() client: Socket, @MessageBody() message: ChatMessageDto): void {
 		const newMessage: ChatMessageDto | null = this.chatService.createMessage(client.id, message);
 		if (newMessage !== null) {
