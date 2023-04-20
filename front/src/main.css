@@ -13,12 +13,13 @@
 	/* based on main color, don't modify */
 	--main-color1:rgba(var(--main-color), 1);
 	--main-color08:rgba(var(--main-color), 0.8);
+	--main-color07:rgba(var(--main-color), 0.7);
 	--main-color05:rgba(var(--main-color), 0.5);
 	--main-color04:rgba(var(--main-color), 0.4);
 	--main-color03:rgba(var(--main-color), 0.3);
-	--main-color022:rgba(var(--main-color), 0.22);
+	--main-color02:rgba(var(--main-color), 0.20);
 	--main-color015:rgba(var(--main-color), 0.15);
-	--main-color010:rgba(var(--main-color), 0.10);
+	--main-color01:rgba(var(--main-color), 0.10);
 }
 
 *, *::before, *::after {
@@ -86,21 +87,26 @@ input, button {
 }
 
 input {
-	background-color: var(--main-color015);
-	/* color: var(--input-text-color); */
+	background-color: var(--main-color01);
 	color: var(--main-color1);
 	padding: 5px 15px;
 }
 
 button {
-	background: var(--main-color08);
+	background: var(--main-color07);
 	color: var(--button-text-color);
 	padding: 5px;
 }
 
 input:hover, input:active{
-	background-color: var(--main-color022);
+	background-color: var(--main-color02);
 	transition: .15s;
+}
+
+input:hover::-webkit-input-placeholder,
+input:hover:-moz-placeholder,
+input:hover::-moz-placeholder {
+	color: var(--main-color1);
 }
 
 input::selection, input::-moz-selection {

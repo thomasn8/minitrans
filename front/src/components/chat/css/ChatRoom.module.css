@@ -118,13 +118,13 @@ button.chat {
 /* .title_chat span.chatnav {
 } */
 
-span.chatlink {
-	color: var(--main-color05);
+span.chatlink1, span.chatlink2{
+	color: var(--main-color07);
 	padding: 0 5px;
 	font-size: 0.85em;
 }
 
-span.chatlink:hover {
+span.chatlink1:hover {
 	color: var(--main-color1);
 }
 
@@ -153,10 +153,6 @@ span.chatlink:hover {
 .message .pseudo {
 	opacity: 0.5;
 }
-
-/* .message {
-	padding-bottom: 5px;
-} */
 
 .write {
 	display: flex;

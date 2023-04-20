@@ -140,9 +140,9 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 				<div className={styles.title_chat}>
 					<span>Chat</span>
 					<span className={styles.chatnav}>
-						<Link to="/"><span className={styles.chatlink}>Home</span></Link>
-						<span className={styles.chatlink}>/</span>
-						<Link to="/logout"><span className={styles.chatlink}>Logout</span></Link>
+						<Link to="/"><span className={styles.chatlink1}>Home</span></Link>
+						<span className={styles.chatlink2}>/</span>
+						<Link to="/logout"><span className={styles.chatlink1}>Logout</span></Link>
 					</span>
 				</div>
 				<div className={styles.messages_wrapper}>

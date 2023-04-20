@@ -14,7 +14,8 @@ function LoginPage({user}: LoginPageProps) {
 	useHomeRedirect(user);
 
 	const [signin, setSignin] = React.useState(false);
-	function handleClickSignin() {
+	function handleClickSignin(event: SyntheticEvent) {
+		event.preventDefault();
 		setSignin(!signin);
 	}
 
@@ -35,7 +36,12 @@ function LoginPage({user}: LoginPageProps) {
 				{signin === false &&
 				<>
 				<h1 className={`title ${styles.login}`}>Login</h1>
-				<form onSubmit={handleSubmitLogin} className={styles.login}>
+				<div className={`nav nav_top ${styles.login}`}>
+					<Link to="" onClick={handleClickSignin}>Sign in</Link>
+					<span>/</span>
+					<Link to="/recover">Forgotten password</Link>
+				</div>
+				<form className={styles.login} onSubmit={handleSubmitLogin}>
 					<input
 						className={styles.login}
 						type="email"
@@ -47,11 +53,6 @@ function LoginPage({user}: LoginPageProps) {
 						type="password"
 						placeholder="Password"
 					/>
-					<div className={`nav ${styles.login}`}>
-						<a onClick={handleClickSignin}>Signin</a>
-						<span>/</span>
-						<Link to="/recover">Forgotten password</Link>
-					</div>
 					<button className={styles.login} type="submit">Enter</button>
 				</form>
 				</>
@@ -59,8 +60,11 @@ function LoginPage({user}: LoginPageProps) {
 				||
 
 				<>
-				<h1 className={`title ${styles.login}`}>Signin</h1>
-				<form onSubmit={handleSubmitSignin}>
+				<h1 className={`title ${styles.login}`}>Sign in</h1>
+				<div className={`nav nav_top ${styles.login}`}>
+					<Link to="" onClick={handleClickSignin}>Login</Link>
+				</div>
+				<form className={styles.login} onSubmit={handleSubmitSignin}>
 					<input
 						className={styles.login}
 						type="email"
@@ -77,14 +81,11 @@ function LoginPage({user}: LoginPageProps) {
 						type="password"
 						placeholder="Repeat password"
 					/>
-					<div className={`nav ${styles.login}`}>
-						<a onClick={handleClickSignin}>Login</a>
-					</div>
 					<button className={styles.login} type="submit">Enter</button>
 				</form>
 				</>}
 
-				<p className={`error_message ${styles.login}`}>{errorMessage}error</p>
+				<p className={`error_message ${styles.login}`}>{errorMessage}</p>
 			</div>
 	);
 }

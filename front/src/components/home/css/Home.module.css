@@ -31,7 +31,7 @@
 }
 
 .appli:active {
-	background-color: var(--main-color010);
+	background-color: var(--main-color01);
 	transition: .1s;
 }
 
