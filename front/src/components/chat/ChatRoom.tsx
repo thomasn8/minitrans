@@ -72,13 +72,15 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 	})
 	
 	socketRef.current && socketRef.current.on('isTyping', (res: string) => {
-		console.log(res, 'is typing');
 		setUsersTyping([...usersTyping, res]);
+		console.log(res, 'is typing:', usersTyping);
+		// console.log(res, 'is typing:');
 	})
 
 	socketRef.current && socketRef.current.on('stopTyping', (res: string) => {
-		console.log(res, 'stops typing');
 		setUsersTyping(usersTyping.filter(userTyping => userTyping !== res));
+		console.log(res, 'stops typing:', usersTyping);
+		// console.log(res, 'stops typing:');
 	})
 
 	function sendMessage(event: SyntheticEvent) {
@@ -92,6 +94,7 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 
 	function emitTyping() {
 		if (typing === false) {
+			console.log('I\'m typing');
 			setTyping(true);
 			socketRef.current && socketRef.current.emit('isTyping', {pseudo: pseudo} );
 			
