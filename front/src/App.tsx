@@ -12,7 +12,6 @@ import ColorTheme from './assets/ColorTheme';
 import { LoginDto } from './_dto/login-dto';
 import { UserDto } from './_dto/user-dto';
 
-import mainColor from './assets/ColorTheme'
 import './main.css'
 
 function App() {
@@ -28,14 +27,14 @@ function App() {
 
   // const user: LoginDto | undefined = useLogin();
 
-  // const user = undefined;
-  const user = {
-    token: 'test',
-    setToken: Function,
-    user: {id: 1, email: 'thomasnanchen@hotmail.com', pseudo: 'tom'},
-    getHeaders: Function,
-    getUserData: Function
-  };
+  const user = undefined;
+  // const user = {
+  //   token: 'test',
+  //   setToken: Function,
+  //   user: {id: 1, email: 'thomasnanchen@hotmail.com', pseudo: 'tom'},
+  //   getHeaders: Function,
+  //   getUserData: Function
+  // };
 
   return (
     <Router>
