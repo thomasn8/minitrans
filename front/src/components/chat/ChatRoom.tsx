@@ -117,7 +117,7 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 					<div className={styles.users}>
 						{users.map((user) => {
 							return (
-								<div className={styles.user_wrapper}>
+								<div key={user.id} className={styles.user_wrapper}>
 									{usersTyping.find(userTyping => {
 										(userTyping === user.pseudo && userTyping !== pseudo && <span className={styles.typing}></span>) ||
 										(userTyping === user.pseudo && userTyping === pseudo && <span className={styles.me_typing}></span>) 

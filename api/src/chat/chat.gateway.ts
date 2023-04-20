@@ -44,8 +44,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 			this.server.emit('countUsers', this.usersCount);
 			this.server.emit('disconect', userId);
 		} catch (err) {
-			console.log('User not found');
-			// throw new NotFoundException(err);
+			console.log('User not found:', client);
 		}
 	}
 
