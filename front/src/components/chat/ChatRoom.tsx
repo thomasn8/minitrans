@@ -37,9 +37,9 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
         },
       });
 
-			socketRef.current.on("connect", () => {
-        console.log("connection to chat: success");
-			})
+			// socketRef.current.on("connect", () => {
+      //   console.log("connection to chat: success");
+			// })
 
 			socketRef.current && socketRef.current.emit('findAllUsers', {}, (res: ChatUserDto[]) => {
 				setUsers(res);
@@ -73,14 +73,10 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 	
 	socketRef.current && socketRef.current.on('isTyping', (res: string) => {
 		setUsersTyping([...usersTyping, res]);
-		console.log(res, 'is typing:', usersTyping);
-		// console.log(res, 'is typing:');
 	})
 
 	socketRef.current && socketRef.current.on('stopTyping', (res: string) => {
 		setUsersTyping(usersTyping.filter(userTyping => userTyping !== res));
-		console.log(res, 'stops typing:', usersTyping);
-		// console.log(res, 'stops typing:');
 	})
 
 	function sendMessage(event: SyntheticEvent) {
@@ -94,7 +90,6 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 
 	function emitTyping() {
 		if (typing === false) {
-			console.log('I\'m typing');
 			setTyping(true);
 			socketRef.current && socketRef.current.emit('isTyping', {pseudo: pseudo} );
 			
@@ -118,15 +113,21 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 						{users.map((user) => {
 							return (
 								<div key={user.id} className={styles.user_wrapper}>
-									{usersTyping.find(userTyping => {
-										(userTyping === user.pseudo && userTyping !== pseudo && <span className={styles.typing}></span>) ||
-										(userTyping === user.pseudo && userTyping === pseudo && <span className={styles.me_typing}></span>) 
+									
+									{usersTyping.map((userTyping) => {
+										return (
+											(userTyping === user.pseudo) && 
+												(userTyping === pseudo && 
+												<span key={pseudo} className={styles.me_typing}></span> ||
+												<span key={pseudo} className={styles.typing}></span>)
+										);
 									})}
 
 									{user.pseudo === pseudo &&
 									<span className={`${styles.user} ${styles.me}`}>{user.pseudo} (me)</span> ||
 									<span className={`${styles.user} ${styles.else}`}>{user.pseudo}</span>}
 									<span className={styles.lister}>•</span>
+
 								</div>
 							);
 						})}
