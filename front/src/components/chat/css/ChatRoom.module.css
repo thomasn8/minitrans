@@ -147,9 +147,9 @@ button.chat {
 	opacity: 0.5;
 }
 
-.message {
+/* .message {
 	padding-bottom: 5px;
-}
+} */
 
 .write {
 	display: flex;

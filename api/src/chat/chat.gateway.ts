@@ -7,7 +7,7 @@ import { ChatService } from './chat.service';
 import { ChatUserDto, ChatUserResponseDto } from './dto/chat-user.dto';
 import { ChatMessageDto } from './dto/chat-message.dto';
 
-// @WebSocketGateway( {cors: { origin: '*' }} )
+
 @WebSocketGateway({ path: '/socket-chat/', cors: { origin: '*' } })
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   
@@ -71,12 +71,14 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 	@SubscribeMessage('isTyping')
 	isTyping(@MessageBody('pseudo') pseudo: string): void
 	{
+		console.log(pseudo,'is typing');
 		this.server.emit('isTyping', pseudo);
 	}
 
 	@SubscribeMessage('stopTyping')
 	stopTyping(@MessageBody('pseudo') pseudo: string): void
 	{
+		console.log(pseudo,'stops typing');
 		this.server.emit('stopTyping', pseudo);
 	}
 
