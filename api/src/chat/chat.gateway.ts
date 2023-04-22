@@ -17,6 +17,10 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
 
 	handleConnection(@ConnectedSocket() client: Socket): void {
+
+		// check bearer token against user db to see if user is known
+		// if no, disconnect ths client socket
+
 		console.log('Connect:', client.id, 'pseudo:',client.handshake.headers.pseudo);
 		this.usersCount++;
 		this.server.emit('countUsers', this.usersCount);

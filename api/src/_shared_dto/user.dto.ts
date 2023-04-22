@@ -2,5 +2,5 @@ export interface UserDto {
 	id: number;
 	email: string;
 	pseudo: string;
-	element: string;
+	element: number;
 }

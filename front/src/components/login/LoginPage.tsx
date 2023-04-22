@@ -85,7 +85,7 @@ function LoginPage({user}: LoginPageProps) {
 				</form>
 				</>}
 
-				<p className={`error_message ${styles.login}`}>{errorMessage}</p>
+				<p className={`error_message ${styles.login}`}>{errorMessage}error</p>
 			</div>
 	);
 }
