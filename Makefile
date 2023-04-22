@@ -81,11 +81,6 @@ migrate-run:
 			${DOCKER} exec back yarn migration:run
 migrate-revert:
 			${DOCKER} exec back yarn migration:revert
-# package-json yarn commands for migrations
-# "typeorm": "yarn ts-node ./node_modules/typeorm/cli -d ./dist/typeorm/data-source.js",
-# "migration:generate": "yarn build && yarn typeorm migration:generate",
-# "migration:run": "yarn build && yarn typeorm migration:run",
-# "migration:revert": "yarn build && yarn typeorm migration:revert"
 
 
 .PHONY:		all build start down logs flogs run re

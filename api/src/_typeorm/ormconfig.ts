@@ -15,7 +15,7 @@ const config: MysqlConnectionOptions = {
 	logging: false,
 
 	entities: [ User, Element],
-	migrations: ['dist/_typeorm/migrations/*.js'],
+	migrations: ['/app/dist/_typeorm/migrations/*.js'],
 	subscribers: [],
 }
 

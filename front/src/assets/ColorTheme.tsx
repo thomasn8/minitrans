@@ -12,11 +12,13 @@ class ColorTheme {
 	orange: string = '239, 126, 33';		// [1]
 	green: string = '93, 213, 18';			// [2]
 	purple: string = '163, 76, 255';		// [3]
+	grey: string = '239, 239, 239';			// [4]
 	
 	blueHex: string = '#6494ed'
 	orangeHex: string = '#ef7e21'
 	greenHex: string = '#5dd512'
 	purpleHex: string = '#a34cff'
+	greyHex: string = '#efefef'
 
 
 	colorTab: string[] = [this.blue, this.orange, this.green, this.purple];

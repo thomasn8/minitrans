@@ -19,19 +19,15 @@ export class User {
   @Column()
   pseudo: string;
 
-	// @Column()
 	@ManyToOne(() => Element)
-  element: number;
-
-  // @Column({ default: true })
-  // isActive: boolean;
+  element: Element;
 
 	toUserDto(): UserDto {
 		return {
-				id: this.id,
-				email: this.email,
-				pseudo: this.pseudo,
-				element: this.element
+			id: this.id,
+			email: this.email,
+			pseudo: this.pseudo,
+			element: this.element
 		}
 	}
 
