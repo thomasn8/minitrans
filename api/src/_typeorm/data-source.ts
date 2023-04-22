@@ -17,7 +17,3 @@ const AppDataSource = new DataSource({
 });
 
 export default AppDataSource;
-
-
-//yarn migration:generate src/typeorm/migrations/UserStatus
-//yarn migration:run

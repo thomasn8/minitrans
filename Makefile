@@ -10,7 +10,7 @@ DOCKER		= docker compose ${COMPOSE_DEV} -p ${APP_NAME}
 #Prod
 # DOCKER		= docker compose ${COMPOSE_PROD} ${ENV_FILE} -p ${APP_NAME}
 
-all:		start
+all:	start
 
 
 build:
@@ -23,9 +23,8 @@ start:
 			${DOCKER} up -d --build
 down:
 			${DOCKER} down
-re:
-			down
-			start
+
+re:		down start
 
 
 logs:
@@ -34,8 +33,6 @@ flogs:
 			${DOCKER} logs -f
 logsfront:
 			${DOCKER} logs front
-logsvue:
-			${DOCKER} logs front-vue
 logsapi:
 			${DOCKER} logs back
 logsnginx:
@@ -44,8 +41,6 @@ logsnginx:
 
 flogsfront:
 			${DOCKER} logs -f front
-flogsvue:
-			${DOCKER} logs -f front-vue
 flogsapi:
 			${DOCKER} logs -f back
 flogsnginx:
@@ -54,8 +49,6 @@ flogsnginx:
 
 refront:
 			${DOCKER} restart front
-refront-vue:
-			${DOCKER} restart front-vue
 reapi:
 			${DOCKER} restart back
 renginx:
@@ -64,16 +57,14 @@ renginx:
 
 run:
 			${DOCKER} exec front sh
-runvue:
-			${DOCKER} exec font=vue sh
 runapi:
 			${DOCKER} exec back sh
 runnginx:
 			${DOCKER} exec nginx bash
-runpostg:
-			${DOCKER} exec postgres bash
-rundb:
-			${DOCKER} exec postgres psql --host=postgres --dbname=test_db --username=user -W
+
+# mysql --user=... --password=... databasename
+runmariadb:
+			${DOCKER} exec mariadb bash
 
 
 migrate-create:

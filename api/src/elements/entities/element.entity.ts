@@ -20,8 +20,8 @@ export class Element {
 	// constructor(typeId: number) {
 	// 	this.id = typeId;
 	// }
-	constructor(typeId: number, name: string, colorName: string, rgb:string, hex: string) {
-		this.id = typeId;
+	constructor(name: string, colorName: string, rgb:string, hex: string) {
+		// this.id = typeId;
 		this.name = name;
 		this.colorName = colorName;
 		this.rgb = rgb;

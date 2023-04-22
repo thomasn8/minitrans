@@ -6,7 +6,7 @@ yarn global add @nestjs/cli
 if [ "$BUILD_TYPE" = "Setup" ]; 
 then 
 	yarn install
-	yarn add @nestjs/typeorm typeorm pg
+	yarn add @nestjs/typeorm typeorm mysql
 	yarn add bcrypt @types/bcrypt
 	# yarn add @nestjs/jwt passport-jwt @types/passport-jwt
 	yarn add  @nestjs/schedule @types/cron

@@ -23,15 +23,15 @@ services:
     ports:
       - "4000:4000"
 
-  postgres:
+  mariadb:
     restart: "no"
     # ports:
-    #  - "5432:5432"
+    #  - "3306:3306"
 
   adminer:
     image: adminer
     depends_on:
-      - postgres
+      - mariadb
     restart: "no"
     ports:
       - "8081:8080"

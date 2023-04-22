@@ -26,7 +26,7 @@ services:
   back:
     build: ./_build/back
     depends_on:
-      - postgres
+      - mariadb
     volumes:
       - ./api:/app
     networks:
@@ -37,16 +37,18 @@ services:
       DATABASE_DB: ${DB_DB}
     working_dir: /app
 
-  postgres:
-    image: postgres:14.2
+  mariadb:
+    image: mariadb
     volumes:
-      - pong_db:/var/lib/postgresql/data/
+      - pong_db:/var/lib/mysql/
     networks:
       - netpong
     environment:
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_DB}
+      MARIADB_ROOT_PASSWORD: ${ROOT_PASSWORD}
+      MARIADB_ROOT_HOST: ${ROOT_HOST}
+      MARIADB_DATABASE: ${DB_DB}
+      MARIADB_USER: ${DB_USERNAME}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
 
 networks:
   netpong:

@@ -1,19 +1,20 @@
-import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
+import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
 import { User } from 'src/users/entities/user.entity';
+import { Element } from "src/elements/entities/element.entity";
 
-const config: PostgresConnectionOptions = {
-	type: "postgres",
-	host: "postgres",
-	port: 5432,
+const config: MysqlConnectionOptions = {
+	type: "mariadb",
+	host: "mariadb",
+	port: 3306,
 	username: process.env.DATABASE_USER,
 	password: process.env.DATABASE_PASSWORD,
 	database: process.env.DATABASE_DB,
 
-	// synchronize: false,
-	synchronize: true,
+	// synchronize: false,	// for PROD
+	synchronize: true,			// for DEV
 	logging: false,
 
-	entities: [ User, ],
+	entities: [ User, Element],
 	migrations: ['dist/_typeorm/migrations/*.js'],
 	subscribers: [],
 }
