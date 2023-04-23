@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne, UpdateDateColumn } from 'typeorm';
 import { UserDto } from 'src/_shared_dto/user.dto';
 import { Element } from 'src/elements/entities/element.entity';
 
@@ -13,8 +13,14 @@ export class User {
 	@Column({ select: false })
 	password: string; 
 
-	@CreateDateColumn()
+	@CreateDateColumn({ select: false })
 	createDate: Date;
+
+	@Column({ default: false, select: false })
+  confirmation: boolean;
+
+	@UpdateDateColumn({ select: false })
+	confirmationDate: Date;
 
   @Column()
   pseudo: string;

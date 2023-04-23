@@ -5,6 +5,8 @@ if [ "$BUILD_TYPE" = "Setup" ];
 then
     yarn add react-router-dom
     yarn add axios
+    yarn add class-validator
+    yarn add bcryptjs
     yarn add socket.io-client
 fi
 

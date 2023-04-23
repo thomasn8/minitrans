@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException, PayloadTooLargeException } from '@nestjs/common';
 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Element } from 'src/elements/entities/element.entity';
 
 @Injectable()
 export class UsersService {
@@ -16,7 +17,16 @@ export class UsersService {
   ) {}
 
   create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+    const user = new User();
+    user.email = createUserDto.email;
+    user.password = createUserDto.password;
+    const element = new Element(5);
+    user.element = element;
+    user.pseudo = 'test';
+    this.usersRepository.save(user).catch((err) => {
+      throw new BadRequestException('User creation error');
+    })
+    return 'Signed in success';
   }
 
   findAll() {
