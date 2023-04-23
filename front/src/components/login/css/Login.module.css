@@ -20,6 +20,21 @@ button.login {
 	max-width: 90vw;
 }
 
+label.questions {
+	padding: 10px;
+}
+
+select.questions {
+	margin-bottom: 15px;
+	width: 300px;
+	max-width: 90vw;
+	font-size: 18px;
+}
+
+select.questions option {
+	font-size: 16px;
+}
+
 .login_wrapper {
 	display: flex;
 	flex-direction: column;

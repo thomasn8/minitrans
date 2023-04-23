@@ -24,7 +24,6 @@ function LoginPage({user}: LoginPageProps) {
 	const [email, setEmail] = React.useState('');
 	const [password, setPassword] = React.useState('');
 
-	// const [buttonDisabled, setButtonDisabled] = React.useState(false);
 	const [errorMessage, setErrorMessage] = React.useState('');
 
 	function message(text: string, timeInMs: number) {
@@ -37,6 +36,7 @@ function LoginPage({user}: LoginPageProps) {
 	function handleSubmitLogin(event: SyntheticEvent) {
 		event.preventDefault();
 
+		// CODE
 		// ...
 	}
 

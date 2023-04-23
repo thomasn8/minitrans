@@ -24,7 +24,7 @@ function SigninPage({signin, setSignin, message, setErrorMessage}: SigninPagePag
 
 	const [questions, setQuestions] = React.useState(false);
 
-	// AJOUTER VALIDATION PASSWORD (ici)
+
 	async function handleClickPart2(event: SyntheticEvent) {
 		event.preventDefault();
 
@@ -33,8 +33,17 @@ function SigninPage({signin, setSignin, message, setErrorMessage}: SigninPagePag
 			return;
 		}
 
-		// Validation password characters 
-		// ...
+		if (password.length < 6) {
+			message('Passwords too short, minimum 6 characters', 4000);
+			return;			
+		}
+
+		const regex = /^([a-zA-Z0-9 \._-]+)$/;
+		const isValid: boolean = regex.test(password);
+		if (isValid === false) {
+			message('Passwords format invalid. Allowed: [a-zA-Z0-9 ._-]', 4000);
+			return;			
+		}
 
 		if (password !== repeatPassword) {
 			message('Passwords don\'t match', 4000);
@@ -47,10 +56,12 @@ function SigninPage({signin, setSignin, message, setErrorMessage}: SigninPagePag
 
 	return (
 		<>
-		<h1 className={`title ${styles.login}`}>Sign in</h1>
+		<h1 className={`title ${styles.login}`}>{questions === false && "Sign in" || "Your ADN"}</h1>
+		{questions === false &&
 		<div className={`nav nav_top ${styles.login}`}>
 			<Link to="" onClick={handleClickSignin}>Login</Link>
 		</div>
+		}
 		<form className={styles.login}>
 			
 			{questions === false &&

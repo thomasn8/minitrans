@@ -1,6 +1,5 @@
 import React, { SyntheticEvent } from "react";
-import { LoginDto } from "../../_dto/login-dto";
-import { CreateUserDto } from "../../_dto/create-user.dto";
+import { CreateUserDto, QuestionsDto } from "../../_dto/create-user.dto";
 import { api_request } from "../../assets/utils";
 
 import styles from './css/Login.module.css'
@@ -16,15 +15,36 @@ function SigninPart2({email, password, message}: SigninPagePageProps) {
 	const [buttonDisabled, setButtonDisabled] = React.useState(false);
 
 	const [response1, setResponse1] = React.useState(0);
+	const [response2, setResponse2] = React.useState(0);
+	const [response3, setResponse3] = React.useState(0);
+	const [response4, setResponse4] = React.useState(0);
+	const [response5, setResponse5] = React.useState(0);
 
-	// AJOUTER SELECT BOX QUIZZ EN 2EME ETAPE
-	// AJOUTER REDIRECTION SUR LOGIN EN CAS DE SUCCESS 
-		// OU MESSAGE (DIRE DE CONFIRME PAR EMAIL+ LIEN VERS LOGIN)
-	// AJOUTER EMAIL VERIFICATION (cote server)
+	// EN CAS DE SIGNIN VALID: 
+	// MESSAGE "votre ADN a été détérminé, rendez-vous sur votre boite mail pour confirmer votre inscription et découvrir votre tribu" 
+	// + LIEN "retour vers le login"
 	async function handleSubmit(event: SyntheticEvent) {
 		event.preventDefault();
 
-		// Get questions response to calculate Element
+		if (response1 === 0 ||
+			response2 === 0 ||
+			response3 === 0 ||
+			response4 === 0 ||
+			response5 === 0
+		) {
+			message('You must answer each question')
+			return;
+		}
+
+		const questions: QuestionsDto = {
+			question1: response1,
+			question2: response2,
+			question3: response3,
+			question4: response4,
+			question5: response5,
+		}
+
+		console.log(questions);
 
 		const bcrypt = require('bcryptjs');
 		const saltRounds: number = 10;
@@ -32,14 +52,16 @@ function SigninPart2({email, password, message}: SigninPagePageProps) {
 
 		let user: CreateUserDto = {
 			email: email,
-			password: hash
+			password: hash,
+			questions: questions
 		}
 
 		api_request('post', '/api/users', undefined, user)
 		.then((res) => {
 			if (res.status === 201) {
 				setButtonDisabled(true);
-				message(res.data, 6000);
+				const msg = "Your DNA has been determined, go to your mailbox to confirm your registration and discover your faction.";
+				message(msg, 6000);
 			}
 		})
 		.catch((err) => {
@@ -49,100 +71,124 @@ function SigninPart2({email, password, message}: SigninPagePageProps) {
 
 	return (
 		<>
-
-		<label>Question 1: ...</label>
+		<label className={styles.questions}>
+			If you had to face difficult weather conditions during a long trip, what type of weather would you choose ?
+		</label>
 		<select
+			className={styles.questions}
 			defaultValue={0}
-			onChange={(event) => setResponse1(0)}
-			// onChange={(event) => setResponse1(event.target.value)}
+			onChange={(event) => setResponse1(parseInt(event.target.value))}
 		>
-			<option id="defaultOption" key={1} value="0">
-				response 1
+			<option value={0} disabled>
+				...
 			</option>
-			<option id="defaultOption" key={2} value="0">
-				response 2
+			<option value={1}>
+				Howling wind 
 			</option>
-			<option id="defaultOption" key={3} value="0">
-				response 3
+			<option value={2}>
+				Blistering hot
 			</option>
-			<option id="defaultOption" key={4} value="0">
-				response 4
+			<option value={3}>
+				Freezing cold
+			</option>
+			<option value={4}>
+				Torrential rain
 			</option>
 		</select>
-		<label>Question 2: ...</label>
+		<label className={styles.questions}>
+			With your tribe, you are confronted with a series of collective events. What role do you take on ?
+		</label>
 		<select
+			className={styles.questions}
 			defaultValue={0}
-			onChange={(event) => setResponse1(0)}
-			// onChange={(event) => setResponse1(event.target.value)}
+			onChange={(event) => setResponse2(parseInt(event.target.value))}
 		>
-			<option id="defaultOption" key={1} value="0">
-				response 1
+			<option value={0} disabled>
+				...
 			</option>
-			<option id="defaultOption" key={2} value="0">
-				response 2
+			<option value={1}>
+				Mediator
 			</option>
-			<option id="defaultOption" key={3} value="0">
-				response 3
+			<option value={2}>
+				Strategist
 			</option>
-			<option id="defaultOption" key={4} value="0">
-				response 4
+			<option value={3}>
+				Protector
+			</option>
+			<option value={4}>
+				Healer
 			</option>
 		</select>
-		<label>Question 3: ...</label>
+		<label className={styles.questions}>
+			What type of clothing do you feel most comfortable wearing ?
+		</label>
 		<select
+			className={styles.questions}
 			defaultValue={0}
-			onChange={(event) => setResponse1(0)}
-			// onChange={(event) => setResponse1(event.target.value)}
+			onChange={(event) => setResponse3(parseInt(event.target.value))}
 		>
-			<option id="defaultOption" key={1} value="0">
-				response 1
+			<option value={0} disabled>
+				...
 			</option>
-			<option id="defaultOption" key={2} value="0">
-				response 2
+			<option value={1}>
+				Lightweight, flowy fabrics
 			</option>
-			<option id="defaultOption" key={3} value="0">
-				response 3
+			<option value={2}>
+				Loose, breathable garments
 			</option>
-			<option id="defaultOption" key={4} value="0">
-				response 4
+			<option value={3}>
+				Soft and warm materials
+			</option>
+			<option value={4}>
+				Shimmery and sparkling outfits 
 			</option>
 		</select>
-		<label>Question 4: ...</label>
+		<label className={styles.questions}>
+			What kind of sound resonates with you the most ?
+		</label>
 		<select
+			className={styles.questions}
 			defaultValue={0}
-			onChange={(event) => setResponse1(0)}
-			// onChange={(event) => setResponse1(event.target.value)}
+			onChange={(event) => setResponse4(parseInt(event.target.value))}
 		>
-			<option id="defaultOption" key={1} value="0">
-				response 1
+			<option value={0} disabled>
+				...
 			</option>
-			<option id="defaultOption" key={2} value="0">
-				response 2
+			<option value={1}>
+				Soothing, melodic sounds of waves 
 			</option>
-			<option id="defaultOption" key={3} value="0">
-				response 3
+			<option value={2}>
+				The rhythm of a tribal drum
 			</option>
-			<option id="defaultOption" key={4} value="0">
-				response 4
+			<option value={3}>
+				The symphony of birds singing
+			</option>
+			<option value={4}>
+				The ethereal sounds of a choir
 			</option>
 		</select>
-		<label>Question 5: ...</label>
+		<label className={styles.questions}>
+			What companion do you choose for an adventure among the following creatures ?
+		</label>
 		<select
+			className={styles.questions}
 			defaultValue={0}
-			onChange={(event) => setResponse1(0)}
-			// onChange={(event) => setResponse1(event.target.value)}
+			onChange={(event) => setResponse5(parseInt(event.target.value))}
 		>
-			<option id="defaultOption" key={1} value="0">
-				response 1
+			<option value={0} disabled>
+				...
 			</option>
-			<option id="defaultOption" key={2} value="0">
-				response 2
+			<option value={1}>
+				Flaming fennec 
 			</option>
-			<option id="defaultOption" key={3} value="0">
-				response 3
+			<option value={2}>
+				Intrepid raven
 			</option>
-			<option id="defaultOption" key={4} value="0">
-				response 4
+			<option value={3}>
+				Clever jellyfish 
+			</option>
+			<option value={4}>
+				Generous turtle
 			</option>
 		</select>
 
@@ -152,7 +198,7 @@ function SigninPart2({email, password, message}: SigninPagePageProps) {
 			onClick={handleSubmit}
 			disabled={buttonDisabled}
 		>
-			Submit
+			Join
 		</button>
 		</>
 	);

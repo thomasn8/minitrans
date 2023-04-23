@@ -9,12 +9,6 @@ export async function api_request(type: string, path: string,
         Authorization: `Bearer ${token}`,
       },
 		})
-		// .then((res) => {
-		// 	return res;
-		// })
-		// .catch((err) => {
-		// 	throw new Error(err);
-		// });
 		return res;
 	}
 	else if (type === 'post') {
@@ -23,14 +17,6 @@ export async function api_request(type: string, path: string,
 				Authorization: `Bearer ${token}`,
 			},
 		})
-		// .then((res) => {
-		// 	return res;
-		// })
-		// .catch((err) => {
-		// 	console.log(err.response.data);
-		// 	// throw new Error(err);
-		// 	return err;
-		// });
 		return res;
 	}
 

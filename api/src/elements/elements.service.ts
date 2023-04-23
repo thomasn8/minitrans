@@ -11,15 +11,4 @@ export class ElementsService {
     private elementsRepository: Repository<Element>,
   ) {}
 
-	// async initRepo() {
-	// 	const element1 = new Element('Water', 'blue', '100, 148, 237', '6494ed');
-	// 	const element2 = new Element('Desert', 'orange', '239, 126, 33', 'ef7e21');
-	// 	const element3 = new Element('Forest', 'green', '93, 213, 18', '5dd512');
-	// 	const element4 = new Element('Mutation', 'purple', '163, 76, 255', 'a34cff');
-	// 	await this.elementsRepository.save(element1);
-	// 	await this.elementsRepository.save(element2);
-	// 	await this.elementsRepository.save(element3);
-	// 	await this.elementsRepository.save(element4);
-	// }
-
 }

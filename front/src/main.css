@@ -128,6 +128,21 @@ input:focus, button:focus {
     outline: none;
 }
 
+select, select option {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+	background-color: var(--main-color08);
+	color: var(--window-color);
+	border: none;
+}
+
+select {
+	height: 35px;
+	border-radius: 5px;
+	font-size: 20px;
+	cursor: default;
+	padding: 5px 15px;
+}
+
 a {
 	text-decoration: none;
 	cursor: default;
