@@ -46,7 +46,7 @@ function LoginPage({user}: LoginPageProps) {
 				<>
 				<h1 className={`title ${styles.login}`}>Login</h1>
 				<div className={`nav nav_top ${styles.login}`}>
-					<Link to="" onClick={handleClickSignin}>Sign in</Link>
+					<a onClick={handleClickSignin}>Sign in</a>
 					<span>/</span>
 					<Link to="/recover">Forgotten password</Link>
 				</div>

@@ -7,7 +7,7 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
 	@Column({ select: false })
@@ -22,7 +22,7 @@ export class User {
 	@UpdateDateColumn({ select: false })
 	confirmationDate: Date;
 
-  @Column()
+  @Column({ unique: true })
   pseudo: string;
 
 	@ManyToOne(() => Element)

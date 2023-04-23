@@ -1,6 +1,6 @@
 import React, { SyntheticEvent } from "react";
-import { Link } from "react-router-dom";
 import SigninPart2 from "./SigninPart2";
+import { api_request } from "../../assets/utils";
 
 import styles from './css/Login.module.css'
 
@@ -33,6 +33,14 @@ function SigninPage({signin, setSignin, message, setErrorMessage}: SigninPagePag
 			return;
 		}
 
+		// check unique email
+		const res = await api_request('post', '/api/users/email', undefined, {email: email});
+		if (res.data !== false) {
+			message("Email already used", 4000);
+			return;
+		}
+
+		// check password format and repetition
 		if (password.length < 6) {
 			message('Passwords too short, minimum 6 characters', 4000);
 			return;			
@@ -59,7 +67,7 @@ function SigninPage({signin, setSignin, message, setErrorMessage}: SigninPagePag
 		<h1 className={`title ${styles.login}`}>{questions === false && "Sign in" || "Your ADN"}</h1>
 		{questions === false &&
 		<div className={`nav nav_top ${styles.login}`}>
-			<Link to="" onClick={handleClickSignin}>Login</Link>
+			<a onClick={handleClickSignin}>Login</a>
 		</div>
 		}
 		<form className={styles.login}>

@@ -3,7 +3,6 @@ import { CreateUserDto, QuestionsDto } from "../../_dto/create-user.dto";
 import { api_request } from "../../assets/utils";
 
 import styles from './css/Login.module.css'
-import { Link, useNavigate } from "react-router-dom";
 
 interface SigninPagePageProps {
 	email: string,
@@ -22,8 +21,6 @@ function SigninPart2({email, password, message, signin, setSignin}: SigninPagePa
 	const [response3, setResponse3] = React.useState(0);
 	const [response4, setResponse4] = React.useState(0);
 	const [response5, setResponse5] = React.useState(0);
-
-	const navigate = useNavigate();
 
 	function backToLogin() {
 		setSignin(!signin);
@@ -49,8 +46,6 @@ function SigninPart2({email, password, message, signin, setSignin}: SigninPagePa
 			question4: response4,
 			question5: response5,
 		}
-
-		console.log(questions);
 
 		const bcrypt = require('bcryptjs');
 		const saltRounds: number = 10;
@@ -208,9 +203,12 @@ function SigninPart2({email, password, message, signin, setSignin}: SigninPagePa
 		||
 
 		<>
-		<p className={`sucess_message ${styles.login}`}>Your DNA has been determined, go to your mailbox to confirm your registration and discover your faction.</p>
-		<div className={`nav ${styles.login}`}>
-			<Link to="" onClick={backToLogin}>Back to login</Link>
+		<div className={`nav ${styles.success_message} ${styles.login}`}>
+				<a onClick={backToLogin}>
+					Your DNA has been determined. Go to your mailbox to confirm your registration and discover your faction.
+					<br></br>
+					Back to login
+				</a>
 		</div>
 		</>}
 		</>

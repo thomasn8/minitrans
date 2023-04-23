@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException, PayloadTooLargeException } from '@nestjs/common';
+import { Injectable, BadRequestException, ConflictException } from '@nestjs/common';
 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -16,24 +16,6 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  // GENERER UN PSEUDO RANDOM QUE LE USER PEUT CHANGER
-  // AJOUTER EMAIL VERIFICATION (cote server)
-  create(createUserDto: CreateUserDto) {
-    const user = new User();
-    user.email = createUserDto.email;
-    user.password = createUserDto.password;
-    user.pseudo = 'test';
-
-    const elementId = this.identifyUser(createUserDto.questions);
-    const element = new Element(elementId);
-    user.element = element;
-
-    this.usersRepository.save(user).catch((err) => {
-      throw new BadRequestException('User creation error:', err);
-    })
-    return 'Signed in success';
-  }
-
   findAll() {
     return `This action returns all user`;
   }
@@ -50,6 +32,46 @@ export class UsersService {
     return `This action removes a #${id} user`;
   }
 
+  async emailExist(email: string): Promise<boolean> {
+    const user = await this.usersRepository.findOne({
+      where: { email: email }
+    })
+    if (user)
+      return true;
+    return false;
+  }
+
+  async pseudoExist(pseudo: string): Promise<boolean> {
+    const user = await this.usersRepository.findOne({
+      where: { pseudo: pseudo }
+    })
+    if (user)
+      return true;
+    return false;
+  }
+
+  // GENERER UN PSEUDO RANDOM QUE LE USER PEUT CHANGER
+  // ENVOYER EMAIL DE CONFIRMATION (lien avec randomstring qui pointe sur un endpoint special) + AVEC PSEUDO + NOM DE FACTION
+  async create(createUserDto: CreateUserDto) {
+   
+    console.log(createUserDto);
+    
+    const user = new User();
+    user.email = createUserDto.email;
+    user.password = createUserDto.password;
+    user.pseudo = 'test';
+
+    const elementId = this.identifyUser(createUserDto.questions);
+    const element = new Element(elementId);
+    user.element = element;
+
+    this.usersRepository.save(user).catch((err) => {
+      throw new BadRequestException('User creation error:', err);
+    })
+    return 'Signed in success';
+  }
+
+  // Get user Faction based on questionaire responses
   identifyUser(questions: QuestionsDto) {
     let water = 0;
     let desert = 0;

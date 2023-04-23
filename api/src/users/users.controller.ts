@@ -7,10 +7,13 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  /*
+    CRUD 
+  */
+
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    console.log(createUserDto);
-    return this.usersService.create(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto) {
+    return await this.usersService.create(createUserDto);
   }
 
   @Get()
@@ -32,4 +35,14 @@ export class UsersController {
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
   }
+
+  /*
+    OTHERS 
+  */
+
+  @Post('/email')
+  async checkEmail(@Body() {email}: {email: string}) {
+    return await this.usersService.emailExist(email);
+  }
+
 }

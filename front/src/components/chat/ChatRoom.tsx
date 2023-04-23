@@ -1,5 +1,5 @@
 import React, { SyntheticEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { io, Socket } from 'socket.io-client';
 
@@ -101,6 +101,18 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 		}
 	}
 
+	const navigate = useNavigate();
+	function handleLeaveChat(event: SyntheticEvent) {
+		event.preventDefault();
+		socketRef.current && socketRef.current.disconnect();
+		navigate('/');
+	}
+	function handleLogout(event: SyntheticEvent) {
+		event.preventDefault();
+		socketRef.current && socketRef.current.disconnect();
+		navigate('/logout');
+	}
+
 
 	return (
 		<div className={styles.chat_container}>		
@@ -140,9 +152,9 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 				<div className={styles.title_chat}>
 					<span>Chat</span>
 					<span className={styles.chatnav}>
-						<Link to="/"><span className={styles.chatlink1}>Home</span></Link>
+						<a onClick={handleLeaveChat}><span className={styles.chatlink1}>Home</span></a>
 						<span className={styles.chatlink2}>/</span>
-						<Link to="/logout"><span className={styles.chatlink1}>Logout</span></Link>
+						<a onClick={handleLogout}><span className={styles.chatlink1}>Logout</span></a>
 					</span>
 				</div>
 				<div className={styles.messages_wrapper}>
