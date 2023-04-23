@@ -96,7 +96,7 @@ function SigninPage({signin, setSignin, message, setErrorMessage}: SigninPagePag
 			</button>
 			</> 
 			
-			|| <SigninPart2 email={email} password={password} message={message} />}
+			|| <SigninPart2 email={email} password={password} message={message} signin={signin} setSignin={setSignin}/>}
 
 		</form>
 		</>

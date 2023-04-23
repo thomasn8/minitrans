@@ -3,16 +3,19 @@ import { CreateUserDto, QuestionsDto } from "../../_dto/create-user.dto";
 import { api_request } from "../../assets/utils";
 
 import styles from './css/Login.module.css'
+import { Link, useNavigate } from "react-router-dom";
 
 interface SigninPagePageProps {
 	email: string,
 	password: string,
 	message: Function;
+	signin: boolean;
+	setSignin: Function;
 }
 
-function SigninPart2({email, password, message}: SigninPagePageProps) {
+function SigninPart2({email, password, message, signin, setSignin}: SigninPagePageProps) {
 	
-	const [buttonDisabled, setButtonDisabled] = React.useState(false);
+	const [submited, setSubmited] = React.useState(false);
 
 	const [response1, setResponse1] = React.useState(0);
 	const [response2, setResponse2] = React.useState(0);
@@ -20,9 +23,12 @@ function SigninPart2({email, password, message}: SigninPagePageProps) {
 	const [response4, setResponse4] = React.useState(0);
 	const [response5, setResponse5] = React.useState(0);
 
-	// EN CAS DE SIGNIN VALID: 
-	// MESSAGE "votre ADN a été détérminé, rendez-vous sur votre boite mail pour confirmer votre inscription et découvrir votre tribu" 
-	// + LIEN "retour vers le login"
+	const navigate = useNavigate();
+
+	function backToLogin() {
+		setSignin(!signin);
+	}
+
 	async function handleSubmit(event: SyntheticEvent) {
 		event.preventDefault();
 
@@ -32,7 +38,7 @@ function SigninPart2({email, password, message}: SigninPagePageProps) {
 			response4 === 0 ||
 			response5 === 0
 		) {
-			message('You must answer each question')
+			message('You must answer each question', 4000);
 			return;
 		}
 
@@ -59,9 +65,7 @@ function SigninPart2({email, password, message}: SigninPagePageProps) {
 		api_request('post', '/api/users', undefined, user)
 		.then((res) => {
 			if (res.status === 201) {
-				setButtonDisabled(true);
-				const msg = "Your DNA has been determined, go to your mailbox to confirm your registration and discover your faction.";
-				message(msg, 6000);
+				setSubmited(true);
 			}
 		})
 		.catch((err) => {
@@ -192,14 +196,23 @@ function SigninPart2({email, password, message}: SigninPagePageProps) {
 			</option>
 		</select>
 
+		{submited === false && 
 		<button 
 			className={styles.login}
 			type="submit"
 			onClick={handleSubmit}
-			disabled={buttonDisabled}
 		>
 			Join
 		</button>
+		
+		||
+
+		<>
+		<p className={`sucess_message ${styles.login}`}>Your DNA has been determined, go to your mailbox to confirm your registration and discover your faction.</p>
+		<div className={`nav ${styles.login}`}>
+			<Link to="" onClick={backToLogin}>Back to login</Link>
+		</div>
+		</>}
 		</>
 	);
 }
