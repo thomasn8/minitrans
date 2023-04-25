@@ -47,16 +47,12 @@ class ColorTheme {
 		switch (this.colorTab[index]) {
 			case this.blue:
 				return this.blueHex;
-				break;
 			case this.orange:
 				return this.orangeHex; 
-				break;
 			case this.green:
 				return this.greenHex;
-				break;
 			case this.purple:
 				return this.purpleHex; 
-				break;
 		}
 		return this.blueHex;
 	}
