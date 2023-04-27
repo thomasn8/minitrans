@@ -10,6 +10,7 @@ services:
     ports:
       - "8080:80"
       - "8443:443"
+      - "8587:587"
     volumes:
       - ./_build/nginx/certs:/certs
     networks:

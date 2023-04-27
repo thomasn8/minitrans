@@ -10,12 +10,15 @@ import { Element } from 'src/elements/entities/element.entity';
 
 import { Factions } from './factions/Factions';
 
+import { EmailService } from 'src/email/email.service';
+
 @Injectable()
 export class UsersService {
 
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    private emailService: EmailService,
   ) {}
 
   findAll() {
@@ -73,9 +76,15 @@ export class UsersService {
     user.pseudo = pseudo;
 
     // save in db
-    this.usersRepository.save(user).catch((err) => {
-      throw new BadRequestException('User creation error:', err);
-    })
+    // this.usersRepository.save(user).catch((err) => {
+    //   throw new BadRequestException('User creation error:', err);
+    // })
+
+    const token: string = 'test';
+    await this.emailService.sendUserConfirmation(user, token);
+
+    console.log('email sent2');
+
     return 'Signed in success';
   }
 
