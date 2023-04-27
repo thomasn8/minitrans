@@ -11,6 +11,8 @@ then
 	# yarn add @nestjs/jwt passport-jwt @types/passport-jwt
 	yarn add  @nestjs/schedule @types/cron
 	yarn add @nestjs/websockets @nestjs/platform-socket.io
+	yarn add @nestjs-modules/mailer nodemailer @types/nodemailer handlebars
+	yarn add unique-username-generator
 fi
 
 # Use tsc: compile ts to js
