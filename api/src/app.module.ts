@@ -8,7 +8,6 @@ import { UsersModule } from './users/users.module';
 import { ElementsModule } from './elements/elements.module';
 
 import { EmailModule } from './email/email.module';
-import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -17,9 +16,6 @@ import { ConfigModule } from '@nestjs/config';
     ChatModule,
     ElementsModule,
     EmailModule,
-    // ConfigModule.forRoot({
-    //   isGlobal: true, // no need to import into other modules
-    // }),
   ],
   controllers: [],
   providers: [],

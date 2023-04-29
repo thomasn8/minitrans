@@ -11,7 +11,7 @@ then
 	# yarn add @nestjs/jwt passport-jwt @types/passport-jwt
 	yarn add  @nestjs/schedule @types/cron
 	yarn add @nestjs/websockets @nestjs/platform-socket.io
-	yarn add @nestjs-modules/mailer nodemailer @types/nodemailer nodemailer-smtp-transport handlebars googleapis google-auth-library @nestjs/config
+	yarn add nodemailer @types/nodemailer googleapis
 	yarn add unique-username-generator
 fi
 

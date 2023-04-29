@@ -57,7 +57,6 @@ export class UsersService {
 
   // ENVOYER EMAIL DE CONFIRMATION (lien avec randomstring qui pointe sur un endpoint special) + AVEC PSEUDO + NOM DE FACTION
   async create(createUserDto: CreateUserDto) {
-    // console.log(createUserDto);
     
     // user data from body 
     const user = new User();
@@ -76,14 +75,13 @@ export class UsersService {
     user.pseudo = pseudo;
 
     // save in db
-    // this.usersRepository.save(user).catch((err) => {
-    //   throw new BadRequestException('User creation error:', err);
-    // })
+    this.usersRepository.save(user).catch((err) => {
+      throw new BadRequestException('User creation error:', err);
+    })
 
-    const token: string = 'test';
-    await this.emailService.sendUserConfirmation(user, token);
-
-    console.log('email sent2');
+    // send email with confirmation link
+    const link: string = 'test';
+    await this.emailService.sendConfirmationLink(user, link);
 
     return 'Signed in success';
   }

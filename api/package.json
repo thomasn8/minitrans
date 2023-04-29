@@ -25,9 +25,7 @@
     "migration:revert": "yarn build && yarn typeorm migration:revert"
   },
   "dependencies": {
-    "@nestjs-modules/mailer": "^1.8.1",
     "@nestjs/common": "^9.0.0",
-    "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.0.0",
     "@nestjs/mapped-types": "^1.2.2",
     "@nestjs/platform-express": "^9.0.0",
@@ -39,12 +37,9 @@
     "@types/cron": "^2.0.1",
     "@types/nodemailer": "^6.4.7",
     "bcrypt": "^5.1.0",
-    "google-auth-library": "^8.7.0",
     "googleapis": "^118.0.0",
-    "handlebars": "^4.7.7",
     "mysql": "^2.18.1",
     "nodemailer": "^6.9.1",
-    "nodemailer-smtp-transport": "^2.7.4",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
     "typeorm": "^0.3.15",
