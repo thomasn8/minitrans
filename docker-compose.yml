@@ -10,7 +10,6 @@ services:
     ports:
       - "8080:80"
       - "8443:443"
-      - "8587:587"
     volumes:
       - ./_build/nginx/certs:/certs
     networks:
@@ -36,6 +35,11 @@ services:
       DATABASE_USER: ${DB_USERNAME}
       DATABASE_PASSWORD: ${DB_PASSWORD}
       DATABASE_DB: ${DB_DB}
+      MAIL_USER: ${MAIL_USER}
+      CLIENT_ID: ${CLIENT_ID}
+      CLIENT_SECRET: ${CLIENT_SECRET}
+      REDIRECT_URI: ${REDIRECT_URI}
+      REFRESH_TOKEN: ${REFRESH_TOKEN}
     working_dir: /app
 
   mariadb:
