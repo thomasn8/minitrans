@@ -1,4 +1,7 @@
-apk add vim
+# apk add vim
+apt update && apt install -y vim
+
+# echo 'include /etc/nginx/mail.conf;' >> /etc/nginx/nginx.conf
 
 if [ "$BUILD_TYPE" = "Setup" ]; 
 then 

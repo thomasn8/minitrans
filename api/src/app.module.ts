@@ -6,11 +6,21 @@ import config from './_typeorm/ormconfig';
 import { ChatModule } from './chat/chat.module';
 import { UsersModule } from './users/users.module';
 import { ElementsModule } from './elements/elements.module';
+
 import { EmailModule } from './email/email.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    EmailModule, TypeOrmModule.forRoot(config), UsersModule, ChatModule, ElementsModule],
+    TypeOrmModule.forRoot(config), 
+    UsersModule,
+    ChatModule,
+    ElementsModule,
+    EmailModule,
+    // ConfigModule.forRoot({
+    //   isGlobal: true, // no need to import into other modules
+    // }),
+  ],
   controllers: [],
   providers: [],
 })

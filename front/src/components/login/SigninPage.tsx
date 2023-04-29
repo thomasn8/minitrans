@@ -18,9 +18,9 @@ function SigninPage({signin, setSignin, message, setErrorMessage}: SigninPagePag
 		setSignin(!signin);
 	}
 
-	const [email, setEmail] = React.useState('');
-	const [password, setPassword] = React.useState('');
-	const [repeatPassword, setRepeatPassword] = React.useState('');
+	const [email, setEmail] = React.useState('thomasnanchen@hotmail.com');
+	const [password, setPassword] = React.useState('password');
+	const [repeatPassword, setRepeatPassword] = React.useState('password');
 
 	const [questions, setQuestions] = React.useState(false);
 
