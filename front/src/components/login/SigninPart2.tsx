@@ -57,7 +57,7 @@ function SigninPart2({email, password, message, signin, setSignin}: SigninPagePa
 			questions: questions
 		}
 
-		api_request('post', '/api/users', undefined, user)
+		api_request('post', '/api/auth/signin', undefined, user)
 		.then((res) => {
 			if (res.status === 201) {
 				setSubmited(true);

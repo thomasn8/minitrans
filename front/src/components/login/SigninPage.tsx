@@ -64,7 +64,7 @@ function SigninPage({signin, setSignin, message, setErrorMessage}: SigninPagePag
 
 	return (
 		<>
-		<h1 className={`title ${styles.login}`}>{questions === false && "Sign in" || "Your ADN"}</h1>
+		<h1 className={`title ${styles.login}`}>{questions === false && "Sign in" || "Your DNA"}</h1>
 		{questions === false &&
 		<div className={`nav nav_top ${styles.login}`}>
 			<a onClick={handleClickSignin}>Login</a>

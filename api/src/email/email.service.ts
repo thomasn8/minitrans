@@ -35,18 +35,18 @@ export class EmailService {
 					},
 				});
 
-				let app_name = process.env.APP_NAME;
-				if (process.env.BUILD_TYPE != "Production")
-					app_name = process.env.DEV_APP_NAME;
-				// const link = `example.com/auth/confirm?token=${randomstring}`;
-				const link = `${app_name}/${process.env.EMAIL_CONFIRM_URL}/?token=${confirmToken}`;
+				const app_name = process.env.APP_NAME;
+				let domain_name = undefined;
+				process.env.BUILD_TYPE === "Production" ? domain_name = process.env.DOMAIN_NAME : domain_name = process.env.DEV_DOMAIN_NAME;
+				const link = `${domain_name}/${process.env.SIGNIN_CONFIRM_URL}/?token=${confirmToken}`;
+				// const link = `${domain_name}/${process.env.SIGNIN_CONFIRM_URL}?token=${confirmToken}`;
 
 				const mailOptions = {
 					from: '"No Reply" <noreply@example.com>',
 					to: user.email,
-					subject: 'Welcome to Nice App! Confirm your Email',
-					text: `Hello ${user.pseudo}, Welcome in your new faction ... , click on this link to activate your profile: ${link}`, 
-					html: `<h1>Hello ${user.pseudo},</h1> <p>Welcome in your new faction ... , click on this link to activate your profile: ${link}</p>`,
+					subject: `Welcome to ${app_name}! Confirm your Email`,
+					text: `Hello ${user.pseudo}, Welcome into your new faction: the ${user.element.name}, click on this link to activate your profile:\n ${link}`, 
+					html: `<h1>Hello ${user.pseudo},</h1> <p>Welcome into your new faction <b>the ${user.element.name}</b>, click on this link to activate your profile:\n ${link}</p>`,
 				};
 
 				const result = await transport.sendMail(mailOptions);

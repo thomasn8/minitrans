@@ -12,6 +12,9 @@ import { Factions } from './factions/Factions';
 
 import { EmailService } from 'src/email/email.service';
 
+import * as randomstring from 'randomstring';
+
+
 @Injectable()
 export class UsersService {
 
@@ -21,21 +24,21 @@ export class UsersService {
     private emailService: EmailService,
   ) {}
 
-  findAll() {
-    return `This action returns all user`;
-  }
+  // findAll() {
+  //   return `This action returns all user`;
+  // }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
+  // findOne(id: number) {
+  //   return `This action returns a #${id} user`;
+  // }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
+  // update(id: number, updateUserDto: UpdateUserDto) {
+  //   return `This action updates a #${id} user`;
+  // }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  }
+  // remove(id: number) {
+  //   return `This action removes a #${id} user`;
+  // }
 
   async emailExist(email: string): Promise<boolean> {
     const user = await this.usersRepository.findOne({
@@ -57,7 +60,7 @@ export class UsersService {
 
   // ENVOYER EMAIL DE CONFIRMATION (lien avec randomstring qui pointe sur un endpoint special) + AVEC PSEUDO + NOM DE FACTION
   async create(createUserDto: CreateUserDto) {
-    
+    console.log(createUserDto);
     // user data from body 
     const user = new User();
     user.email = createUserDto.email;
@@ -75,11 +78,12 @@ export class UsersService {
     user.pseudo = pseudo;
 
     // token to use in the url of confirmation
-    const confirmToken: string = 'test';          // GENERATE A JWT OR A RANDOMSTRING
+    const confirmToken: string = randomstring.generate(15);         // GENERATE A JWT OR A RANDOMSTRING ?
     user.confirmationToken = confirmToken;
 
     // save in db
     this.usersRepository.save(user).catch((err) => {
+      console.log(err);
       throw new BadRequestException('User creation error:', err);
     })
 
