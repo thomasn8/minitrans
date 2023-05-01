@@ -8,6 +8,7 @@ import { UsersModule } from './users/users.module';
 import { ElementsModule } from './elements/elements.module';
 
 import { EmailModule } from './email/email.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { EmailModule } from './email/email.module';
     ChatModule,
     ElementsModule,
     EmailModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

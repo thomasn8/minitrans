@@ -17,7 +17,7 @@ export class EmailService {
 		this.oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
 	}
 
-	async sendConfirmationLink(user: User, link: string) {
+	async sendConfirmationLink(user: User, confirmToken: string) {
 		try {
 			const accessToken = await this.oAuth2Client.getAccessToken();
 			const token = accessToken.token;
@@ -35,7 +35,11 @@ export class EmailService {
 					},
 				});
 
+				let app_name = process.env.APP_NAME;
+				if (process.env.BUILD_TYPE != "Production")
+					app_name = process.env.DEV_APP_NAME;
 				// const link = `example.com/auth/confirm?token=${randomstring}`;
+				const link = `${app_name}/${process.env.EMAIL_CONFIRM_URL}/?token=${confirmToken}`;
 
 				const mailOptions = {
 					from: '"No Reply" <noreply@example.com>',

@@ -19,6 +19,9 @@ export class User {
 	@Column({ default: false, select: false })
   confirmation: boolean;
 
+	@Column({ select: false })
+  confirmationToken: string;
+
 	@UpdateDateColumn({ select: false })
 	confirmationDate: Date;
 
