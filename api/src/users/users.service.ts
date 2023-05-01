@@ -74,14 +74,16 @@ export class UsersService {
     }
     user.pseudo = pseudo;
 
+    // token to use in the url of confirmation
+    const confirmToken: string = 'test';          // GENERATE A JWT OR A RANDOMSTRING
+    user.confirmationToken = confirmToken;
+
     // save in db
     this.usersRepository.save(user).catch((err) => {
       throw new BadRequestException('User creation error:', err);
     })
 
-    // send email with confirmation link
-    const link: string = 'test';
-    await this.emailService.sendConfirmationLink(user, link);
+    await this.emailService.sendConfirmationLink(user, confirmToken);
 
     return 'Signed in success';
   }
