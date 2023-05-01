@@ -31,6 +31,9 @@ export class User {
 	@ManyToOne(() => Element)
   element: Element;
 
+	@Column({ nullable: true, default: null, select: false })
+  refreshToken?: string;
+
 	toUserDto(): UserDto {
 		return {
 			id: this.id,

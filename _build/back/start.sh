@@ -13,10 +13,11 @@ then
 	yarn add @nestjs/websockets @nestjs/platform-socket.io
 	yarn add nodemailer @types/nodemailer googleapis
 	yarn add unique-username-generator
+	yarn add randomstring @types/randomstring
 fi
 
 # Use tsc: compile ts to js
-yarn build
+# yarn build
 # yarn typeorm migration:run
 
 if [ "$BUILD_TYPE" = "Production" ]; 
