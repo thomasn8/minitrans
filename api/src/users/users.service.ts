@@ -82,7 +82,7 @@ export class UsersService {
     user.pseudo = pseudo;
 
     // token to use in the url of confirmation
-    const elementName = this.elementService.getElementById(elementId)
+    const elementName = this.elementService.getElement(elementId)
     const { accessToken } = await this.authService.getAccessToken({
       id: -1,
       email: user.email,
