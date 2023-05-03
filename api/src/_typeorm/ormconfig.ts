@@ -6,9 +6,9 @@ const config: MysqlConnectionOptions = {
 	type: "mariadb",
 	host: "mariadb",
 	port: 3306,
-	username: process.env.DATABASE_USER,
-	password: process.env.DATABASE_PASSWORD,
-	database: process.env.DATABASE_DB,
+	username: process.env.MARIADB_USER,
+	password: process.env.MARIADB_PASSWORD,
+	database: process.env.MARIADB_DB,
 
 	// synchronize: false,	// for PROD
 	synchronize: true,			// for DEV

@@ -5,7 +5,7 @@ import { ElementsService } from './elements.service';
 
 @Module({
 	imports: [TypeOrmModule.forFeature([Element])],
-	exports: [TypeOrmModule],
 	providers: [ElementsService],
+	exports: [TypeOrmModule, ElementsService],
 })
 export class ElementsModule {}

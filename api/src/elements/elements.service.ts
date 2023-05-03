@@ -11,4 +11,22 @@ export class ElementsService {
     private elementsRepository: Repository<Element>,
   ) {}
 
+  getElementNameById(id: number) {
+    switch (id) {
+      case 1:
+        return 'Water'
+      case 2:
+        return 'Desert'
+      case 3:
+        return 'Forest'
+      case 4:
+        return 'Cosmos'
+      case 5:
+        return 'Unknown'
+    
+      default:
+        return 'Unknown';
+    }
+  }
+  
 }

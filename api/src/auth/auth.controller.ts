@@ -1,7 +1,8 @@
-import { Controller, Post, Request, Body } from '@nestjs/common';
+import { Controller, Get, Post, Request, Body, Param, Query } from '@nestjs/common';
 import { AuthService } from './auth.service';
 
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { Tokens } from './tokens/tokens.interface';
 
 @Controller('api/auth')
 export class AuthController {
@@ -11,13 +12,13 @@ export class AuthController {
   // local/signup
   @Post('signin')
   async signin(@Body() createUserDto: CreateUserDto) {
-    return this.authService.signin(createUserDto);
+    return await this.authService.signin(createUserDto);
   }
 
   // local/signup
-  @Post('signin-confirm')
-  async confirmSignin(@Request() req: any) {
-    this.authService.confirmSignin();
+  @Get('signin-confirm')
+  async confirmSignin(@Request() req: any, @Query('token') confirmToken: string): Promise<Tokens> {
+    return await this.authService.confirmSignin(req.email, confirmToken);
   }
   
   // local/signin
