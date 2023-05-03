@@ -68,7 +68,6 @@ export class AuthService {
 		return await this.userService.create(createUserDto);
 	}
 
-	// after clicking on the link from email confirmation
 	async confirmSignin(email: string, confirmToken: string): Promise<Tokens> {
 		// get the confirmToken from url and compare it to the confirmToken from db
 		const tokenDb = await this.userService.getConfirmToken(email).catch((err) => {

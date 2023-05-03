@@ -17,7 +17,7 @@ export class EmailService {
 		this.oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
 	}
 
-	async sendConfirmationLink(user: User, confirmToken: string) {
+	async sendConfirmationLink(user: User, element: string, confirmToken: string) {
 		try {
 			const accessToken = await this.oAuth2Client.getAccessToken();
 			const token = accessToken.token;
@@ -44,8 +44,8 @@ export class EmailService {
 					from: '"No Reply" <noreply@example.com>',
 					to: user.email,
 					subject: `Welcome to ${app_name}! Confirm your Email`,
-					text: `Hello ${user.pseudo}, Welcome into your new faction: the ${user.element.name}, click on this link to activate your profile: ${link}`, 
-					html: `<h1>Hello ${user.pseudo},</h1> <p>Welcome into your new faction <b>the ${user.element.name}</b>, click on this link to activate your profile: ${link}</p>`,
+					text: `Hello ${user.pseudo}, Welcome into your new faction: the ${element}, click on this link to activate your profile: ${link}`, 
+					html: `<h1>Hello ${user.pseudo},</h1> <p>Welcome into your new faction <b>the ${element}</b>, click on this link to activate your profile:<br /> ${link}</p>`,
 				};
 
 				const result = await transport.sendMail(mailOptions);

@@ -11,7 +11,7 @@ export class ElementsService {
     private elementsRepository: Repository<Element>,
   ) {}
 
-  getElementNameById(id: number) {
+  getElementById(id: number) {
     switch (id) {
       case 1:
         return 'Water'
