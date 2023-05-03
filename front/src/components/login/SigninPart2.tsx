@@ -2,7 +2,10 @@ import React, { SyntheticEvent } from "react";
 import { CreateUserDto, QuestionsDto } from "../../_dto/create-user.dto";
 import { api_request } from "../../assets/utils";
 
+import * as bcrypt from 'bcryptjs'
+
 import styles from './css/Login.module.css'
+
 
 interface SigninPagePageProps {
 	email: string,
@@ -47,9 +50,7 @@ function SigninPart2({email, password, message, signin, setSignin}: SigninPagePa
 			question5: response5,
 		}
 
-		const bcrypt = require('bcryptjs');
-		const saltRounds: number = 10;
-    const hash: string = await bcrypt.hash(password, saltRounds);
+    const hash: string = await bcrypt.hash(password, 10);
 
 		let user: CreateUserDto = {
 			email: email,
