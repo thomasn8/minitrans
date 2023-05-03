@@ -38,15 +38,14 @@ export class EmailService {
 				const app_name = process.env.APP_NAME;
 				let domain_name = undefined;
 				process.env.BUILD_TYPE === "Production" ? domain_name = process.env.DOMAIN_NAME : domain_name = process.env.DEV_DOMAIN_NAME;
-				const link = `${domain_name}/${process.env.SIGNIN_CONFIRM_URL}/?token=${confirmToken}`;
-				// const link = `${domain_name}/${process.env.SIGNIN_CONFIRM_URL}?token=${confirmToken}`;
+				const link = `${domain_name}/${process.env.SIGNIN_CONFIRM_URL}?token=${confirmToken}`;
 
 				const mailOptions = {
 					from: '"No Reply" <noreply@example.com>',
 					to: user.email,
 					subject: `Welcome to ${app_name}! Confirm your Email`,
-					text: `Hello ${user.pseudo}, Welcome into your new faction: the ${user.element.name}, click on this link to activate your profile:\n ${link}`, 
-					html: `<h1>Hello ${user.pseudo},</h1> <p>Welcome into your new faction <b>the ${user.element.name}</b>, click on this link to activate your profile:\n ${link}</p>`,
+					text: `Hello ${user.pseudo}, Welcome into your new faction: the ${user.element.name}, click on this link to activate your profile: ${link}`, 
+					html: `<h1>Hello ${user.pseudo},</h1> <p>Welcome into your new faction <b>the ${user.element.name}</b>, click on this link to activate your profile: ${link}</p>`,
 				};
 
 				const result = await transport.sendMail(mailOptions);

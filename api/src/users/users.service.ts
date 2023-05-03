@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException, ConflictException } from '@nestjs/common';
+import { Injectable, Inject, forwardRef, BadRequestException, ConflictException } from '@nestjs/common';
 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -11,8 +11,10 @@ import { Element } from 'src/elements/entities/element.entity';
 import { Factions } from './factions/Factions';
 
 import { EmailService } from 'src/email/email.service';
+import { AuthService } from 'src/auth/auth.service';
 
 import * as randomstring from 'randomstring';
+import { ElementsService } from 'src/elements/elements.service';
 
 
 @Injectable()
@@ -22,6 +24,9 @@ export class UsersService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
     private emailService: EmailService,
+    @Inject(forwardRef(() => AuthService))
+    private authService: AuthService,
+    private elementService: ElementsService
   ) {}
 
   // findAll() {
@@ -78,8 +83,26 @@ export class UsersService {
     user.pseudo = pseudo;
 
     // token to use in the url of confirmation
-    const confirmToken: string = randomstring.generate(15);         // GENERATE A JWT OR A RANDOMSTRING ?
-    user.confirmationToken = confirmToken;
+
+    // randomstring + email
+    // const confirmToken: string = randomstring.generate(15);
+    // user.confirmationToken = confirmToken;
+
+    // jwt with email encoded
+    console.log({
+      id: -1,
+      email: user.email,
+      pseudo: user.pseudo,
+      element: this.elementService.getElementNameById(elementId)
+    });
+    const { accessToken } = await this.authService.getAccessToken({
+      id: -1,
+      email: user.email,
+      pseudo: user.pseudo,
+      element: this.elementService.getElementNameById(elementId)
+    });
+    user.confirmationToken = accessToken;
+    console.log(accessToken);
 
     // save in db
     this.usersRepository.save(user).catch((err) => {
@@ -87,9 +110,19 @@ export class UsersService {
       throw new BadRequestException('User creation error:', err);
     })
 
-    await this.emailService.sendConfirmationLink(user, confirmToken);
+    await this.emailService.sendConfirmationLink(user, user.confirmationToken);
 
     return 'Signed in success';
+  }
+
+  async getConfirmToken(email: string) {
+    const token = await this.usersRepository.findOneOrFail({
+      where: { email: email },
+      select: ['confirmationToken']
+    });
+    if (token)
+      return token;
+    return null;
   }
 
 }

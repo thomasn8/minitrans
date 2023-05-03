@@ -8,8 +8,8 @@ then
 	yarn install
 	yarn add @nestjs/typeorm typeorm mysql
 	yarn add bcrypt @types/bcrypt
-	# yarn add @nestjs/jwt passport-jwt @types/passport-jwt
-	yarn add  @nestjs/schedule @types/cron
+	yarn add @nestjs/jwt passport-jwt @types/passport-jwt @nestjs/passport passport
+	yarn add @nestjs/schedule @types/cron
 	yarn add @nestjs/websockets @nestjs/platform-socket.io
 	yarn add nodemailer @types/nodemailer googleapis
 	yarn add unique-username-generator
