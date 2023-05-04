@@ -22,8 +22,8 @@ export class User {
 	@Column({ select: false })
   confirmationToken: string;
 
-	@UpdateDateColumn({ select: false })
-	confirmationDate: Date;
+	@UpdateDateColumn({ nullable: true, default: null, select: false })
+	confirmationDate: Date | null;
 
   @Column({ unique: true })
   pseudo: string;
@@ -32,14 +32,14 @@ export class User {
   element: Element;
 
 	@Column({ nullable: true, default: null, select: false })
-  refreshToken?: string;
+  refreshToken: string;
 
 	toUserDto(): UserDto {
 		return {
 			id: this.id,
 			email: this.email,
 			pseudo: this.pseudo,
-			element: this.element
+			element: this.element.name
 		}
 	}
 
