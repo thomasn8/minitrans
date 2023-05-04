@@ -38,7 +38,7 @@ export class EmailService {
 				const app_name = process.env.APP_NAME;
 				let domain_name = undefined;
 				process.env.BUILD_TYPE === "Production" ? domain_name = process.env.DOMAIN_NAME : domain_name = process.env.DEV_DOMAIN_NAME;
-				const link = `${domain_name}/${process.env.SIGNIN_CONFIRM_URL}?token=${confirmToken}`;
+				const link = `${domain_name}/signin-confirm?token=${confirmToken}`;
 
 				const mailOptions = {
 					from: '"No Reply" <noreply@example.com>',

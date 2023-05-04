@@ -4,7 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './components/home/HomePage';
 import LoginPage from './components/login/LoginPage'; 
 import LogoutPage from './components/login/LogoutPage';
-import Recover from './components/login/Recover';
+import RecoverPage from './components/login/RecoverPage';
+import SigninConfirmPage from './components/login/SigninConfirmPage';
 import ChatPage from './components/chat/ChatPage';
 import GamePage from './components/game/GamePage';
 import ColorTheme from './assets/ColorTheme';
@@ -40,12 +41,13 @@ function App() {
     <Router>
       <div className="app">
         <Routes>
-          <Route path="/"         element={<HomePage    user={user} color={color} />} />
-          <Route path="/login"    element={<LoginPage   user={user} />} />
-          <Route path="/logout"   element={<LogoutPage  user={user} />} />
-          <Route path="/recover"  element={<Recover     user={user} />} />
-          <Route path="/chat"     element={<ChatPage    user={user} />} />
-          <Route path="/game"     element={<GamePage    user={user} />} />
+          <Route path="/"               element={<HomePage      user={user} color={color} />} />
+          <Route path="/login"          element={<LoginPage     user={user} />} />
+          <Route path="/logout"         element={<LogoutPage    user={user} />} />
+          <Route path="/signin-confirm" element={<SigninConfirmPage         />} />
+          <Route path="/recover"        element={<RecoverPage               />} />
+          <Route path="/chat"           element={<ChatPage      user={user} />} />
+          <Route path="/game"           element={<GamePage      user={user} />} />
         </Routes>
       </div>
     </Router>
