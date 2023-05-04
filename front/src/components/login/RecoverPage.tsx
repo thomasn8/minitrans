@@ -1,13 +1,9 @@
 import React, { SyntheticEvent } from "react";
 import { LoginDto } from "../../_dto/login-dto";
 
-// import '../../assets/css/recover.css';
+// import './recover.css';
 
-interface RecoverPageProps {
-	user: LoginDto | undefined;
-}
-
-function RecoverPage({user}: RecoverPageProps) {
+function RecoverPage() {
 	return (
 		<>Recover</>
 	);

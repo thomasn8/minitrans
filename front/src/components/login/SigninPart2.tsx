@@ -1,7 +1,6 @@
 import React, { SyntheticEvent } from "react";
 import { CreateUserDto, QuestionsDto } from "../../_dto/create-user.dto";
 import { api_request } from "../../assets/utils";
-
 import * as bcrypt from 'bcryptjs'
 
 import styles from './css/Login.module.css'

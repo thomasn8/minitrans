@@ -5,6 +5,7 @@ import { UserDto } from 'src/_shared_dto/user.dto';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { Tokens } from './tokens/tokens.interface';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -65,18 +66,23 @@ export class AuthService {
 	}
 
 	async confirmSignin(confirmToken: string): Promise<Tokens> {
+
 		const decoded = await this.jwtService.verifyAsync(confirmToken, { secret: process.env.EMAILCONFIRM_TOKEN_SECRET }).catch((err:any) => {
 			console.log(err);
 			throw new UnauthorizedException('Email confirmation error: token not valid');
 		})
 
-		const tokenRegisterd = await this.userService.getConfirmToken(decoded.email);
-		
-		if (tokenRegisterd && tokenRegisterd === confirmToken) {
+		const tokenRegistered = await this.userService.getConfirmToken(decoded.email);
+
+		if (tokenRegistered === '')
+			throw new UnauthorizedException('Email confirmation error: already confirmed');
+
+		if (tokenRegistered && tokenRegistered === confirmToken) {
 			const user: UserDto = await this.userService.confirmUser(decoded.email);
-			console.log(user);
 			const tokens = await this.getTokens(user);
-			await this.userService.updateRefreshToken(user.id, tokens.refreshToken);
+			const hash = await bcrypt.hash(tokens.refreshToken, 10);
+			await this.userService.updateRefreshToken(user.id, hash);
+			console.log('Signin confirmed:',user);
 			return tokens;
 		}
 		else
