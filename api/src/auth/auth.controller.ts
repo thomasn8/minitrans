@@ -17,8 +17,10 @@ export class AuthController {
 
   // local/signup
   @Get('signin-confirm')
-  async confirmSignin(@Request() req: any, @Query('token') confirmToken: string): Promise<Tokens> {
-    return await this.authService.confirmSignin(req.email, confirmToken);
+  async confirmSignin(@Query('token') confirmToken: string): Promise<Tokens> {
+    // console.log(req.email); // A TESTER
+    // console.log(confirmToken);
+    return await this.authService.confirmSignin(confirmToken);
   }
   
   // local/signin

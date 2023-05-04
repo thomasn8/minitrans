@@ -1,4 +1,4 @@
-import { Injectable, Inject, forwardRef, BadRequestException, ConflictException } from '@nestjs/common';
+import { Injectable, BadRequestException, NotFoundException, ConflictException, InternalServerErrorException } from '@nestjs/common';
 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -6,15 +6,14 @@ import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { Element } from 'src/elements/entities/element.entity';
+import { UserDto } from 'src/_shared_dto/user.dto';
 
+import { Element } from 'src/elements/entities/element.entity';
 import { Factions } from './factions/Factions';
 
 import { EmailService } from 'src/email/email.service';
-import { AuthService } from 'src/auth/auth.service';
-
-import * as randomstring from 'randomstring';
 import { ElementsService } from 'src/elements/elements.service';
+import { JwtService } from '@nestjs/jwt';
 
 
 @Injectable()
@@ -24,17 +23,37 @@ export class UsersService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
     private emailService: EmailService,
-    @Inject(forwardRef(() => AuthService))
-    private authService: AuthService,
-    private elementService: ElementsService
+    private elementService: ElementsService,
+    private jwtService: JwtService
   ) {}
+
+  async saveUser(user: User, errorMsg: string) {
+    await this.usersRepository.save(user).catch((err) => {
+      console.log(err);
+      throw new InternalServerErrorException(errorMsg);
+    });
+  }
 
   // findAll() {
   //   return `This action returns all user`;
   // }
 
-  // findOne(id: number) {
-  //   return `This action returns a #${id} user`;
+  // async findOne(errorMsg: string, id?: number, email?: string) {
+  //   try {
+  //     if (id) {
+  //       return await this.usersRepository.findOneOrFail({
+  //         where: { id: id },
+  //       })
+  //     }
+  //     else {
+  //       return await this.usersRepository.findOneOrFail({
+  //         where: { email: email },
+  //       })
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+	// 		throw new NotFoundException(errorMsg);
+  //   }
   // }
 
   // update(id: number, updateUserDto: UpdateUserDto) {
@@ -65,12 +84,10 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto) {
     console.log(createUserDto);
-    // user data from body 
+    
     const user = new User();
     user.email = createUserDto.email;
     user.password = createUserDto.password;
-
-    // faction datas determined by user responses
     const factions: Factions = new Factions(); 
     const elementId = factions.identifyUser(createUserDto.questions);
     const element = new Element(elementId);
@@ -80,36 +97,67 @@ export class UsersService {
       pseudo = factions.generatePseudo(elementId);
     }
     user.pseudo = pseudo;
+    const confirmToken = await this.jwtService.signAsync({
+        email: user.email,
+      }, {
+        secret: process.env.EMAILCONFIRM_TOKEN_SECRET,
+        expiresIn: 60 * 60 * 24, // 2 hours to confirm
+      }
+    );
+    user.confirmationDate = null;
+    user.confirmationToken = confirmToken;
+    await this.saveUser(user, 'User creation error');
 
-    // token to use in the url of confirmation
     const elementName = this.elementService.getElement(elementId)
-    const { accessToken } = await this.authService.getAccessToken({
-      id: -1,
-      email: user.email,
-      pseudo: user.pseudo,
-      element: elementName
-    });
-    user.confirmationToken = accessToken;
-
-    // save in db
-    this.usersRepository.save(user).catch((err) => {
-      console.log(err);
-      throw new BadRequestException('User creation error:', err);
-    })
-
-    await this.emailService.sendConfirmationLink(user, elementName, user.confirmationToken);
+    await this.emailService.sendConfirmationLink(user, elementName, confirmToken);
 
     return 'Signed in success';
   }
 
-  async getConfirmToken(email: string) {
-    const token = await this.usersRepository.findOneOrFail({
+  async getConfirmToken(email: string): Promise<string>  {
+    const user = await this.usersRepository.findOneOrFail({
       where: { email: email },
       select: ['confirmationToken']
+    }).catch((err) => {
+      console.log(err);
+      throw new NotFoundException('User not found');
     });
-    if (token)
-      return token;
-    return null;
+
+    return user.confirmationToken;
+  }
+
+  async confirmUser(email: string): Promise<UserDto> {
+    const user = await this.usersRepository.findOneOrFail({
+      where: { email: email },
+      relations: { element: true }
+    }).catch((err) => {
+      console.log(err);
+			throw new NotFoundException('User not found');
+    });
+
+    user.confirmation = true;
+    user.confirmationToken = '';
+    user.confirmationDate = new Date();
+    await this.saveUser(user, 'User confirmation error');
+
+    return {
+      id: user.id,
+      email: user.email,
+      pseudo: user.pseudo,
+      element: user.element.name
+    };
+  }
+
+  async updateRefreshToken(userId: number, refreshToken: string) {
+    const user = await this.usersRepository.findOneOrFail({
+      where: { id: userId },
+    }).catch((err) => {
+      console.log(err);
+			throw new NotFoundException('User not found');
+    });
+
+    user.refreshToken = refreshToken;
+    await this.saveUser(user, 'User confirmation error');
   }
 
 }
