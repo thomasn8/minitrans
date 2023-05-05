@@ -27,7 +27,7 @@ export class UsersService {
     private jwtService: JwtService
   ) {}
 
-  async saveUser(user: User, errorMsg: string) {
+  async saveUserOrFail(user: User, errorMsg: string) {
     await this.usersRepository.save(user).catch((err) => {
       console.log(err);
       throw new InternalServerErrorException(errorMsg);
@@ -37,6 +37,35 @@ export class UsersService {
   // findAll() {
   //   return `This action returns all user`;
   // }
+
+  async findLogin(email: string) {
+    if (!email)
+      throw new NotFoundException('User not found');
+
+    const user = await this.usersRepository.findOneOrFail({
+      where: { email: email },
+      relations: { element: true },
+      select: ['id', 'email', 'password', 'pseudo', 'element']
+    }).catch((err) => {
+      console.log(err);
+      throw new NotFoundException('User not found');
+    })
+    return user;
+  }
+
+  async findRefreshToken(userId: number) {
+    if (!userId)
+      throw new NotFoundException('User not found');
+
+    const user = await this.usersRepository.findOneOrFail({
+      where: { id: userId },
+      select: ['refreshToken']
+    }).catch((err) => {
+      console.log(err);
+      throw new NotFoundException('User not found');
+    })
+    return user.refreshToken;
+  }
 
   // async findOne(errorMsg: string, id?: number, email?: string) {
   //   try {
@@ -64,24 +93,6 @@ export class UsersService {
   //   return `This action removes a #${id} user`;
   // }
 
-  async emailExist(email: string): Promise<boolean> {
-    const user = await this.usersRepository.findOne({
-      where: { email: email }
-    })
-    if (user)
-      return true;
-    return false;
-  }
-
-  async pseudoExist(pseudo: string): Promise<boolean> {
-    const user = await this.usersRepository.findOne({
-      where: { pseudo: pseudo }
-    })
-    if (user)
-      return true;
-    return false;
-  }
-
   async create(createUserDto: CreateUserDto) {
     console.log(createUserDto);
     
@@ -101,12 +112,12 @@ export class UsersService {
         email: user.email,
       }, {
         secret: process.env.EMAILCONFIRM_TOKEN_SECRET,
-        expiresIn: 60 * 60 * 24, // 2 hours to confirm
+        expiresIn: 60 * 60 * 24, // 24 hours to confirm
       }
     );
-    user.confirmationDate = null;
+    // user.confirmationDate = null;
     user.confirmationToken = confirmToken;
-    await this.saveUser(user, 'User creation error');
+    await this.saveUserOrFail(user, 'User creation error');
 
     const elementName = this.elementService.getElement(elementId)
     await this.emailService.sendConfirmationLink(user, elementName, confirmToken);
@@ -114,7 +125,28 @@ export class UsersService {
     return 'Signed in success';
   }
 
+  async emailExist(email: string): Promise<boolean> {
+    const user = await this.usersRepository.findOne({
+      where: { email: email }
+    })
+    if (user)
+      return true;
+    return false;
+  }
+
+  async pseudoExist(pseudo: string): Promise<boolean> {
+    const user = await this.usersRepository.findOne({
+      where: { pseudo: pseudo }
+    })
+    if (user)
+      return true;
+    return false;
+  }
+
   async getConfirmToken(email: string): Promise<string>  {
+    if (!email)
+      throw new NotFoundException('User not found');
+
     const user = await this.usersRepository.findOneOrFail({
       where: { email: email },
       select: ['confirmationToken']
@@ -127,6 +159,9 @@ export class UsersService {
   }
 
   async confirmUser(email: string): Promise<UserDto> {
+    if (!email)
+      throw new NotFoundException('User not found');
+  
     const user = await this.usersRepository.findOneOrFail({
       where: { email: email },
       relations: { element: true }
@@ -137,8 +172,8 @@ export class UsersService {
 
     user.confirmation = true;
     user.confirmationToken = '';
-    user.confirmationDate = new Date();
-    await this.saveUser(user, 'User confirmation error');
+    // user.confirmationDate = new Date();
+    await this.saveUserOrFail(user, 'User confirmation error');
 
     return {
       id: user.id,
@@ -149,6 +184,9 @@ export class UsersService {
   }
 
   async updateRefreshToken(userId: number, refreshToken: string) {
+    if (!userId)
+      throw new NotFoundException('User not found');
+
     const user = await this.usersRepository.findOneOrFail({
       where: { id: userId },
     }).catch((err) => {
@@ -157,7 +195,7 @@ export class UsersService {
     });
 
     user.refreshToken = refreshToken;
-    await this.saveUser(user, 'User confirmation error');
+    await this.saveUserOrFail(user, 'User confirmation error');
   }
 
 }

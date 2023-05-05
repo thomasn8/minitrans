@@ -21,8 +21,8 @@ function LoginPage({user}: LoginPageProps) {
 		setSignin(!signin);
 	}
 
-	const [email, setEmail] = React.useState('');
-	const [password, setPassword] = React.useState('');
+	const [email, setEmail] = React.useState('thomasnanchen@hotmail.com');
+	const [password, setPassword] = React.useState('password');
 
 	const [errorMessage, setErrorMessage] = React.useState('');
 
@@ -36,8 +36,22 @@ function LoginPage({user}: LoginPageProps) {
 	function handleSubmitLogin(event: SyntheticEvent) {
 		event.preventDefault();
 
-		// CODE
+		// VALIDATION
 		// ...
+		
+		api_request('post', '/api/auth/login', undefined, {
+			email: email,
+			password: password
+		})
+		.then((res) => {
+			console.log(res.data);
+			if (res.status === 200) {
+				// use the tokens from res.data.accessToken /refreshToken
+			}
+		})
+		.catch((err) => {
+			message(err.response.data.message, 4000);
+		});
 	}
 
 	return (
@@ -55,6 +69,7 @@ function LoginPage({user}: LoginPageProps) {
 						className={styles.login}
 						type="email"
 						placeholder="Email"
+						value={email}
 						onChange={(event) => setEmail(event.target.value)}
 						autoFocus
 					/>
@@ -62,6 +77,7 @@ function LoginPage({user}: LoginPageProps) {
 						className={styles.login}
 						type="password"
 						placeholder="Password"
+						value={password}
 						onChange={(event) => setPassword(event.target.value)}
 					/>
 					<button className={styles.login} type="submit">Enter</button>

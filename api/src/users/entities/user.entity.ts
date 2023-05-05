@@ -22,8 +22,8 @@ export class User {
 	@Column({ select: false })
   confirmationToken: string;
 
-	@UpdateDateColumn({ nullable: true, default: null, select: false })
-	confirmationDate: Date | null;
+	// @CreateDateColumn({ nullable: true, default: null, select: false })
+	// confirmationDate: Date | null;
 
   @Column({ unique: true })
   pseudo: string;
