@@ -1,4 +1,4 @@
 export interface ChatUserDto {
-	id: number,
-	pseudo: string,
+	id: number;
+	pseudo: string;
 }

@@ -44,8 +44,8 @@ export class EmailService {
 					from: '"No Reply" <noreply@example.com>',
 					to: user.email,
 					subject: `Welcome to ${app_name}! Confirm your Email`,
-					text: `Hello ${user.pseudo}, Welcome into your new faction: the ${element}, click on this link to activate your profile: ${link}`, 
-					html: `<h1>Hello ${user.pseudo},</h1> <p>Welcome into your new faction <b>the ${element}</b>, click on this link to activate your profile:<br /> ${link}</p>`,
+					text: `${user.pseudo},\n Welcome into your new faction: the ${element}! Click on this link to activate your profile:\n ${link}`, 
+					html: `<h1>${user.pseudo},</h1> <p>Welcome into your new faction <b>the ${element}</b>! Click on this link to activate your profile:<br /> ${link}</p>`,
 				};
 
 				const result = await transport.sendMail(mailOptions);

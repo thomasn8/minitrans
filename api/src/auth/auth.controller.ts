@@ -1,48 +1,53 @@
-import { Controller, Post, Request, Body, UnauthorizedException } from '@nestjs/common';
+import { Controller, Post, Request, Body, HttpCode, HttpStatus, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { LoginDto } from './dto/Login.dto';
+import { RefreshTokenGuard } from './guards';
+
+import { Public } from './decorators/public.decorator';
 
 @Controller('api/auth')
 export class AuthController {
 
   constructor(private readonly authService: AuthService) {}
 
-  /* 
-  PUBLIC ROUTES
-  */
-
   @Post('signin')
+  @Public()
+  @HttpCode(201)
   async signin(@Body() createUserDto: CreateUserDto) {
     return await this.authService.signin(createUserDto);
   }
 
   @Post('signin-confirm')
+  @Public()
+  @HttpCode(200)
   async confirmSignin(@Body() body: { token: string }) {
-
-    // make use of the token for the new user (store where ? headers ?)
     const tokens = await this.authService.confirmSignin(body.token)
-    return tokens;
+    return tokens;                                          // WHICH TOKEN TO RETURN AND WHAT TO DO WITH IT/THEM ?
   }
   
   @Post('login')
-  async login(@Request() req: any) {
-    this.authService.login();
+  @Public()
+  @HttpCode(200)
+  async login(@Body() login: LoginDto) {
+    const tokens = await this.authService.login(login);
+    return tokens;                                          // WHICH TOKEN TO RETURN AND WHAT TO DO WITH IT/THEM ?
   }
 
-
-  /* 
-  LOGGEDIN ROUTES
-  */
-
   @Post('logout')
+  @HttpCode(200)
   async logout(@Request() req: any) {
-    this.authService.logout();
+    console.log(req.user);
+    this.authService.logout(req.user.id);                   // RETURN SOMETHING ?
   }
 
   @Post('refresh')
+  @Public()
+  @UseGuards(RefreshTokenGuard)
+  @HttpCode(200)
   async refreshToken(@Request() req: any) {
-    this.authService.refreshToken();
+    return this.authService.refreshToken(req.user, req.user.refreshToken);
   }
 
 }

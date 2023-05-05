@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
 import config from './_typeorm/ormconfig';
@@ -9,6 +10,7 @@ import { ElementsModule } from './elements/elements.module';
 
 import { EmailModule } from './email/email.module';
 import { AuthModule } from './auth/auth.module';
+import { AccessTokenGuard } from './auth/guards';
 
 @Module({
   imports: [
@@ -20,6 +22,9 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [{
+    provide: APP_GUARD,
+    useClass: AccessTokenGuard
+  }],
 })
 export class AppModule { }
