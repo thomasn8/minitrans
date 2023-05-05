@@ -38,12 +38,12 @@ export class AuthController {
   @Post('logout')
   @HttpCode(200)
   async logout(@Request() req: any) {
-    console.log(req.user);
     this.authService.logout(req.user.id);                   // RETURN SOMETHING ?
   }
 
+  // MUST PASS THE LAST GENERATED REFRESH-TOKEN IN ORDER TO GET A NEW PAIR OF TOKENS 
   @Post('refresh')
-  @Public()
+  @Public()// anhilates the AccessTokenGuard to use the RefreshTokenGuard
   @UseGuards(RefreshTokenGuard)
   @HttpCode(200)
   async refreshToken(@Request() req: any) {
