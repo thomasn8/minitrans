@@ -83,8 +83,9 @@ export class AuthService {
 		if (tokenRegistered && tokenRegistered === confirmToken) {
 			const user: UserDto = await this.userService.confirmUser(decoded.email);
 			const tokens = await this.getTokens(user);
-			const hash = await bcrypt.hash(tokens.refreshToken, 10);
-			await this.userService.updateRefreshToken(user.id, hash);
+			// const hash = await bcrypt.hash(tokens.refreshToken, 10);
+			// await this.userService.updateRefreshToken(user.id, hash);
+			await this.userService.updateRefreshToken(user.id, tokens.refreshToken);
 			console.log('Signin confirmed:',user);
 			return tokens;
 		}
@@ -107,8 +108,9 @@ export class AuthService {
 			element: user.element.name
 		}
 		const tokens = await this.getTokens(userToLogin);
-		const hash = await bcrypt.hash(tokens.refreshToken, 10);
-		await this.userService.updateRefreshToken(user.id, hash);
+		// const hash = await bcrypt.hash(tokens.refreshToken, 10);
+		// await this.userService.updateRefreshToken(user.id, hash);
+		await this.userService.updateRefreshToken(user.id, tokens.refreshToken);
 		return tokens;
 	}
 
@@ -121,13 +123,21 @@ export class AuthService {
 	async refreshToken(user: any, refreshToken: string) {
 		const rtRegistered = await this.userService.findRefreshToken(user.id);
 
-		const rtMatch = await bcrypt.compare(refreshToken, rtRegistered);
-		if (rtMatch === false)
-			throw new ForbiddenException('Error');
+		if (!rtRegistered)
+			throw new ForbiddenException('Access denied');
+
+		// const rtMatch = await bcrypt.compare(refreshToken, rtRegistered);			// ERROR SHOULD NOT WORK WITH THE ACCESS TOKEN SET IN BEARER
+		// if (rtMatch === false)
+			// throw new ForbiddenException('Error');				// aussi logout le user en detruisant son rt en db par securite
+		console.log('token from request:', refreshToken);
+		console.log('token from db:', rtRegistered);
+		if (refreshToken !== rtRegistered)
+			throw new ForbiddenException('Access denied');
 
 		const tokens = await this.getTokens(user);
-		const hash = await bcrypt.hash(tokens.refreshToken, 10);
-		await this.userService.updateRefreshToken(user.id, hash);
+		// const hash = await bcrypt.hash(tokens.refreshToken, 10);
+		// await this.userService.updateRefreshToken(user.id, hash);
+		await this.userService.updateRefreshToken(user.id, tokens.refreshToken);
 		return tokens;
 	}
 
