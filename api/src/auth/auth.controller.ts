@@ -43,7 +43,7 @@ export class AuthController {
 
   // MUST PASS THE LAST GENERATED REFRESH-TOKEN IN ORDER TO GET A NEW PAIR OF TOKENS 
   @Post('refresh')
-  @Public()// anhilates the AccessTokenGuard to use the RefreshTokenGuard
+  @Public()// disables the AccessTokenGuard in order to use the RefreshTokenGuard
   @UseGuards(RefreshTokenGuard)
   @HttpCode(200)
   async refreshToken(@Request() req: any) {
@@ -51,3 +51,5 @@ export class AuthController {
   }
 
 }
+
+
