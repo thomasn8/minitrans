@@ -35,13 +35,17 @@ export class AuthController {
     return tokens;                                          // WHICH TOKEN TO RETURN AND WHAT TO DO WITH IT/THEM ?
   }
 
+  /* 
+    Protected routes  
+  */
+
   @Post('logout')
   @HttpCode(200)
   async logout(@Request() req: any) {
     this.authService.logout(req.user.id);                   // RETURN SOMETHING ?
   }
 
-  // MUST PASS THE LAST GENERATED REFRESH-TOKEN IN ORDER TO GET A NEW PAIR OF TOKENS 
+  // must pass the last generated refresh-token in order to get a new pair of tokens 
   @Post('refresh')
   @Public()// disables the AccessTokenGuard in order to use the RefreshTokenGuard
   @UseGuards(RefreshTokenGuard)
@@ -51,5 +55,4 @@ export class AuthController {
   }
 
 }
-
 
