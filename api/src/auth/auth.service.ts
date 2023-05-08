@@ -24,7 +24,7 @@ export class AuthService {
 	// 			element: user.element
 	// 		}, {
 	// 			secret: process.env.ACCESSTOKEN_SECRET,
-	// 			expiresIn: 60 * 15,
+	// 			expiresIn: "1h",
 	// 		}
 	// 	);
 	// 	return { accessToken: accessToken };
@@ -40,7 +40,7 @@ export class AuthService {
 					element: user.element
 				}, {
 					secret: process.env.ACCESSTOKEN_SECRET,
-					expiresIn: 60 * 15,
+					expiresIn: "1h",
 				}
 			),
 			this.jwtService.signAsync({
@@ -50,7 +50,7 @@ export class AuthService {
 					element: user.element
 				}, {
 					secret: process.env.REFRESHTOKEN_SECRET,
-					expiresIn: 60 * 60 * 24 * 7,
+					expiresIn: 60 * 60 * 24 * 2,
 				}
 			),
 		]).catch((err) => {
