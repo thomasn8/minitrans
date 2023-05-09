@@ -1,4 +1,4 @@
-import { Controller, Post, Request, Body, HttpCode, HttpStatus, UseGuards, Res } from '@nestjs/common';
+import { Controller, Get, Post, Request, Body, HttpCode, HttpStatus, UseGuards, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
 
 import { Response } from 'express';
@@ -37,7 +37,7 @@ export class AuthController {
     const tokens = await this.authService.login(login);
     const cookie = `Authentication=${tokens.refreshToken}; HttpOnly; Path=/; Max-Age=172800`;
     response.setHeader('Set-Cookie', cookie);
-    console.log('rt in cookies:', tokens.refreshToken);
+    console.log('new rt set in cookie:', tokens.refreshToken);
     return tokens.accessToken;
   }
 
@@ -51,16 +51,22 @@ export class AuthController {
     this.authService.logout(req.user.id); // RETURN SOMETHING ?
   }
 
-  // must pass the last generated refresh-token in order to get a new pair of tokens 
-  @Post('refresh')
+  // get the refresh token set from the cookies
+  @Get('refresh')
   @Public()// disables the AccessTokenGuard in order to use the RefreshTokenGuard
   @UseGuards(RefreshTokenGuard)
   @HttpCode(200)
   async refreshToken(@Request() req: any, @Res({ passthrough: true }) response: Response) {
-    const tokens = await this.authService.refreshToken(req.user, req.user.refreshToken);
+    const headers: string[] = req.rawHeaders;
+    const index = headers.findIndex((header) => header === 'Cookie') + 1;
+    const rtFromCookie = headers[index].substring(headers[index].indexOf('=') + 1);
+    console.log('rt get from cookie',rtFromCookie);
+
+    const tokens = await this.authService.refreshToken(req.user, rtFromCookie);
+    // const tokens = await this.authService.refreshToken(req.user, req.user.refreshToken);
     const cookie = `Authentication=${tokens.refreshToken}; HttpOnly; Path=/; Max-Age=172800`;
     response.setHeader('Set-Cookie', cookie);
-    console.log('rt in cookies:', tokens.refreshToken);
+    console.log('new rt set in cookie:', tokens.refreshToken);
     return tokens.accessToken;
   }
 
