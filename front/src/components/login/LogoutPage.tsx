@@ -14,6 +14,7 @@ function LogoutPage({login, setToken}: LogoutPageProps) {
 	React.useEffect(() => {
 		localStorage.setItem("token", "");
 		setToken("");
+		// request to api/logout in order to delete refresh token from the db
 		navigate("/login");
 	});
 

@@ -8,11 +8,12 @@ import styles from './css/Chat.module.css'
 
 interface ChatPageProps {
 	login: LoginDto | undefined;
+	setToken: Function;
 }
 
-function ChatPage({login}: ChatPageProps) {
+function ChatPage({login, setToken}: ChatPageProps) {
 
-	useLoginRedirect(login);
+	useLoginRedirect(login, setToken);
 
 	const [pseudo, setPseudo] = React.useState('');
 

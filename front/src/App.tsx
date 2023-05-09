@@ -33,8 +33,8 @@ function App() {
   const [token, setToken] = React.useState(localStorage.getItem("token") || "");
   const [login, setLogin] = React.useState<LoginDto | undefined>(undefined);
 
-  // si ca a pas passer, faire une requet sur auth/refresh pour avoir une nouvelle paire de token, si oui et retenter une requete sur api/me
   React.useEffect(() => {
+    console.log('set login');
     const getUserData = async () => {
       if (token) {
         api_request('get', '/api/me', token)
@@ -58,13 +58,13 @@ function App() {
     <Router>
       <div className="app">
         <Routes>
-          <Route path="/"               element={<HomePage      login={login} color={color} />} />
+          <Route path="/"               element={<HomePage      login={login} setToken={setToken} color={color} />} />
           <Route path="/login"          element={<LoginPage     login={login} setToken={setToken}/>} />
           <Route path="/logout"         element={<LogoutPage    login={login} setToken={setToken}/>} />
-          <Route path="/signin-confirm" element={<SigninConfirmPage           />} />
-          <Route path="/recover"        element={<RecoverPage                 />} />
-          <Route path="/chat"           element={<ChatPage      login={login} />} />
-          <Route path="/game"           element={<GamePage      login={login} />} />
+          <Route path="/signin-confirm" element={<SigninConfirmPage />} />
+          <Route path="/recover"        element={<RecoverPage />} />
+          <Route path="/chat"           element={<ChatPage      login={login} setToken={setToken}/>} />
+          <Route path="/game"           element={<GamePage      login={login} setToken={setToken}/>} />
         </Routes>
       </div>
     </Router>
