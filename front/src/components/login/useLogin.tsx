@@ -17,7 +17,7 @@ function useLogin(): LoginDto | undefined {
   }
 
   function getUserData(): void {
-    if (token && token.length != 0) {
+    if (token && token.length !== 0) {
       axios
         .get("/api/me", getHeaders())
         .then((res) => {
@@ -25,7 +25,7 @@ function useLogin(): LoginDto | undefined {
             setUser(res.data as UserDto);
           }
         })
-        .catch((error) => {});
+        .catch((error) => {});  // si ca a pas passer, faire une requet sur auth/refresh pour avoir une nouvelle paire de token, si oui et retenter une requete sur api/me
     }
 		else {
 	    setUser(undefined);
@@ -38,13 +38,16 @@ function useLogin(): LoginDto | undefined {
     }
   }, [token]);
 
-	return {
-    token,
-    setToken,
-    user,
-    getHeaders,
-    getUserData,
-  };
+  if (user) {
+    return {
+      token,
+      setToken,
+      user,
+      getHeaders,
+      getUserData,
+    };
+  }
+  return undefined;
 }
 
 export default useLogin;

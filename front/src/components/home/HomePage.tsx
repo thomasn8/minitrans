@@ -8,13 +8,13 @@ import styles from './css/Home.module.css'
 import { ChatSvg, GameSvg } from "./svg/home-icones";
 
 interface HomePageProps {
-	user: LoginDto | undefined;
+	login: LoginDto | undefined;
 	color: string;
 }
 
-function HomePage({user, color}: HomePageProps) {
+function HomePage({login, color}: HomePageProps) {
 
-	useLoginRedirect(user);
+	useLoginRedirect(login);
 
 	const [alignment, setAlignment] = React.useState('justify_center');
 	React.useEffect(() => {
@@ -26,7 +26,7 @@ function HomePage({user, color}: HomePageProps) {
 
 	return (
 		<div id="home" className={styles.home_wrapper}>
-			{user && 
+			{login && 
 			<>
 			<h1 className={`title`}>Home</h1>
 			<Nav page={'home'}/>

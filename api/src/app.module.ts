@@ -11,6 +11,7 @@ import { ElementsModule } from './elements/elements.module';
 import { EmailModule } from './email/email.module';
 import { AuthModule } from './auth/auth.module';
 import { AccessTokenGuard } from './auth/guards';
+import { MeModule } from './me/me.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { AccessTokenGuard } from './auth/guards';
     ElementsModule,
     EmailModule,
     AuthModule,
+    MeModule,
   ],
   controllers: [],
   providers: [{

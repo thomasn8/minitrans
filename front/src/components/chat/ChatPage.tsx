@@ -7,20 +7,20 @@ import ChatRoom from "./ChatRoom";
 import styles from './css/Chat.module.css'
 
 interface ChatPageProps {
-	user: LoginDto | undefined;
+	login: LoginDto | undefined;
 }
 
-function ChatPage({user}: ChatPageProps) {
+function ChatPage({login}: ChatPageProps) {
 
-	useLoginRedirect(user);
+	useLoginRedirect(login);
 
 	const [pseudo, setPseudo] = React.useState('');
 
 	return (
 		<div id="chat" className={styles.chat_wrapper}>
 			{pseudo === '' &&
-			<ChatEntry user={user} setPseudo={setPseudo}/> ||
-			<ChatRoom user={user} pseudo={pseudo} />}
+			<ChatEntry login={login} setPseudo={setPseudo}/> ||
+			<ChatRoom login={login} pseudo={pseudo} />}
 		</div>
 	);
 

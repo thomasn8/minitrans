@@ -10,11 +10,11 @@ import { ChatMessageDto } from "../../_dto/chat-message.dto";
 import styles from './css/ChatRoom.module.css'
 
 interface ChatRoomProps {
-	user: LoginDto | undefined;
+	login: LoginDto | undefined;
 	pseudo: string;
 }
 
-function ChatRoom({user, pseudo}: ChatRoomProps) {
+function ChatRoom({login, pseudo}: ChatRoomProps) {
 
 	const [usersCount, setUsersCount] = React.useState('');
 	const [users, setUsers] = React.useState<ChatUserDto[]>([]);
@@ -58,7 +58,7 @@ function ChatRoom({user, pseudo}: ChatRoomProps) {
 
 		}
 
-	}, [user, pseudo]);
+	}, [login, pseudo]);
 
 	socketRef.current && socketRef.current.on('newClient', (res: ChatUserDto) => {
 		setUsers([...users, res]);

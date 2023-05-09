@@ -8,12 +8,12 @@ import { api_request } from "../../assets/utils";
 import styles from './css/Login.module.css'
 
 interface LoginPageProps {
-	user: LoginDto | undefined;
+	login: LoginDto | undefined;
 }
 
-function LoginPage({user}: LoginPageProps) {
+function LoginPage({login}: LoginPageProps) {
 
-	useHomeRedirect(user);
+	useHomeRedirect(login);
 	
 	const [signin, setSignin] = React.useState(false);
 	function handleClickSignin(event: SyntheticEvent) {
@@ -44,9 +44,9 @@ function LoginPage({user}: LoginPageProps) {
 			password: password
 		})
 		.then((res) => {
-			console.log(res.data);
 			if (res.status === 200) {
-				// use the tokens from res.data.accessToken /refreshToken
+				localStorage.setItem("token", res.data);
+				login?.setToken(res.data);
 			}
 		})
 		.catch((err) => {

@@ -10,6 +10,7 @@ import ChatPage from './components/chat/ChatPage';
 import GamePage from './components/game/GamePage';
 import ColorTheme from './assets/ColorTheme';
 
+import useLogin from './components/login/useLogin';
 import { LoginDto } from './_dto/login-dto';
 import { UserDto } from './_dto/user-dto';
 
@@ -26,28 +27,29 @@ function App() {
     setColor(colorTheme);
   }, [])
 
-  // const user: LoginDto | undefined = useLogin();
+  let login: LoginDto | undefined = useLogin();
+  console.log('login:', login);
 
-  const user = undefined;
-  // const user = {
-  //   token: 'test',
-  //   setToken: Function,
-  //   user: {id: 1, email: 'thomasnanchen@hotmail.com', pseudo: 'tom', element: 'water'},
-  //   getHeaders: Function,
-  //   getUserData: Function
-  // };
+  // let [loginer, setLoginer] = React.useState(login);
+
+  // let [login, setLogin] = React.useState<LoginDto | undefined>(undefined);
+
+  // let login: LoginDto | undefined = undefined;
+  // React.useEffect(() => {
+  //   setLoginer(login);
+  // }, [loginer]);
 
   return (
     <Router>
       <div className="app">
         <Routes>
-          <Route path="/"               element={<HomePage      user={user} color={color} />} />
-          <Route path="/login"          element={<LoginPage     user={user} />} />
-          <Route path="/logout"         element={<LogoutPage    user={user} />} />
-          <Route path="/signin-confirm" element={<SigninConfirmPage         />} />
-          <Route path="/recover"        element={<RecoverPage               />} />
-          <Route path="/chat"           element={<ChatPage      user={user} />} />
-          <Route path="/game"           element={<GamePage      user={user} />} />
+          <Route path="/"               element={<HomePage      login={login} color={color} />} />
+          <Route path="/login"          element={<LoginPage     login={login} />} />
+          <Route path="/logout"         element={<LogoutPage    login={login} />} />
+          <Route path="/signin-confirm" element={<SigninConfirmPage           />} />
+          <Route path="/recover"        element={<RecoverPage                 />} />
+          <Route path="/chat"           element={<ChatPage      login={login} />} />
+          <Route path="/game"           element={<GamePage      login={login} />} />
         </Routes>
       </div>
     </Router>

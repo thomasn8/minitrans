@@ -88,7 +88,11 @@ export class AuthService {
 		if (!rtRegistered)
 			throw new UnauthorizedException('Unauthorized');
 
-		const hash = createHmac('sha256', 'secret').update(refreshToken).digest('hex');
+		const salt: string | undefined = process.env.REFRESHTOKEN_SALT;
+		if (!salt)
+			throw new InternalServerErrorException('Token error 1');
+		const hash = createHmac('sha256', salt).update(refreshToken).digest('hex');
+
 		if (hash !== rtRegistered) {
 			// this.logout(user.id)
 			// send warning email to the user to prevent it from potential attack on his account
@@ -101,7 +105,10 @@ export class AuthService {
 
 	async updateTokens(user: UserDto): Promise<TokensDto> {
 		const tokens = await this.getTokens(user);
-		const hash = createHmac('sha256', 'secret').update(tokens.refreshToken).digest('hex');
+		const salt: string | undefined = process.env.REFRESHTOKEN_SALT;
+		if (!salt)
+			throw new InternalServerErrorException('Token error 2');		
+		const hash = createHmac('sha256', salt).update(tokens.refreshToken).digest('hex');
 		await this.userService.updateRefreshToken(user.id, hash);
 		return tokens;
 	}
@@ -126,8 +133,7 @@ export class AuthService {
 					element: user.element
 				}, {
 					secret: process.env.REFRESHTOKEN_SECRET,
-					expiresIn: 2,
-					// expiresIn: 60 * 60 * 24 * 2,
+					expiresIn: 60 * 60 * 24 * 2,
 				}
 			),
 		]).catch((err) => {
