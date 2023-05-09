@@ -9,9 +9,10 @@ import styles from './css/Login.module.css'
 
 interface LoginPageProps {
 	login: LoginDto | undefined;
+	setToken: Function;
 }
 
-function LoginPage({login}: LoginPageProps) {
+function LoginPage({login, setToken}: LoginPageProps) {
 
 	useHomeRedirect(login);
 	
@@ -36,7 +37,7 @@ function LoginPage({login}: LoginPageProps) {
 	function handleSubmitLogin(event: SyntheticEvent) {
 		event.preventDefault();
 
-		// VALIDATION
+		// VALIDATION email + password
 		// ...
 		
 		api_request('post', '/api/auth/login', undefined, {
@@ -46,7 +47,7 @@ function LoginPage({login}: LoginPageProps) {
 		.then((res) => {
 			if (res.status === 200) {
 				localStorage.setItem("token", res.data);
-				login?.setToken(res.data);
+				setToken(res.data);
 			}
 		})
 		.catch((err) => {

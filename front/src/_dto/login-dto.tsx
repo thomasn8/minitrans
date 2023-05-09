@@ -1,11 +1,8 @@
 import { UserDto } from "./user-dto";
 
 export interface LoginDto {
-  token: string;
-  setToken: Function;
-
-  user: UserDto | undefined;
-
-  getHeaders: Function;
-  getUserData: Function;
+	id: number;
+	email: string;
+	pseudo: string;
+	element: string;
 }
