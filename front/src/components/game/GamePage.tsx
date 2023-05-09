@@ -7,11 +7,12 @@ import styles from './css/Game.module.css'
 
 interface GamePageProps {
 	login: LoginDto | undefined;
+	setToken: Function;
 }
 
-function GamePage({login}: GamePageProps) {
+function GamePage({login, setToken}: GamePageProps) {
 	
-	useLoginRedirect(login);
+	useLoginRedirect(login, setToken);
 
 	return (
 		<div id="game" className={styles.game_wrapper}>

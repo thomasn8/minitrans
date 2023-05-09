@@ -123,7 +123,8 @@ export class AuthService {
 					element: user.element
 				}, {
 					secret: process.env.ACCESSTOKEN_SECRET,
-					expiresIn: "1h",
+					// expiresIn: "1h",
+					expiresIn: 1,
 				}
 			),
 			this.jwtService.signAsync({

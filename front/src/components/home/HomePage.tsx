@@ -9,12 +9,13 @@ import { ChatSvg, GameSvg } from "./svg/home-icones";
 
 interface HomePageProps {
 	login: LoginDto | undefined;
+	setToken: Function;
 	color: string;
 }
 
-function HomePage({login, color}: HomePageProps) {
+function HomePage({login, setToken, color}: HomePageProps) {
 
-	useLoginRedirect(login);
+	useLoginRedirect(login, setToken);
 
 	const [alignment, setAlignment] = React.useState('justify_center');
 	React.useEffect(() => {

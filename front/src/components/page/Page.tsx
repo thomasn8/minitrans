@@ -5,12 +5,13 @@ import { LoginDto } from "../../_dto/login-dto";
 import '../../assets/css/page.css';
 
 interface PageProps {
-	user: LoginDto | undefined;
+	login: LoginDto | undefined;
+	setToken: Function;
 }
 
-function Page({user}: PageProps) {
+function Page({login, setToken}: PageProps) {
 
-	useLoginRedirect(user);
+	useLoginRedirect(login, setToken);
 	
 	return (
 		<></>
