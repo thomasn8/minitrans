@@ -3,7 +3,6 @@ import { LoginDto } from "../../_dto/login-dto";
 import { useNavigate } from "react-router-dom";
 import { isExpired } from "react-jwt";
 import { api_request } from "../../assets/utils";
-import Cookies from 'js-cookie'
 
 function useLoginRedirect(login: LoginDto | undefined, setToken: Function): void {
 
@@ -16,13 +15,7 @@ function useLoginRedirect(login: LoginDto | undefined, setToken: Function): void
 		}
 		else if (isExpired(token) === true) {
 			console.log('TOKEN EXPIRED');
-			const refresh_token = Cookies.get('Authentication');	// comment obtenir le refresh_token depuis les cookies ??
-			console.log('from cookies', refresh_token);
-
-			// const refresh_token = '';
-			// console.log(Cookies.get());
-			
-			api_request('post', '/api/auth/refresh', refresh_token)
+			api_request('get', '/api/auth/refresh')
 			.then((res) => {
 				if (res.status === 200) {
 					localStorage.setItem("token", res.data);

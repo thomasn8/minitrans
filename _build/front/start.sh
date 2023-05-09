@@ -9,7 +9,6 @@ then
     yarn add bcryptjs @types/bcryptjs
     yarn add socket.io-client
     yarn add react-jwt
-    yarn add js-cookie @types/js-cookie
 fi
 
 if [ "$BUILD_TYPE" = "Production" ];

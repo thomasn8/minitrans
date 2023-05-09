@@ -92,6 +92,8 @@ export class AuthService {
 		if (!salt)
 			throw new InternalServerErrorException('Token error 1');
 		const hash = createHmac('sha256', salt).update(refreshToken).digest('hex');
+		console.log('rt from cookie hashed:', hash);
+		console.log('rt registred hashed:', rtRegistered);
 
 		if (hash !== rtRegistered) {
 			// this.logout(user.id)
