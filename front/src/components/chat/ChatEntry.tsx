@@ -5,11 +5,11 @@ import { LoginDto } from "../../_dto/login-dto";
 import styles from './css/ChatEntry.module.css'
 
 interface ChatEntryProps {
-	user: LoginDto | undefined;
+	login: LoginDto | undefined;
 	setPseudo: Function;
 }
 
-function ChatEntry({user, setPseudo}: ChatEntryProps) {
+function ChatEntry({login, setPseudo}: ChatEntryProps) {
 
 	const [pseudoInput, setPseudoInput] = React.useState('');
 	const [errorMessage, seterrorMessage] = React.useState('');

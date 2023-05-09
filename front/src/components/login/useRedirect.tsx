@@ -2,24 +2,24 @@ import React from "react";
 import { LoginDto } from "../../_dto/login-dto";
 import { useNavigate } from "react-router-dom";
 
-function useLoginRedirect(user: LoginDto | undefined): void {
+function useLoginRedirect(login: LoginDto | undefined): void {
 
 	const navigate = useNavigate();
 
 	React.useEffect(() => {
-		if (user === undefined)
+		if (login === undefined)
 			navigate("/login");
-	}, [user]);
+	}, [login]);
 }
 
-function useHomeRedirect(user: LoginDto | undefined): void {
+function useHomeRedirect(login: LoginDto | undefined): void {
 
 	const navigate = useNavigate();
 
 	React.useEffect(() => {
-		if (user !== undefined)
+		if (login !== undefined)
 			navigate("/");
-	}, [user]);
+	}, [login]);
 }
 
 export { useLoginRedirect, useHomeRedirect, };

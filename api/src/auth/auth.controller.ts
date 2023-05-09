@@ -1,5 +1,7 @@
-import { Controller, Post, Request, Body, HttpCode, HttpStatus, UseGuards } from '@nestjs/common';
+import { Controller, Post, Request, Body, HttpCode, HttpStatus, UseGuards, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
+
+import { Response } from 'express';
 
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { LoginDto } from './dto/Login.dto';
@@ -19,6 +21,7 @@ export class AuthController {
     return await this.authService.signin(createUserDto);
   }
 
+  // return the tokens ? anyway need to login after confirmation
   @Post('signin-confirm')
   @Public()
   @HttpCode(200)
@@ -30,9 +33,11 @@ export class AuthController {
   @Post('login')
   @Public()
   @HttpCode(200)
-  async login(@Body() login: LoginDto) {
+  async login(@Body() login: LoginDto, @Res({ passthrough: true }) response: Response) {
     const tokens = await this.authService.login(login);
-    return tokens;                                          // WHICH TOKEN TO RETURN AND WHAT TO DO WITH IT/THEM ?
+    const cookie = `Authentication=${tokens.refreshToken}; HttpOnly; Path=/; Max-Age=172800`;
+    response.setHeader('Set-Cookie', cookie);
+    return tokens.accessToken;
   }
 
   /* 
@@ -55,4 +60,5 @@ export class AuthController {
   }
 
 }
+
 

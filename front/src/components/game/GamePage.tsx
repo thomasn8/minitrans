@@ -6,12 +6,12 @@ import Nav from "../nav/Nav";
 import styles from './css/Game.module.css'
 
 interface GamePageProps {
-	user: LoginDto | undefined;
+	login: LoginDto | undefined;
 }
 
-function GamePage({user}: GamePageProps) {
+function GamePage({login}: GamePageProps) {
 	
-	useLoginRedirect(user);
+	useLoginRedirect(login);
 
 	return (
 		<div id="game" className={styles.game_wrapper}>

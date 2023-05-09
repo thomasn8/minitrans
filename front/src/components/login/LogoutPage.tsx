@@ -4,10 +4,10 @@ import { LoginDto } from "../../_dto/login-dto";
 // import '../../assets/css/logout.css';
 
 interface LogoutPageProps {
-	user: LoginDto | undefined;
+	login: LoginDto | undefined;
 }
 
-function LogoutPage({user}: LogoutPageProps) {
+function LogoutPage({login}: LogoutPageProps) {
 	return (
 		<>logout</>
 	);
