@@ -4,11 +4,6 @@
 	
 	/* modifyable (see ColorTheme.tsx) */
 	--main-color:100, 148, 237;
-	/* --water-color:100, 148, 237;
-	--desert-color:239, 126, 33;
-	--forest-color:93, 213, 18;
-	--cosmos-color:163, 76, 255;
-	--unknown-color:239, 239, 239;*/
 
 	/* main, don't modify */
 	--window-color:rgb(15, 15, 15);

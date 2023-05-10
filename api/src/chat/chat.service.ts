@@ -30,7 +30,7 @@ export class ChatService {
   findAllUsers(): ChatUserResponseDto[] {
     let usersArray: ChatUserResponseDto[] = [];
     this.users.forEach((user) => {
-      usersArray.push({id: user.id, pseudo: user.pseudo});
+      usersArray.push({id: user.id, pseudo: user.pseudo, element: user.element});
     });
     return usersArray;
   }

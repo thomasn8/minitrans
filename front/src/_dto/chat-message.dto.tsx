@@ -1,5 +1,6 @@
 export interface ChatMessageDto {
-	id?: number;
+	id: number;
 	pseudo: string;
+	element: string;
 	text: string;
 }

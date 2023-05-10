@@ -1,5 +1,5 @@
 import React, { SyntheticEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { io, Socket } from 'socket.io-client';
 
@@ -10,12 +10,10 @@ import { ChatMessageDto } from "../../_dto/chat-message.dto";
 import styles from './css/ChatRoom.module.css'
 
 interface ChatRoomProps {
-	login: LoginDto | undefined;
+	login: LoginDto;
 }
 
 function ChatRoom({login}: ChatRoomProps) {
-
-	const [pseudo, setPseudo] = React.useState(login && login.pseudo || 'randomUser');
 
 	const [usersCount, setUsersCount] = React.useState('');
 	const [users, setUsers] = React.useState<ChatUserDto[]>([]);
@@ -34,8 +32,7 @@ function ChatRoom({login}: ChatRoomProps) {
         path: "/socket-chat/",
         timeout: 10000,
         extraHeaders: {
-          // Authorization: `Bearer ${token}`,
-					Pseudo: pseudo,														// CHEAT (provisory until no stable login)
+          Authorization: `${localStorage.getItem('token')}`,
         },
       });
 
@@ -59,7 +56,7 @@ function ChatRoom({login}: ChatRoomProps) {
 
 		}
 
-	}, [login, pseudo]);
+	}, [login]);
 
 	socketRef.current && socketRef.current.on('newClient', (res: ChatUserDto) => {
 		setUsers([...users, res]);
@@ -83,7 +80,7 @@ function ChatRoom({login}: ChatRoomProps) {
 
 	function sendMessage(event: SyntheticEvent) {
 		event.preventDefault()
-		let message: ChatMessageDto = { pseudo: pseudo, text: messageInput };
+		const message: ChatMessageDto = { id: login.id, pseudo: login.pseudo, element: login.element, text: messageInput}
 		if (messageInput !== '' && messageInput.length < 2000) {
 			socketRef.current && socketRef.current.emit('createMessage', message);
 		}
@@ -93,10 +90,10 @@ function ChatRoom({login}: ChatRoomProps) {
 	function emitTyping() {
 		if (typing === false) {
 			setTyping(true);
-			socketRef.current && socketRef.current.emit('isTyping', {pseudo: pseudo} );
+			socketRef.current && socketRef.current.emit('isTyping', {pseudo: login.pseudo} );
 			
 			setTimeout (() => {
-				socketRef.current && socketRef.current.emit('stopTyping', {pseudo: pseudo} );
+				socketRef.current && socketRef.current.emit('stopTyping', {pseudo: login.pseudo} );
 				setTyping(false);
 			}, 10000);
 		}
@@ -126,18 +123,18 @@ function ChatRoom({login}: ChatRoomProps) {
 					<div className={styles.users}>
 						{users.map((user) => {
 							return (
-								<div key={user.id} className={`${styles.user_wrapper} ${login?.element}`}>
+								<div key={user.id} className={`${styles.user_wrapper} ${user.element}`}>
 									
 									{usersTyping.map((userTyping) => {
 										return (
 											(userTyping === user.pseudo) && 
-												(userTyping === pseudo && 
-												<span key={pseudo} className={styles.me_typing}></span> ||
-												<span key={pseudo} className={styles.typing}></span>)
+												(userTyping === login.pseudo && 
+												<span key={login.pseudo} className={styles.me_typing}></span> ||
+												<span key={login.pseudo} className={styles.typing}></span>)
 										);
 									})}
 
-									{user.pseudo === pseudo &&
+									{user.pseudo === login.pseudo &&
 									<span className={`${styles.user} ${styles.me}`}>{user.pseudo} (me)</span> ||
 									<span className={`${styles.user} ${styles.else}`}>{user.pseudo}</span>}
 									<span className={styles.lister}>•</span>
@@ -162,8 +159,8 @@ function ChatRoom({login}: ChatRoomProps) {
 					<div className={`${styles.messages} ${styles.scrollbar}`}>
 						{messages.slice().reverse().map((message) => {
 							return (
-								<div key={message.id} className={styles.message}>
-									{message.pseudo === pseudo && 
+								<div key={message.id} className={`${styles.message} ${message.element}`}>
+									{message.pseudo === login.pseudo && 
 									<div className={styles.me}><span>{message.text}</span></div> ||
 									<div className={styles.else}><span className={styles.pseudo}>{message.pseudo}: </span><span>{message.text}</span></div>}
 								</div>

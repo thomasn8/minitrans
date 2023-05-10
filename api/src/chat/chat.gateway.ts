@@ -1,4 +1,3 @@
-import { NotFoundException } from '@nestjs/common';
 import { WebSocketGateway, SubscribeMessage, MessageBody, WebSocketServer, ConnectedSocket, OnGatewayConnection, OnGatewayDisconnect, } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 
@@ -6,6 +5,8 @@ import { ChatService } from './chat.service';
 
 import { ChatUserDto, ChatUserResponseDto } from './dto/chat-user.dto';
 import { ChatMessageDto } from './dto/chat-message.dto';
+
+import * as jwt from 'jsonwebtoken'
 
 
 @WebSocketGateway({ path: '/socket-chat/', cors: { origin: '*' } })
@@ -15,33 +16,28 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 	constructor(private readonly chatService: ChatService) {}
 	usersCount: number = 0;
 
-
 	handleConnection(@ConnectedSocket() client: Socket): void {
-
-		// check bearer token against user db to see if user is known
-		// if no, disconnect ths client socket
-
-		console.log('Connect:', client.id, 'pseudo:', client.handshake.headers.pseudo);
-		this.usersCount++;
-		this.server.emit('countUsers', this.usersCount);
-
-		// provisory (later will use token login infos)
-		if (client.handshake.headers.pseudo) {
-			const user: ChatUserDto = new ChatUserDto();
-			const pseudo: string = (client.handshake.headers.pseudo).toString();		// CHEAT (provisory)
-			const id = this.usersCount;																							// CHEAT (provisory)
-
-			user.socket = client;
-			user.id = id;
-			user.pseudo = pseudo;
-
+		if (client.handshake.headers.authorization && process.env.ACCESSTOKEN_SECRET) {
+			const jwtUser = jwt.verify(client.handshake.headers.authorization, process.env.ACCESSTOKEN_SECRET) as ChatUserDto;
+			const user: ChatUserDto = {
+				id: jwtUser.id,
+				pseudo: jwtUser.pseudo,
+				element: jwtUser.element,
+				socket: client
+			}
+			console.log(`Connect to chat: ${user.pseudo} (${user.socket.id})`);
+			this.usersCount++;
+			this.server.emit('countUsers', this.usersCount);
 			this.chatService.identify(user);
-			this.server.emit('newClient', {id, pseudo});
+			this.server.emit('newClient', {id: user.id, pseudo: user.pseudo, element: user.element});
+		}
+		else {
+			client.disconnect();
 		}
 	}
 
 	handleDisconnect(@ConnectedSocket() client: Socket): void {
-		console.log('Disconnect:', client.id);
+		console.log('Disconnect from chat:', client.id);
 		try {
 			const userId: number = this.chatService.quitChat(client.id);
 			this.usersCount--;

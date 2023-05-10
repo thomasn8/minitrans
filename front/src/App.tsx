@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
 import HomePage from './components/home/HomePage';
 import LoginPage from './components/login/LoginPage'; 
 import LogoutPage from './components/login/LogoutPage';
@@ -9,12 +8,8 @@ import SigninConfirmPage from './components/login/SigninConfirmPage';
 import ChatPage from './components/chat/ChatPage';
 import GamePage from './components/game/GamePage';
 import ColorTheme from './assets/ColorTheme';
-
 import { LoginDto } from './_dto/login-dto';
-import { UserDto } from './_dto/user-dto';
-
 import { api_request } from './assets/utils';
-import axios from "axios";
 
 import './main.css'
 
