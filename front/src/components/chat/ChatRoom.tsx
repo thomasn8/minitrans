@@ -11,10 +11,11 @@ import styles from './css/ChatRoom.module.css'
 
 interface ChatRoomProps {
 	login: LoginDto | undefined;
-	pseudo: string;
 }
 
-function ChatRoom({login, pseudo}: ChatRoomProps) {
+function ChatRoom({login}: ChatRoomProps) {
+
+	const [pseudo, setPseudo] = React.useState(login && login.pseudo || 'randomUser');
 
 	const [usersCount, setUsersCount] = React.useState('');
 	const [users, setUsers] = React.useState<ChatUserDto[]>([]);
@@ -125,7 +126,7 @@ function ChatRoom({login, pseudo}: ChatRoomProps) {
 					<div className={styles.users}>
 						{users.map((user) => {
 							return (
-								<div key={user.id} className={styles.user_wrapper}>
+								<div key={user.id} className={`${styles.user_wrapper} ${login?.element}`}>
 									
 									{usersTyping.map((userTyping) => {
 										return (

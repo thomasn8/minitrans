@@ -19,9 +19,10 @@ function ChatPage({login, setToken}: ChatPageProps) {
 
 	return (
 		<div id="chat" className={styles.chat_wrapper}>
-			{pseudo === '' &&
+			{/* {pseudo === '' &&
 			<ChatEntry login={login} setPseudo={setPseudo}/> ||
-			<ChatRoom login={login} pseudo={pseudo} />}
+			<ChatRoom login={login} pseudo={pseudo} />} */}
+			<ChatRoom login={login} />
 		</div>
 	);
 

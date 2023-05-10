@@ -22,12 +22,12 @@ function useLoginRedirect(login: LoginDto | undefined, setToken: Function): void
 				}
 				else
 				{
-					localStorage.setItem("token", '');		// OR NAVIGATE TO LOGOUT
+					localStorage.setItem("token", '');
 					setToken('');
 				}
 			})
 			.catch((err) => {
-				localStorage.setItem("token", '');			// OR NAVIGATE TO LOGOUT
+				localStorage.setItem("token", '');
 				setToken('');
 			});
 		}

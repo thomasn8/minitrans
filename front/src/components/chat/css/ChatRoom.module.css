@@ -63,15 +63,18 @@ button.chat {
 }
 
 .users .me {
-	color: var(--main-color05);
+	/* color: var(--main-color05); */
+	opacity: 0.5;
 }
 
 .users .else {
-	color: var(--main-color05);
+	/* color: var(--main-color05); */
+	opacity: 0.5;
 }
 
 .lister {
-	color: var(--main-color05);
+	/* color: var(--main-color05); */
+	opacity: 0.5;
 	position: absolute;
 	left: 5px;
 	transform: translateX(-100%);
@@ -86,7 +89,8 @@ button.chat {
 }
 
 .typing + span, .me_typing + span {
-	color: var(--main-color1)!important;
+	/* color: var(--main-color1)!important; */
+	opacity: 1!important;
 }
 .typing + span:after{
 	font-size: 12px;
