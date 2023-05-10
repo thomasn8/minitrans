@@ -3,7 +3,7 @@ import { AuthGuard } from "@nestjs/passport";
 import { Reflector } from '@nestjs/core';
 
 @Injectable()
-export class AccessTokenGuard extends AuthGuard('jwt') {
+export class AccessTokenGuard extends AuthGuard('jwt-access') {
 	constructor(private reflector: Reflector) {
 		super();
 	}

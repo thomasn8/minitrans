@@ -57,13 +57,17 @@ export class AuthController {
   @UseGuards(RefreshTokenGuard)
   @HttpCode(200)
   async refreshToken(@Request() req: any, @Res({ passthrough: true }) response: Response) {
-    const headers: string[] = req.rawHeaders;
-    const index = headers.findIndex((header) => header === 'Cookie') + 1;
-    const rtFromCookie = headers[index].substring(headers[index].indexOf('=') + 1);
-    console.log('rt get from cookie',rtFromCookie);
+    
+    // const headers: string[] = req.rawHeaders;
+    // const index = headers.findIndex((header) => header === 'Cookie') + 1;
+    // const rtFromCookie = headers[index].substring(headers[index].indexOf('=') + 1);
+    // console.log('rt get from cookie',rtFromCookie);
+    // const tokens = await this.authService.refreshToken(req.user, rtFromCookie);
+  
+    console.log(req.user);
+    console.log('rt get from cookie',req.user.refreshToken);
+    const tokens = await this.authService.refreshToken(req.user, req.user.refreshToken);
 
-    const tokens = await this.authService.refreshToken(req.user, rtFromCookie);
-    // const tokens = await this.authService.refreshToken(req.user, req.user.refreshToken);
     const cookie = `Authentication=${tokens.refreshToken}; HttpOnly; Path=/; Max-Age=172800`;
     response.setHeader('Set-Cookie', cookie);
     console.log('new rt set in cookie:', tokens.refreshToken);

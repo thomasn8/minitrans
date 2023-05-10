@@ -14,6 +14,7 @@ then
 	yarn add nodemailer @types/nodemailer googleapis
 	yarn add unique-username-generator
 	yarn add randomstring @types/randomstring
+	yarn add cookie-parser @types/cookie-parser
 fi
 
 # Use tsc: compile ts to js
