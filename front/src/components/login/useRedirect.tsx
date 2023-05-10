@@ -14,24 +14,19 @@ function useLoginRedirect(login: LoginDto | undefined, setToken: Function): void
 			navigate("/login");
 		}
 		else if (isExpired(token) === true) {
-			// console.log('TOKEN EXPIRED');
 			api_request('get', '/api/auth/refresh')
 			.then((res) => {
 				if (res.status === 200) {
-					// console.log('TOKEN REFRESHED');
 					localStorage.setItem("token", res.data);
 					setToken(res.data);
 				}
 				else
 				{
-					// console.log('TOKEN NOT VALID, CAN GET NEW PAIR OF TOKEN');
 					localStorage.setItem("token", '');		// OR NAVIGATE TO LOGOUT
 					setToken('');
 				}
 			})
 			.catch((err) => {
-				// console.log('TOKEN NOT VALID, CAN GET NEW PAIR OF TOKEN');
-				console.log(err);
 				localStorage.setItem("token", '');			// OR NAVIGATE TO LOGOUT
 				setToken('');
 			});

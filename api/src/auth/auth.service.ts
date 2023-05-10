@@ -78,8 +78,6 @@ export class AuthService {
 		if (!salt)
 			throw new InternalServerErrorException('Token error 1');
 		const hash = createHmac('sha256', salt).update(refreshToken).digest('hex');
-		// console.log('rt from cookie hashed:', hash);
-		// console.log('rt registred hashed:', rtRegistered);
 
 		if (hash !== rtRegistered) {
 			// this.logout(user.id)
@@ -136,7 +134,7 @@ export class AuthService {
 		};
 	}
 
-
+	// get expire date from env or set it to 1 day if not provided in env
 	getExpireDate(): Date {
 		let ms: number;
     process.env.REFRESHTOKEN_DURATION_SEC ? ms = parseInt(process.env.REFRESHTOKEN_DURATION_SEC) * 1000 : ms = 86400000;

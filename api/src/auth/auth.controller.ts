@@ -37,12 +37,7 @@ export class AuthController {
   @HttpCode(200)
   async login(@Body() login: LoginDto, @Res({ passthrough: true }) response: Response) {
     const tokens = await this.authService.login(login);
-   
-    // const cookie = `Authentication=${tokens.refreshToken}; HttpOnly; Path=/; Max-Age=${process.env.REFRESHTOKEN_DURATION_SEC}`;
-    // response.setHeader('Set-Cookie', cookie);
-    
     response.cookie('Authentication', tokens.refreshToken, { expires: this.authService.getExpireDate(), httpOnly: true });
-      
     return tokens.accessToken;
   }
 
@@ -65,16 +60,8 @@ export class AuthController {
   @UseGuards(RefreshTokenGuard) // get the refresh token set from the cookies
   @HttpCode(200)
   async refreshTokens(@Request() req: any, @Res({ passthrough: true }) response: Response) {
-    // console.log(req.user);
-    // console.log('rt get from cookie',req.user.refreshToken);
     const tokens = await this.authService.refreshTokens(req.user, req.user.refreshToken);
-
-    // const cookie = `Authentication=${tokens.refreshToken}; HttpOnly; Path=/; Max-Age=${process.env.REFRESHTOKEN_DURATION_SEC}`;
-    // response.setHeader('Set-Cookie', cookie);
-
     response.cookie('Authentication', tokens.refreshToken, { expires: this.authService.getExpireDate(), httpOnly: true });
-
-    // console.log('new rt set in cookie:', tokens.refreshToken);
     return tokens.accessToken;
   }
 
