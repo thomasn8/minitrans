@@ -36,9 +36,6 @@ function LoginPage({login, setToken}: LoginPageProps) {
 
 	function handleSubmitLogin(event: SyntheticEvent) {
 		event.preventDefault();
-
-		// VALIDATION email + password
-		// ...
 		
 		api_request('post', '/api/auth/login', undefined, {
 			email: email,

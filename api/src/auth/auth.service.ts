@@ -24,7 +24,7 @@ export class AuthService {
 
 
 	async confirmSignin(confirmToken: string): Promise<string> {
-		const decoded = await this.jwtService.verifyAsync(confirmToken, { secret: process.env.EMAILCONFIRM_TOKEN_SECRET }).catch((err: any) => {
+		const decoded = await this.jwtService.verifyAsync(confirmToken, { secret: process.env.EMAILTOKEN_SECRET }).catch((err: any) => {
 			console.log(err);
 			throw new UnauthorizedException('Email confirmation error: token not valid');
 		})
