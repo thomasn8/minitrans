@@ -111,8 +111,8 @@ export class UsersService {
     const confirmToken = await this.jwtService.signAsync({
         email: user.email,
       }, {
-        secret: process.env.EMAILCONFIRM_TOKEN_SECRET,
-        expiresIn: 60 * 60 * 24, // 24 hours to confirm
+        secret: process.env.EMAILTOKEN_SECRET,
+        expiresIn: process.env.EMAILTOKEN_DURATION, // 24 hours to confirm
       }
     );
     // user.confirmationDate = null;
@@ -158,7 +158,7 @@ export class UsersService {
     return user.confirmationToken;
   }
 
-  async confirmUser(email: string): Promise<UserDto> {
+  async confirmUser(email: string) {
     if (!email)
       throw new NotFoundException('User not found');
   
@@ -174,13 +174,6 @@ export class UsersService {
     user.confirmationToken = '';
     // user.confirmationDate = new Date();
     await this.saveUserOrFail(user, 'User confirmation error');
-
-    return {
-      id: user.id,
-      email: user.email,
-      pseudo: user.pseudo,
-      element: user.element.name
-    };
   }
 
   async updateRefreshToken(userId: number, refreshToken: string) {

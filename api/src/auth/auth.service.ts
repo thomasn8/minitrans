@@ -8,7 +8,6 @@ import { TokensDto } from './dto/tokens.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { createHmac } from 'crypto';
-import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -18,27 +17,13 @@ export class AuthService {
 		private jwtService: JwtService
 	) {}
 
-	// async getAccessToken(user: ReqUser): Promise<{ accessToken: string }> {
-	// 	const accessToken = await this.jwtService.signAsync({
-	// 			id: user.id,
-	// 			email: user.email,
-	// 			pseudo: user.pseudo,
-	// 			element: user.element
-	// 		}, {
-	// 			secret: process.env.ACCESSTOKEN_SECRET,
-	// 			expiresIn: "1h",
-	// 		}
-	// 	);
-	// 	return { accessToken: accessToken };
-	// }
 
-
-	async signin(createUserDto: CreateUserDto) {
+	async signin(createUserDto: CreateUserDto): Promise<string> {
 		return await this.userService.create(createUserDto);
 	}
 
 
-	async confirmSignin(confirmToken: string): Promise<TokensDto> {
+	async confirmSignin(confirmToken: string): Promise<string> {
 		const decoded = await this.jwtService.verifyAsync(confirmToken, { secret: process.env.EMAILCONFIRM_TOKEN_SECRET }).catch((err: any) => {
 			console.log(err);
 			throw new UnauthorizedException('Email confirmation error: token not valid');
@@ -50,8 +35,8 @@ export class AuthService {
 			throw new UnauthorizedException('Email confirmation error: already confirmed');
 
 		if (tokenRegistered && tokenRegistered === confirmToken) {
-			const user: UserDto = await this.userService.confirmUser(decoded.email);
-			return this.updateTokens(user);
+			await this.userService.confirmUser(decoded.email);
+			return 'Signed in confirmed';
 		}
 		else
 			throw new UnauthorizedException('Email confirmation error: token not valid');
@@ -77,12 +62,13 @@ export class AuthService {
 	}
 
 
-	async logout(userId: number) {
+	async logout(userId: number): Promise<string> {
 		await this.userService.updateRefreshToken(userId, '');
+		return 'Logout success';
 	}
 
 
-	async refreshToken(user: any, refreshToken: string) {
+	async refreshTokens(user: any, refreshToken: string) {
 		const rtRegistered = await this.userService.findRefreshToken(user.id);
 
 		if (!rtRegistered)
@@ -92,8 +78,8 @@ export class AuthService {
 		if (!salt)
 			throw new InternalServerErrorException('Token error 1');
 		const hash = createHmac('sha256', salt).update(refreshToken).digest('hex');
-		console.log('rt from cookie hashed:', hash);
-		console.log('rt registred hashed:', rtRegistered);
+		// console.log('rt from cookie hashed:', hash);
+		// console.log('rt registred hashed:', rtRegistered);
 
 		if (hash !== rtRegistered) {
 			// this.logout(user.id)
@@ -125,8 +111,8 @@ export class AuthService {
 					element: user.element
 				}, {
 					secret: process.env.ACCESSTOKEN_SECRET,
-					// expiresIn: "1h",
-					expiresIn: 1,
+					expiresIn: process.env.ACCESSTOKEN_DURATION,
+					// expiresIn: 1,																			// test purpose
 				}
 			),
 			this.jwtService.signAsync({
@@ -136,7 +122,8 @@ export class AuthService {
 					element: user.element
 				}, {
 					secret: process.env.REFRESHTOKEN_SECRET,
-					expiresIn: 60 * 60 * 24 * 2,
+					expiresIn: process.env.REFRESHTOKEN_DURATION,
+					// expiresIn: 5,																			// test purpose
 				}
 			),
 		]).catch((err) => {
@@ -148,6 +135,5 @@ export class AuthService {
 			refreshToken: refreshToken 
 		};
 	}
-
 
 }

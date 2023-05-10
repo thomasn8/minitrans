@@ -14,7 +14,7 @@ export class EmailService {
 			process.env.CLIENT_SECRET,
 			process.env.REDIRECT_URI
 		);
-		this.oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
+		this.oAuth2Client.setCredentials({ refresh_token: process.env.GMAIL_REFRESH_TOKEN });
 	}
 
 	async sendConfirmationLink(user: User, element: string, confirmToken: string) {
@@ -30,7 +30,7 @@ export class EmailService {
 						user: process.env.MAIL_USER,
 						clientId: process.env.CLIENT_ID,
 						clientSecret: process.env.CLIENT_SECRET,
-						refreshToken: process.env.REFRESH_TOKEN,
+						refreshToken: process.env.GMAIL_REFRESH_TOKEN,
 						accessToken: token,
 					},
 				});

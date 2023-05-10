@@ -18,6 +18,7 @@ function useLoginRedirect(login: LoginDto | undefined, setToken: Function): void
 			api_request('get', '/api/auth/refresh')
 			.then((res) => {
 				if (res.status === 200) {
+					console.log('TOKEN REFRESHED');
 					localStorage.setItem("token", res.data);
 					setToken(res.data);
 				}

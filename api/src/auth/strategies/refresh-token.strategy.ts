@@ -2,7 +2,6 @@ import { Injectable } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import { Request } from 'express';
-import { UserDto } from "src/_shared_dto/user.dto";
 
 
 @Injectable()
