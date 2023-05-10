@@ -14,17 +14,17 @@ function LogoutPage({login, setToken}: LogoutPageProps) {
 
 	React.useEffect(() => {
 		api_request('get', '/api/auth/logout')
-		.then((res) => {
-			if (res.status === 200)
-				console.log(res.data);
-			else
-				console.log('logout fail');
-		})
+		// .then((res) => {
+		// 	if (res.status === 200)
+		// 		console.log(res.data);
+		// 	else
+		// 		console.log('logout fail');
+		// })
 		.catch((err) => {
 			console.log(err);
-			console.log('logout fail');
+			// console.log('logout fail');
 		})
-		
+
 		localStorage.setItem("token", "");
 		setToken("");
 		navigate("/login");

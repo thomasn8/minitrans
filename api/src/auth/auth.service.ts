@@ -136,4 +136,11 @@ export class AuthService {
 		};
 	}
 
+
+	getExpireDate(): Date {
+		let ms: number;
+    process.env.REFRESHTOKEN_DURATION_SEC ? ms = parseInt(process.env.REFRESHTOKEN_DURATION_SEC) * 1000 : ms = 86400000;
+    return new Date(Date.now() + ms);
+	}
+
 }
