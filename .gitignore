@@ -1,11 +1,7 @@
 _build/nginx/certs/*.crt
 _build/nginx/certs/*.key
 
-api/api_google
-api/api_google/credentials.json
-api/api_google/auth.js
-api/api_google/token.js
-api/api_google/token.json
+api/src/api_google/*
 
 # misc
 .DS_Store
